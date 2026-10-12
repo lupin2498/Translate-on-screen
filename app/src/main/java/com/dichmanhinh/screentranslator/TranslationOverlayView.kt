@@ -7,36 +7,30 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
-import android.text.Layout
-import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.TypedValue
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-data class TranslatedBlock(val original: String, val translated: String, val rect: Rect)
+data class TranslatedBlock(val original: String, val translated: String, val rect: Rect, val lines: Int = 1)
 
-/** Vẽ bản dịch đè lên đúng vị trí chữ gốc trên màn hình. */
+/** Vẽ bản dịch đè lên đúng vị trí chữ gốc trên màn hình (tọa độ màn hình). */
 @SuppressLint("ViewConstructor")
 class TranslationOverlayView(
     context: Context,
     private val blocks: List<TranslatedBlock>,
-    private val dimRect: Rect?,
+    private val regionRect: Rect?,
+    private val cfg: OverlayStyle,
     private val onClose: () -> Unit,
     private val onCopy: () -> Unit
 ) : View(context) {
 
-    private val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.argb(242, 255, 255, 255) }
-    private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.argb(160, 26, 115, 232)
-        style = Paint.Style.STROKE
-        strokeWidth = dp(1f)
-    }
-    private val dimPaint = Paint().apply { color = Color.argb(70, 0, 0, 0) }
+    private val renderer = BlockRenderer(resources, cfg)
+    private val dimPaint = Paint().apply { color = Color.argb(if (cfg.transparentBg) 110 else 70, 0, 0, 0) }
     private val regionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.argb(220, 26, 115, 232)
-        style = Paint.Style.STROKE
+        this.style = Paint.Style.STROKE
         strokeWidth = dp(2f)
     }
     private val hintBg = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.argb(200, 32, 33, 36) }
@@ -44,16 +38,9 @@ class TranslationOverlayView(
         color = Color.WHITE
         textSize = sp(13f)
     }
-    private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.rgb(20, 20, 20) }
-
-    private val minText = sp(8f)
-    private val maxText = sp(22f)
-    private val pad = dp(2f)
     private val loc = IntArray(2)
-
-    private class Laid(val rect: RectF, val layout: StaticLayout)
-
-    private var laid: List<Laid>? = null
+    private var laid: List<BlockRenderer.Laid>? = null
+    private var laidForHeight = -1
 
     private val gestures = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent) = true
@@ -68,58 +55,33 @@ class TranslationOverlayView(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean = gestures.onTouchEvent(event)
 
-    private fun layoutBlocks(): List<Laid> {
-        return blocks.map { b ->
-            val r = RectF(b.rect)
-            val w = (r.width() - pad * 2).toInt().coerceAtLeast(dp(40f).toInt())
-            if (r.width() < w + pad * 2) r.right = r.left + w + pad * 2
-            val lineCount = estimateLines(b.original)
-            var size = ((r.height() - pad * 2) / lineCount / 1.25f).coerceIn(minText, maxText)
-            var layout = build(b.translated, w, size)
-            while (layout.height > r.height() - pad * 2 && size > minText) {
-                size = (size - sp(0.5f)).coerceAtLeast(minText)
-                layout = build(b.translated, w, size)
-            }
-            if (layout.height > r.height() - pad * 2) {
-                r.bottom = r.top + layout.height + pad * 2
-            }
-            Laid(r, layout)
-        }
-    }
-
-    private fun estimateLines(s: String): Int = (s.count { it == '\n' } + 1).coerceAtLeast(1)
-
-    private fun build(text: String, width: Int, size: Float): StaticLayout {
-        textPaint.textSize = size
-        return StaticLayout.Builder.obtain(text, 0, text.length, textPaint, width)
-            .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-            .setLineSpacing(0f, 1.0f)
-            .setIncludePad(false)
-            .build()
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        laid = null
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         getLocationOnScreen(loc)
+        val screenBottom = (height + loc[1]).toFloat()
+        val items = laid?.takeIf { laidForHeight == height } ?: renderer.layout(
+            blocks.map { RectF(it.rect) },
+            blocks.map { it.translated },
+            blocks.map { it.lines },
+            screenBottom
+        ).also { laid = it; laidForHeight = height }
+
         canvas.save()
         canvas.translate(-loc[0].toFloat(), -loc[1].toFloat())
-
-        if (dimRect != null) {
-            canvas.drawRect(RectF(dimRect), regionPaint)
+        if (regionRect != null) {
+            canvas.drawRect(RectF(regionRect), regionPaint)
         } else {
-            canvas.drawRect(0f, 0f, (width + loc[0]).toFloat(), (height + loc[1]).toFloat(), dimPaint)
+            canvas.drawRect(
+                loc[0].toFloat(), loc[1].toFloat(),
+                (width + loc[0]).toFloat(), (height + loc[1]).toFloat(), dimPaint
+            )
         }
-
-        val items = laid ?: layoutBlocks().also { laid = it }
-        val radius = dp(3f)
-        for (it in items) {
-            canvas.drawRoundRect(it.rect, radius, radius, bgPaint)
-            canvas.drawRoundRect(it.rect, radius, radius, borderPaint)
-            canvas.save()
-            canvas.translate(it.rect.left + pad, it.rect.top + pad)
-            it.layout.draw(canvas)
-            canvas.restore()
-        }
+        renderer.draw(canvas, items)
         canvas.restore()
 
         // Gợi ý thao tác ở cuối màn hình

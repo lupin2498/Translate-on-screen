@@ -8,14 +8,15 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.hardware.display.DisplayManager
-import android.hardware.display.VirtualDisplay
-import android.media.ImageReader
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
 import android.os.Build
@@ -23,8 +24,13 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
+import android.os.SystemClock
 import android.util.DisplayMetrics
+import android.util.Log
+import android.view.ContextThemeWrapper
+import android.view.Display
 import android.view.Gravity
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -33,6 +39,7 @@ import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -45,6 +52,8 @@ import kotlin.math.abs
 /**
  * Dịch vụ nền: giữ quyền chụp màn hình (MediaProjection), hiển thị nút nổi,
  * chụp màn hình -> OCR -> Google Dịch -> vẽ bản dịch đè lên màn hình.
+ *
+ * Hỗ trợ cả hai chế độ chia sẻ của Android 14+: "Toàn bộ màn hình" và "Một ứng dụng".
  */
 class ScreenTranslateService : Service() {
 
@@ -54,12 +63,14 @@ class ScreenTranslateService : Service() {
         const val ACTION_STOP = "com.dichmanhinh.screentranslator.STOP"
         private const val CHANNEL_ID = "screen_translate"
         private const val NOTIF_ID = 1001
+        private const val TAG = "ScreenTranslator"
 
         @Volatile
         var isRunning = false
             private set
     }
 
+    private lateinit var uiContext: Context
     private lateinit var wm: WindowManager
     private val mainHandler = Handler(Looper.getMainLooper())
     private val captureThread = HandlerThread("ScreenCapture").apply { start() }
@@ -68,22 +79,40 @@ class ScreenTranslateService : Service() {
     private val ocr = OcrEngine()
 
     private var projection: MediaProjection? = null
-    private var virtualDisplay: VirtualDisplay? = null
-    private var imageReader: ImageReader? = null
-    private var capW = 0
-    private var capH = 0
-    private var lastBitmap: Bitmap? = null
+    private var capturer: ScreenCapturer? = null
+    private var projectionStartedAt = 0L
+
+    /**
+     * true khi lớp phủ của ta nằm trong ảnh chụp (chia sẻ toàn màn hình) – cần ẩn nút nổi và chờ
+     * khung hình mới. Ở chế độ một ứng dụng, ẩn nút nổi không tạo khung hình mới.
+     */
+    private var overlayInCapture = true
 
     private var bubble: View? = null
     private var bubbleParams: WindowManager.LayoutParams? = null
     private var overlay: View? = null
     private var busy = false
+    private var stopping = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
-        wm = getSystemService(WINDOW_SERVICE) as WindowManager
+        uiContext = createUiContext()
+        wm = uiContext.getSystemService(WindowManager::class.java)
+    }
+
+    /** Context dành cho cửa sổ nổi (API 30+ dùng window context để có cấu hình/kích thước đúng). */
+    private fun createUiContext(): Context {
+        val base: Context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            runCatching {
+                val dm = getSystemService(DisplayManager::class.java)
+                val display = dm.getDisplay(Display.DEFAULT_DISPLAY)
+                createDisplayContext(display)
+                    .createWindowContext(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, null)
+            }.getOrElse { this }
+        } else this
+        return ContextThemeWrapper(base, R.style.Theme_DichManHinh)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -100,6 +129,7 @@ class ScreenTranslateService : Service() {
                 @Suppress("DEPRECATION") intent.getParcelableExtra(EXTRA_DATA)
             }
             if (data == null || !setupProjection(code, data)) {
+                DebugInfo.lastError = "setupProjection failed"
                 Toast.makeText(this, R.string.capture_failed, Toast.LENGTH_LONG).show()
                 stopSelf()
                 return START_NOT_STICKY
@@ -139,10 +169,11 @@ class ScreenTranslateService : Service() {
 
     // ---------------------------------------------------------------- Capture
 
+    /** Kích thước thật của toàn màn hình (pixel) và mật độ điểm ảnh. */
     private fun screenSize(): Triple<Int, Int, Int> {
-        val dpi = resources.displayMetrics.densityDpi
+        val dpi = uiContext.resources.displayMetrics.densityDpi
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val b = wm.currentWindowMetrics.bounds
+            val b = wm.maximumWindowMetrics.bounds
             Triple(b.width(), b.height(), dpi)
         } else {
             val m = DisplayMetrics()
@@ -153,80 +184,91 @@ class ScreenTranslateService : Service() {
 
     private fun setupProjection(code: Int, data: Intent): Boolean {
         val mpm = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-        val mp = runCatching { mpm.getMediaProjection(code, data) }.getOrNull() ?: return false
+        val mp = try {
+            mpm.getMediaProjection(code, data)
+        } catch (e: Exception) {
+            Log.e(TAG, "getMediaProjection failed", e); null
+        } ?: return false
+        val cap = ScreenCapturer(mp, captureHandler)
+        // Callback phải được đăng ký trước createVirtualDisplay (Android 14+)
         mp.registerCallback(object : MediaProjection.Callback() {
             override fun onStop() {
-                mainHandler.post { stopSelf() }
+                Log.i(TAG, "projection stopped")
+                mainHandler.post {
+                    if (!stopping) {
+                        Toast.makeText(this@ScreenTranslateService, R.string.projection_stopped, Toast.LENGTH_LONG).show()
+                    }
+                    stopSelf()
+                }
             }
-        }, mainHandler)
-        projection = mp
-        val (w, h, dpi) = screenSize()
-        capW = w; capH = h
-        val reader = ImageReader.newInstance(w, h, PixelFormat.RGBA_8888, 2)
-        imageReader = reader
-        virtualDisplay = runCatching {
-            mp.createVirtualDisplay(
-                "ScreenTranslator", w, h, dpi,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
-                reader.surface, null, captureHandler
-            )
-        }.getOrNull()
-        return virtualDisplay != null
-    }
 
-    /** Điều chỉnh kích thước khi xoay màn hình. Trả về true nếu có thay đổi. */
-    private fun ensureSize(): Boolean {
-        val vd = virtualDisplay ?: return false
+            override fun onCapturedContentResize(width: Int, height: Int) {
+                cap.onContentResized(width, height)
+            }
+
+            override fun onCapturedContentVisibilityChanged(isVisible: Boolean) {
+                cap.onContentVisibilityChanged(isVisible)
+                mainHandler.post { onContentVisibilityChanged(isVisible) }
+            }
+        }, captureHandler)
+        projection = mp
+        capturer = cap
+        overlayInCapture = true
         val (w, h, dpi) = screenSize()
-        if (w == capW && h == capH) return false
-        val old = imageReader
-        val reader = ImageReader.newInstance(w, h, PixelFormat.RGBA_8888, 2)
-        imageReader = reader
-        vd.resize(w, h, dpi)
-        vd.surface = reader.surface
-        old?.close()
-        capW = w; capH = h
-        lastBitmap = null
+        if (!cap.start(w, h, dpi)) {
+            runCatching { mp.stop() }
+            projection = null
+            capturer = null
+            return false
+        }
+        projectionStartedAt = SystemClock.uptimeMillis()
         return true
     }
 
-    private fun drainImages() {
-        runCatching { imageReader?.acquireLatestImage()?.close() }
+    private fun onContentVisibilityChanged(visible: Boolean) {
+        bubble?.alpha = if (visible) 1f else 0.5f
+        if (!visible && SystemClock.uptimeMillis() - projectionStartedAt < 2500) {
+            // Thường do người dùng chọn chia sẻ chính ứng dụng này
+            toast(getString(R.string.shared_self), long = true)
+        }
     }
 
-    private fun acquireBitmap(): Bitmap? {
-        val reader = imageReader ?: return null
-        val image = runCatching { reader.acquireLatestImage() }.getOrNull() ?: return null
-        return try {
-            val w = image.width
-            val h = image.height
-            val plane = image.planes[0]
-            val pixelStride = plane.pixelStride
-            val rowStride = plane.rowStride
-            val rowPadding = rowStride - pixelStride * w
-            val raw = Bitmap.createBitmap(w + rowPadding / pixelStride, h, Bitmap.Config.ARGB_8888)
-            raw.copyPixelsFromBuffer(plane.buffer)
-            if (raw.width == w) raw else Bitmap.createBitmap(raw, 0, 0, w, h).also { raw.recycle() }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Xoay màn hình: trên Android 14+ hệ thống báo qua onCapturedContentResize
+        if (Build.VERSION.SDK_INT < 34) {
+            val (w, h, dpi) = screenSize()
+            captureHandler.post { capturer?.resize(w, h, dpi) }
+        }
+        bubbleParams?.let { lp -> bubble?.let { keepBubbleOnScreen(it, lp) } }
+    }
+
+    /** Chụp màn hình (ẩn nút nổi nếu nó nằm trong ảnh chụp). */
+    private suspend fun capture(): ScreenCapturer.Shot? {
+        val cap = capturer ?: return null
+        if (Build.VERSION.SDK_INT < 34) {
+            val (w, h, dpi) = screenSize()
+            if (withContext(Dispatchers.Default) { cap.resize(w, h, dpi) }) delay(300)
+        }
+        val b = bubble
+        val since = cap.frames
+        b?.visibility = View.INVISIBLE
+        try {
+            // Toàn màn hình: ẩn nút nổi sẽ tạo khung hình mới. Một ứng dụng: không có khung hình mới.
+            val timeout = if (overlayInCapture) 450L else 150L
+            val shot = cap.capture(since, timeout)
+            val gotNewFrame = cap.frames > since
+            if (overlayInCapture && !gotNewFrame && cap.hasFrame) {
+                Log.i(TAG, "no new frame after hiding overlay -> single-app capture")
+                overlayInCapture = false
+            } else if (!overlayInCapture && gotNewFrame && cap.coversScreen(screenSize().first, screenSize().second)) {
+                // Có thể là chia sẻ toàn màn hình trên máy chậm
+                overlayInCapture = true
+            }
+            return shot
         } finally {
-            image.close()
+            b?.visibility = View.VISIBLE
         }
-    }
-
-    /** Chụp màn hình (đã ẩn nút nổi và lớp phủ). */
-    private suspend fun capture(): Bitmap? {
-        if (ensureSize()) delay(400)
-        drainImages()
-        bubble?.visibility = View.INVISIBLE
-        delay(220)
-        var bmp: Bitmap? = null
-        for (i in 0 until 8) {
-            bmp = withContext(Dispatchers.Default) { acquireBitmap() }
-            if (bmp != null) break
-            delay(80)
-        }
-        bubble?.visibility = View.VISIBLE
-        if (bmp != null) lastBitmap = bmp
-        return bmp ?: lastBitmap
     }
 
     // ---------------------------------------------------------------- Bubble
@@ -235,8 +277,8 @@ class ScreenTranslateService : Service() {
 
     @SuppressLint("ClickableViewAccessibility", "InflateParams")
     private fun showBubble() {
-        val v = LayoutInflater.from(this).inflate(R.layout.view_bubble, null)
-        val size = (56 * resources.displayMetrics.density).toInt()
+        val v = LayoutInflater.from(uiContext).inflate(R.layout.view_bubble, null)
+        val size = (56 * uiContext.resources.displayMetrics.density).toInt()
         val lp = WindowManager.LayoutParams(
             size, size, overlayType(),
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
@@ -246,10 +288,10 @@ class ScreenTranslateService : Service() {
         ).apply {
             gravity = Gravity.TOP or Gravity.START
             x = 0
-            y = (resources.displayMetrics.heightPixels * 0.35f).toInt()
+            y = (uiContext.resources.displayMetrics.heightPixels * 0.35f).toInt()
         }
 
-        val slop = ViewConfiguration.get(this).scaledTouchSlop
+        val slop = ViewConfiguration.get(uiContext).scaledTouchSlop
         val longPressTimeout = ViewConfiguration.getLongPressTimeout().toLong()
         var downX = 0f
         var downY = 0f
@@ -260,7 +302,7 @@ class ScreenTranslateService : Service() {
         val longPress = Runnable {
             if (!moved) {
                 longPressed = true
-                v.performHapticFeedback(android.view.HapticFeedbackConstants.LONG_PRESS)
+                v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                 startRegionSelect()
             }
         }
@@ -283,13 +325,13 @@ class ScreenTranslateService : Service() {
                     if (moved && !longPressed) {
                         lp.x = startX + dx.toInt()
                         lp.y = startY + dy.toInt()
-                        runCatching { wm.updateViewLayout(v, lp) }
+                        keepBubbleOnScreen(v, lp)
                     }
                 }
                 MotionEvent.ACTION_UP -> {
                     mainHandler.removeCallbacks(longPress)
                     if (moved) snapToEdge(v, lp)
-                    else if (!longPressed) translateScreen(null)
+                    else if (!longPressed) onBubbleTap()
                 }
                 MotionEvent.ACTION_CANCEL -> mainHandler.removeCallbacks(longPress)
             }
@@ -304,6 +346,14 @@ class ScreenTranslateService : Service() {
         val (w, _, _) = screenSize()
         val center = lp.x + v.width / 2
         lp.x = if (center < w / 2) 0 else w - v.width
+        keepBubbleOnScreen(v, lp)
+    }
+
+    private fun keepBubbleOnScreen(v: View, lp: WindowManager.LayoutParams) {
+        val (w, h, _) = screenSize()
+        val size = if (v.width > 0) v.width else lp.width
+        lp.x = lp.x.coerceIn(0, (w - size).coerceAtLeast(0))
+        lp.y = lp.y.coerceIn(0, (h - size).coerceAtLeast(0))
         runCatching { wm.updateViewLayout(v, lp) }
     }
 
@@ -315,10 +365,10 @@ class ScreenTranslateService : Service() {
 
     // ---------------------------------------------------------------- Overlays
 
-    private fun fullScreenParams(focusable: Boolean = false): WindowManager.LayoutParams {
-        var flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        if (!focusable) flags = flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+    private fun fullScreenParams(): WindowManager.LayoutParams {
+        val flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
         return WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
@@ -334,26 +384,42 @@ class ScreenTranslateService : Service() {
 
     private fun showOverlay(v: View) {
         removeOverlay()
-        wm.addView(v, fullScreenParams())
+        try {
+            wm.addView(v, fullScreenParams())
+        } catch (e: Exception) {
+            Log.e(TAG, "addView overlay failed", e)
+            toast(getString(R.string.capture_failed))
+            return
+        }
         overlay = v
         // Đưa nút nổi lên trên cùng
         bubble?.let { b ->
             runCatching {
-                wm.removeView(b)
+                wm.removeViewImmediate(b)
                 wm.addView(b, bubbleParams)
             }
         }
     }
 
     private fun removeOverlay() {
-        overlay?.let { runCatching { wm.removeView(it) } }
+        overlay?.let { runCatching { wm.removeViewImmediate(it) } }
         overlay = null
+    }
+
+    private fun onBubbleTap() {
+        if (busy) return
+        if (overlay != null) {
+            // Đang hiện bản dịch / chọn vùng -> chạm nút nổi để đóng
+            removeOverlay()
+            return
+        }
+        translateScreen(null)
     }
 
     private fun startRegionSelect() {
         if (busy) return
         val view = RegionSelectView(
-            this,
+            uiContext,
             onSelected = { rect ->
                 removeOverlay()
                 translateScreen(rect)
@@ -367,47 +433,76 @@ class ScreenTranslateService : Service() {
 
     private fun translateScreen(region: Rect?) {
         if (busy) return
-        if (overlay != null) {
-            removeOverlay()
-            if (region == null) return
+        val cap = capturer
+        if (cap == null) {
+            toast(getString(R.string.capture_failed)); return
+        }
+        if (!cap.contentVisible) {
+            toast(getString(R.string.content_hidden), long = true); return
         }
         busy = true
+        DebugInfo.translateCalls++
         scope.launch {
             try {
-                delay(60)
+                delay(50)
                 val shot = capture()
                 if (shot == null) {
+                    DebugInfo.lastError = "capture returned null"
                     toast(getString(R.string.capture_failed))
+                    return@launch
+                }
+                val full = shot.bitmap
+                if (isBlank(full)) {
+                    DebugInfo.lastError = "blank capture"
+                    toast(getString(R.string.capture_blank), long = true)
                     return@launch
                 }
                 setLoading(true)
                 val src = Prefs.source(this@ScreenTranslateService)
                 val tgt = Prefs.target(this@ScreenTranslateService)
+                val (sw, sh, _) = screenSize()
+                // Chỉ vẽ đè đúng vị trí khi ảnh chụp trùng với toàn màn hình
+                val inPlace = shot.screenRect.width() == sw && shot.screenRect.height() == sh
 
-                val area = region?.let {
-                    Rect(it).apply {
-                        if (!intersect(0, 0, shot.width, shot.height)) setEmpty()
-                    }
-                }
-                if (area != null && area.isEmpty) {
+                val area = if (region != null && inPlace) {
+                    Rect(region).takeIf { it.intersect(0, 0, full.width, full.height) }
+                } else null
+                if (region != null && inPlace && area == null) {
                     toast(getString(R.string.no_text))
                     return@launch
                 }
                 val input = if (area != null) {
-                    Bitmap.createBitmap(shot, area.left, area.top, area.width(), area.height())
-                } else shot
+                    Bitmap.createBitmap(full, area.left, area.top, area.width(), area.height())
+                } else full
 
                 val blocks = ocr.recognize(input, src).map { b ->
-                    if (area != null) OcrBlock(b.text, Rect(b.rect).apply { offset(area.left, area.top) }) else b
+                    if (area != null) b.copy(rect = Rect(b.rect).apply { offset(area.left, area.top) }) else b
                 }
+                if (input !== full) input.recycle()
+                full.recycle()
+                Log.i(TAG, "ocr blocks=${blocks.size} inPlace=$inPlace shot=${shot.screenRect}")
                 if (blocks.isEmpty()) {
+                    DebugInfo.lastBlocks = 0
+                    DebugInfo.lastError = "no text"
                     toast(getString(R.string.no_text))
                     return@launch
                 }
                 val translated = GoogleTranslator.translateAll(blocks.map { it.text }, src, tgt)
-                val items = blocks.mapIndexed { i, b -> TranslatedBlock(b.text, translated[i], b.rect) }
-                showResult(items, area)
+                val items = blocks.mapIndexed { i, b ->
+                    TranslatedBlock(b.text, translated[i], b.rect, b.lines)
+                }
+                DebugInfo.lastBlocks = items.size
+                DebugInfo.lastOriginals = items.map { it.original }
+                DebugInfo.lastTranslations = items.map { it.translated }
+                DebugInfo.lastError = null
+                DebugInfo.resultCount++
+                Log.i(TAG, "result blocks=${items.size} first='${items.first().translated.take(80)}'")
+                showResult(items, area, inPlace)
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
+                Log.e(TAG, "translate failed", e)
+                DebugInfo.lastError = e.toString()
                 toast("Lỗi: ${e.message ?: e.javaClass.simpleName}")
             } finally {
                 setLoading(false)
@@ -416,34 +511,57 @@ class ScreenTranslateService : Service() {
         }
     }
 
-    private fun showResult(items: List<TranslatedBlock>, area: Rect?) {
-        val view = TranslationOverlayView(
-            this, items, area,
-            onClose = { removeOverlay() },
-            onCopy = {
-                val text = items.joinToString("\n") { it.translated }
-                val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                cm.setPrimaryClip(ClipData.newPlainText("translation", text))
-                toast(getString(R.string.copied))
+    /** Ảnh toàn màu đen (ứng dụng được chia sẻ bị ẩn hoặc chặn chụp màn hình). */
+    private fun isBlank(b: Bitmap): Boolean {
+        val sx = maxOf(1, b.width / 32)
+        val sy = maxOf(1, b.height / 64)
+        var y = sy / 2
+        while (y < b.height) {
+            var x = sx / 2
+            while (x < b.width) {
+                val c = b.getPixel(x, y)
+                if (Color.red(c) > 12 || Color.green(c) > 12 || Color.blue(c) > 12) return false
+                x += sx
             }
-        )
+            y += sy
+        }
+        return true
+    }
+
+    private fun showResult(items: List<TranslatedBlock>, area: Rect?, inPlace: Boolean) {
+        val style = OverlayStyle.load(this)
+        val onClose = { removeOverlay() }
+        val onCopy = {
+            val text = items.joinToString("\n") { it.translated }
+            val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            cm.setPrimaryClip(ClipData.newPlainText("translation", text))
+            toast(getString(R.string.copied))
+        }
+        val view = if (inPlace) {
+            TranslationOverlayView(uiContext, items, area, style, onClose, onCopy)
+        } else {
+            TranslationListView(uiContext, items, style, onClose, onCopy)
+        }
         showOverlay(view)
     }
 
-    private fun toast(msg: String) {
-        mainHandler.post { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
+    private fun toast(msg: String, long: Boolean = false) {
+        mainHandler.post {
+            Toast.makeText(this, msg, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+        }
     }
 
     // ---------------------------------------------------------------- Cleanup
 
     override fun onDestroy() {
+        stopping = true
         isRunning = false
         scope.cancel()
         removeOverlay()
-        bubble?.let { runCatching { wm.removeView(it) } }
+        bubble?.let { runCatching { wm.removeViewImmediate(it) } }
         bubble = null
-        runCatching { virtualDisplay?.release() }
-        runCatching { imageReader?.close() }
+        capturer?.release()
+        capturer = null
         runCatching { projection?.stop() }
         projection = null
         ocr.close()

@@ -3,6 +3,7 @@ package com.dichmanhinh.screentranslator
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.projection.MediaProjectionConfig
 import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import android.os.Build
@@ -15,12 +16,16 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.materialswitch.MaterialSwitch
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -31,20 +36,33 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sources: List<Language>
     private val targets get() = Languages.targets
 
-    private val projectionLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val data = result.data
-            if (result.resultCode == RESULT_OK && data != null) {
-                val intent = Intent(this, ScreenTranslateService::class.java)
-                    .putExtra(ScreenTranslateService.EXTRA_RESULT_CODE, result.resultCode)
-                    .putExtra(ScreenTranslateService.EXTRA_DATA, data)
-                ContextCompat.startForegroundService(this, intent)
-                btnStart.postDelayed({ updateButton() }, 500)
-                moveTaskToBack(true)
-            } else {
-                Toast.makeText(this, R.string.capture_failed, Toast.LENGTH_SHORT).show()
-            }
+    /**
+     * Không dùng registerForActivityResult: khi chọn "Một ứng dụng", hệ thống mở ứng dụng được chọn
+     * và gửi kết quả trong lúc màn hình này đã ở nền (STOPPED). Launcher gắn với lifecycle sẽ giữ
+     * kết quả cho tới khi người dùng quay lại app -> nút nổi không xuất hiện.
+     */
+    private lateinit var projectionLauncher: ActivityResultLauncher<Intent>
+
+    private fun onProjectionResult(result: ActivityResult) {
+        val data = result.data
+        if (result.resultCode != RESULT_OK || data == null) {
+            Toast.makeText(this, R.string.capture_failed, Toast.LENGTH_SHORT).show()
+            return
         }
+        val intent = Intent(this, ScreenTranslateService::class.java)
+            .putExtra(ScreenTranslateService.EXTRA_RESULT_CODE, result.resultCode)
+            .putExtra(ScreenTranslateService.EXTRA_DATA, data)
+        try {
+            ContextCompat.startForegroundService(this, intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, R.string.fgs_start_failed, Toast.LENGTH_LONG).show()
+            return
+        }
+        btnStart.postDelayed({ updateButton() }, 500)
+        // Chia sẻ toàn màn hình: đưa app xuống nền để người dùng mở ứng dụng cần dịch.
+        // Chia sẻ một ứng dụng: hệ thống đã tự mở ứng dụng được chọn, không cần làm gì.
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) moveTaskToBack(true)
+    }
 
     private val notificationLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -54,6 +72,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        projectionLauncher = activityResultRegistry.register(
+            "media_projection", ActivityResultContracts.StartActivityForResult()
+        ) { onProjectionResult(it) }
 
         spinnerSource = findViewById(R.id.spinnerSource)
         spinnerTarget = findViewById(R.id.spinnerTarget)
@@ -73,6 +94,14 @@ class MainActivity : AppCompatActivity() {
         spinnerTarget.onItemSelectedListener = listener
 
         findViewById<View>(R.id.btnSwap).setOnClickListener { swap() }
+        findViewById<MaterialSwitch>(R.id.swFullScreen).apply {
+            isChecked = Prefs.forceFullScreen(this@MainActivity)
+            visibility = if (Build.VERSION.SDK_INT >= 34) View.VISIBLE else View.GONE
+            setOnCheckedChangeListener { _, c -> Prefs.setForceFullScreen(this@MainActivity, c) }
+        }
+        findViewById<View>(R.id.btnDisplaySettings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
         btnStart.setOnClickListener {
             if (ScreenTranslateService.isRunning) {
                 startService(
@@ -97,6 +126,11 @@ class MainActivity : AppCompatActivity() {
                 }.getOrElse { "Lỗi: ${it.message}" }
             }
         }
+    }
+
+    override fun onDestroy() {
+        projectionLauncher.unregister()
+        super.onDestroy()
     }
 
     override fun onResume() {
@@ -155,6 +189,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestProjection() {
         val mpm = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-        projectionLauncher.launch(mpm.createScreenCaptureIntent())
+        val intent = if (Build.VERSION.SDK_INT >= 34 && Prefs.forceFullScreen(this)) {
+            mpm.createScreenCaptureIntent(MediaProjectionConfig.createConfigForDefaultDisplay())
+        } else {
+            mpm.createScreenCaptureIntent()
+        }
+        try {
+            projectionLauncher.launch(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, R.string.capture_failed, Toast.LENGTH_SHORT).show()
+        }
     }
 }

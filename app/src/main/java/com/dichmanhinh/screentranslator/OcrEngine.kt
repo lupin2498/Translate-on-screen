@@ -11,12 +11,13 @@ import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
 import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
-data class OcrBlock(val text: String, val rect: Rect)
+data class OcrBlock(val text: String, val rect: Rect, val lines: Int = 1)
 
 /** Nhận dạng chữ trên ảnh chụp màn hình bằng ML Kit (chạy offline trên máy). */
 class OcrEngine {
@@ -53,7 +54,15 @@ class OcrEngine {
         // Tự động: chạy tất cả bộ nhận dạng, chọn kết quả phù hợp nhất với chữ trên màn hình.
         val results = coroutineScope {
             Script.values().map { s ->
-                async { s to runCatching { recognizer(s).process(image).await() }.getOrNull() }
+                async {
+                    s to try {
+                        recognizer(s).process(image).await()
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        null
+                    }
+                }
             }.awaitAll()
         }.toMap()
 
@@ -95,9 +104,11 @@ class OcrEngine {
         for (block in text.textBlocks) {
             val box = block.boundingBox ?: continue
             val sb = StringBuilder()
+            var lineCount = 0
             for (line in block.lines) {
                 val t = line.text.trim()
                 if (t.isEmpty()) continue
+                lineCount++
                 if (sb.isNotEmpty()) {
                     val last = sb[sb.length - 1]
                     if (!isCjk(last) && !isCjk(t[0])) sb.append(' ')
@@ -105,7 +116,7 @@ class OcrEngine {
                 sb.append(t)
             }
             val s = sb.toString().trim()
-            if (s.isNotEmpty() && s.any { it.isLetter() }) out.add(OcrBlock(s, Rect(box)))
+            if (s.isNotEmpty() && s.any { it.isLetter() }) out.add(OcrBlock(s, Rect(box), lineCount.coerceAtLeast(1)))
         }
         return out
     }

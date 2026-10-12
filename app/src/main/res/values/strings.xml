@@ -20,4 +20,27 @@
     <string name="copied">Đã sao chép bản dịch</string>
     <string name="select_region_hint">Kéo để chọn vùng cần dịch • Chạm để hủy</string>
     <string name="tap_to_close">Chạm để đóng • Giữ để sao chép</string>
+    <string name="open_display_settings">Cài đặt hiển thị bản dịch</string>
+    <string name="settings_title">Cài đặt hiển thị bản dịch</string>
+    <string name="set_background">Nền chữ dịch</string>
+    <string name="set_transparent">Nền trong suốt</string>
+    <string name="set_bg_color">Màu nền</string>
+    <string name="set_bg_opacity">Độ đậm của nền: %1$d%%</string>
+    <string name="set_border">Hiện khung viền quanh bản dịch</string>
+    <string name="set_text">Chữ dịch</string>
+    <string name="set_text_color">Màu chữ</string>
+    <string name="set_auto_size">Tự động chỉnh cỡ chữ vừa khung</string>
+    <string name="set_text_size">Cỡ chữ: %1$d sp</string>
+    <string name="set_font">Font chữ</string>
+    <string name="set_bold">Chữ đậm</string>
+    <string name="set_outline">Viền chữ (dễ đọc khi nền trong suốt)</string>
+    <string name="set_reset">Khôi phục mặc định</string>
+    <string name="color_desc">Màu %1$s</string>
+    <string name="content_hidden">Ứng dụng đang được chia sẻ không hiển thị. Hãy mở lại ứng dụng đó để dịch.</string>
+    <string name="projection_stopped">Đã dừng chia sẻ màn hình (khóa màn hình, đóng ứng dụng được chia sẻ hoặc bấm Dừng trên thanh trạng thái).</string>
+    <string name="shared_self">Bạn đã chọn chia sẻ chính ứng dụng Dịch Màn Hình. Hãy Dừng rồi chọn ứng dụng cần dịch hoặc \"Toàn bộ màn hình\".</string>
+    <string name="capture_blank">Ảnh chụp trống: ứng dụng được chia sẻ đang bị ẩn hoặc chặn chụp màn hình.</string>
+    <string name="force_full_screen">Luôn chia sẻ toàn bộ màn hình (Android 14+)</string>
+    <string name="force_full_screen_desc">Bật để ẩn lựa chọn \"Một ứng dụng\". Nếu chọn \"Một ứng dụng\", app chỉ dịch được ứng dụng đã chọn.</string>
+    <string name="fgs_start_failed">Không khởi động được dịch vụ dịch màn hình. Hãy mở lại ứng dụng và thử lại.</string>
 </resources>
