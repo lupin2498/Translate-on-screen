@@ -39,6 +39,13 @@ class TranslationOverlayView(
         textSize = sp(13f)
     }
     private val loc = IntArray(2)
+
+    init {
+        id = R.id.translationOverlay
+        // Chữ được vẽ trên Canvas: mô tả cho trình đọc màn hình / kiểm thử tự động
+        contentDescription = blocks.joinToString("\n") { it.translated }
+    }
+
     private var laid: List<BlockRenderer.Laid>? = null
     private var laidForHeight = -1
 

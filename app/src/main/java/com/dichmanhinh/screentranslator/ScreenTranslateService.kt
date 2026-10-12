@@ -265,6 +265,9 @@ class ScreenTranslateService : Service() {
                 // Có thể là chia sẻ toàn màn hình trên máy chậm
                 overlayInCapture = true
             }
+            DebugInfo.lastCapture = "singleApp=${!overlayInCapture} newFrame=$gotNewFrame frames=${cap.frames} " +
+                "content=${cap.contentWidth}x${cap.contentHeight} rect=${shot?.screenRect}"
+            Log.i(TAG, "capture ${DebugInfo.lastCapture}")
             return shot
         } finally {
             b?.visibility = View.VISIBLE
@@ -392,6 +395,8 @@ class ScreenTranslateService : Service() {
             return
         }
         overlay = v
+        DebugInfo.overlayShown++
+        Log.i(TAG, "overlay shown ${v.javaClass.simpleName}")
         // Đưa nút nổi lên trên cùng
         bubble?.let { b ->
             runCatching {

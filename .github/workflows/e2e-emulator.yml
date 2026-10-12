@@ -1,0 +1,219 @@
+# .github/workflows/e2e-emulator.yml
+# End-to-end test: bubble -> MediaProjection capture -> ML Kit OCR -> Google Translate -> overlay,
+# in BOTH "Entire screen" and "A single app" consent modes, on API 34 and 35 emulators.
+# (Separate workflow so it never touches the APK-commit logic in build-apk.yml; that commit carries
+#  [skip ci], so it won't retrigger this either.)
+name: E2E emulator
+
+on:
+  push:
+    branches: ["**"]
+    paths-ignore:
+      - "apk/**"
+  workflow_dispatch:
+    inputs:
+      sample_tick:
+        description: "Make the sample app redraw every 500ms (diagnostic: separates 'no new frame' bugs)"
+        required: false
+        default: "false"
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: E2E API ${{ matrix.api-level }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [34, 35]
+    env:
+      AVD_TARGET: google_apis
+      AVD_ARCH: x86_64
+      AVD_PROFILE: pixel_6
+      SAMPLE_TICK: ${{ github.event.inputs.sample_tick || 'false' }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -l /dev/kvm
+
+      # Build BEFORE booting the emulator (runner RAM is limited; Gradle + emulator together is slow/flaky).
+      # -Pe2e=true adds x86_64 to ndk.abiFilters so ML Kit OCR runs natively on the x86_64 emulator.
+      - name: Build debug app + androidTest APKs
+        run: |
+          chmod +x gradlew
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          ./gradlew --no-daemon -Pe2e=true assembleDebug assembleDebugAndroidTest
+          ls -la app/build/outputs/apk/debug app/build/outputs/apk/androidTest/debug
+
+      - name: Write E2E driver script
+        run: |
+          mkdir -p .ci
+          cat > .ci/run-e2e.sh <<'EOF'
+          #!/usr/bin/env bash
+          # Runs inside reactivecircus/android-emulator-runner (ANDROID_SERIAL is set).
+          # Never stops early: every test runs, logs are always collected, exit code is computed at the end.
+          set -u
+          API="${1:-?}"
+          PKG=com.dichmanhinh.screentranslator
+          TPKG=$PKG.test
+          RUNNER=$TPKG/androidx.test.runner.AndroidJUnitRunner
+          CLS=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
+          SAMPLE=$TPKG/com.dichmanhinh.screentranslator.e2e.SampleTextActivity
+          OUT=e2e-artifacts/api$API
+          APP_APK=app/build/outputs/apk/debug/app-debug.apk
+          TEST_APK=app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          SUMMARY="${GITHUB_STEP_SUMMARY:-/dev/null}"
+          mkdir -p "$OUT"
+
+          echo "::group::Device info (API $API)"
+          adb wait-for-device
+          for p in ro.build.fingerprint ro.build.id ro.build.version.sdk ro.build.version.release \
+                   ro.build.version.security_patch ro.product.cpu.abilist ro.dalvik.vm.native.bridge; do
+            echo "$p=$(adb shell getprop $p | tr -d '\r')"
+          done | tee "$OUT/device.txt"
+          adb shell wm size | tee -a "$OUT/device.txt"
+          adb shell wm density | tee -a "$OUT/device.txt"
+          echo "::endgroup::"
+
+          echo "::group::Prepare device"
+          adb shell svc power stayon true || true
+          adb shell settings put system screen_off_timeout 1800000 || true
+          adb shell input keyevent 82 || true
+          adb shell wm dismiss-keyguard || true
+          adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1 || true
+          adb install -r -t -g "$APP_APK" || exit 1
+          adb install -r -t "$TEST_APK" || exit 1
+          adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
+          adb shell pm grant $PKG android.permission.POST_NOTIFICATIONS || true
+          # PROJECT_MEDIA=allow would make SystemUI skip the consent dialog (auto "entire screen").
+          adb shell appops set $PKG PROJECT_MEDIA default || true
+          adb shell appops get $PKG | tee "$OUT/appops.txt"
+          echo "::endgroup::"
+
+          {
+            echo "### E2E API $API"
+            echo ""
+            echo "Fingerprint: \`$(adb shell getprop ro.build.fingerprint | tr -d '\r')\`"
+            echo ""
+            echo "| mode | result | key lines |"
+            echo "|---|---|---|"
+          } >> "$SUMMARY"
+
+          overall=0
+          for t in entireScreen singleApp; do
+            adb shell am force-stop $PKG || true
+            adb shell am force-stop $TPKG || true
+            adb shell input keyevent KEYCODE_HOME || true
+            adb logcat -c || true
+            adb shell rm -rf /data/local/tmp/st-e2e
+            adb shell mkdir -p /data/local/tmp/st-e2e
+            adb shell rm -rf /sdcard/Android/data/$PKG/files/e2e || true
+
+            echo "::group::am instrument $t (API $API)"
+            adb shell am instrument -w -r -e class "$CLS#$t" -e sampleTick "${SAMPLE_TICK:-false}" $RUNNER \
+              | tee "$OUT/instrument-$t.txt"
+            echo "::endgroup::"
+
+            adb logcat -d -v threadtime > "$OUT/logcat-$t.txt" 2>&1 || true
+            adb shell dumpsys media_projection > "$OUT/dumpsys-media_projection-$t.txt" 2>&1 || true
+            adb shell dumpsys activity services $PKG > "$OUT/dumpsys-services-$t.txt" 2>&1 || true
+            adb shell dumpsys window windows > "$OUT/dumpsys-window-$t.txt" 2>&1 || true
+            adb shell dumpsys activity recents > "$OUT/dumpsys-recents-$t.txt" 2>&1 || true
+            adb exec-out screencap -p > "$OUT/final-$t.png" 2>/dev/null || true
+            adb pull /data/local/tmp/st-e2e "$OUT/screens-$t" >/dev/null 2>&1 || true
+            adb pull /sdcard/Android/data/$PKG/files/e2e "$OUT/hierarchy-$t" >/dev/null 2>&1 || true
+
+            if grep -q "INSTRUMENTATION_STATUS_CODE: -4" "$OUT/instrument-$t.txt"; then
+              res=SKIPPED
+            elif grep -q "^OK (" "$OUT/instrument-$t.txt" && ! grep -qE "FAILURES!!!|INSTRUMENTATION_FAILED|Process crashed" "$OUT/instrument-$t.txt"; then
+              res=PASS
+            else
+              res=FAIL; overall=1
+            fi
+
+            echo "================ E2E RESULT API=$API mode=$t => $res ================"
+            echo "--- [$t] test report lines (ST-E2E) ---"
+            grep -E " ST-E2E" "$OUT/logcat-$t.txt" | sed -E 's/^.* ST-E2E *: //' | tail -n 80
+            echo "--- [$t] app log (ScreenTranslator) ---"
+            grep -E " ScreenTranslator" "$OUT/logcat-$t.txt" | tail -n 60
+            echo "--- [$t] crashes / FGS / projection errors ---"
+            grep -E "FATAL EXCEPTION|AndroidRuntime|ForegroundServiceStartNotAllowed|MediaProjection.*(Exception|denied|stop)|SecurityException.*[Pp]rojection|ContentRecorder" \
+              "$OUT/logcat-$t.txt" | tail -n 40
+            echo "--- [$t] failure stack (if any) ---"
+            sed -n '/INSTRUMENTATION_STATUS: stack=/,/INSTRUMENTATION_STATUS: stream=/p' "$OUT/instrument-$t.txt" | head -n 40
+
+            key=$(grep -E " ST-E2E" "$OUT/logcat-$t.txt" | grep -E "RESULT|PASS|FAIL|SKIP" | sed -E 's/^.* ST-E2E *: //' | tail -n 3 | tr '\n|' '  ')
+            echo "| $t | $res | ${key:-see job log} |" >> "$SUMMARY"
+          done
+
+          echo "" >> "$SUMMARY"
+          exit $overall
+          EOF
+          chmod +x .ci/run-e2e.sh
+
+      - name: AVD cache
+        uses: actions/cache@v5
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-v1-api${{ matrix.api-level }}-${{ env.AVD_TARGET }}-${{ env.AVD_ARCH }}-${{ env.AVD_PROFILE }}
+
+      - name: Create AVD and generate snapshot (cache miss only)
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2.38.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ env.AVD_TARGET }}
+          arch: ${{ env.AVD_ARCH }}
+          profile: ${{ env.AVD_PROFILE }}
+          ram-size: 4096M
+          disk-size: 6000M
+          force-avd-creation: false
+          emulator-boot-timeout: 900
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run E2E (entire screen + single app)
+        uses: reactivecircus/android-emulator-runner@v2.38.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ env.AVD_TARGET }}
+          arch: ${{ env.AVD_ARCH }}
+          profile: ${{ env.AVD_PROFILE }}
+          ram-size: 4096M
+          disk-size: 6000M
+          force-avd-creation: false
+          emulator-boot-timeout: 900
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          # Each line of `script` runs in its own `sh -c` and the first failing line aborts the rest,
+          # so all logic lives in one bash script that always collects logs before exiting.
+          script: bash .ci/run-e2e.sh ${{ matrix.api-level }}
+
+      - name: Upload E2E artifacts (screenshots, logcat, dumpsys)
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: e2e-api${{ matrix.api-level }}
+          path: e2e-artifacts/
+          if-no-files-found: warn
+          retention-days: 14

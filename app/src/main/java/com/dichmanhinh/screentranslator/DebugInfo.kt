@@ -8,4 +8,6 @@ object DebugInfo {
     @Volatile var lastOriginals: List<String> = emptyList()
     @Volatile var lastTranslations: List<String> = emptyList()
     @Volatile var lastError: String? = null
+    @Volatile var overlayShown = 0
+    @Volatile var lastCapture: String? = null
 }

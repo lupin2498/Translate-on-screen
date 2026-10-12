@@ -26,6 +26,8 @@ class TranslationListView(
 ) : FrameLayout(context) {
 
     init {
+        id = R.id.translationOverlay
+        contentDescription = items.joinToString("\n") { it.translated }
         setBackgroundColor(Color.argb(140, 0, 0, 0))
         setOnClickListener { onClose() }
         setOnLongClickListener { onCopy(); true }

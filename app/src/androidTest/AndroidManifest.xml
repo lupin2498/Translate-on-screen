@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Merged into the TEST APK (package com.dichmanhinh.screentranslator.test) -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The app selector shows each recent task with contentDescription = APPLICATION label -->
+    <application android:label="ST E2E Sample">
+        <activity
+            android:name="com.dichmanhinh.screentranslator.e2e.SampleTextActivity"
+            android:exported="true"
+            android:label="ST E2E Sample"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.dichmanhinh.screentranslator.test.sample"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+    </application>
+</manifest>
