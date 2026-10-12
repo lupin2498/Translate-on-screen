@@ -2,6 +2,7 @@ package com.dichmanhinh.screentranslator.e2e
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.SystemClock
@@ -11,14 +12,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.BySelector
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import com.dichmanhinh.screentranslator.DebugInfo
 import com.dichmanhinh.screentranslator.GoogleTranslator
+import com.dichmanhinh.screentranslator.OverlayStyle
 import com.dichmanhinh.screentranslator.Prefs
+import com.dichmanhinh.screentranslator.R
 import com.dichmanhinh.screentranslator.ScreenTranslateService
+import com.dichmanhinh.screentranslator.SettingsActivity
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.After
@@ -150,9 +155,141 @@ class ScreenTranslateE2ETest {
     @Test
     fun singleApp() = runE2E(Mode.SINGLE_APP)
 
+    /** Bật "Luôn chia sẻ toàn bộ màn hình": hộp thoại phải mặc định chọn toàn màn hình. */
+    @Test
+    fun entireScreenForced() {
+        Prefs.setForceFullScreen(ctx, true)
+        try {
+            runE2E(Mode.ENTIRE_SCREEN)
+        } finally {
+            Prefs.setForceFullScreen(ctx, false)
+        }
+    }
+
+    /** Kiểu chữ tùy chỉnh: nền trong suốt, viền chữ, cỡ cố định, font serif, đậm, màu vàng. */
+    @Test
+    fun styledOverlay() {
+        OverlayStyle.save(
+            ctx,
+            OverlayStyle(
+                transparentBg = true, outline = true, autoSize = false, textSizeSp = 22,
+                font = "serif", bold = true, textColor = Color.YELLOW, border = false
+            )
+        )
+        try {
+            runE2E(Mode.ENTIRE_SCREEN)
+        } finally {
+            OverlayStyle.save(ctx, OverlayStyle())
+        }
+    }
+
+    /** Nhấn giữ nút nổi -> kéo chọn vùng chứa 2 dòng giữa -> chỉ 2 dòng đó được dịch. */
+    @Test
+    fun regionSelect() {
+        startSession(Mode.ENTIRE_SCREEN)
+        val a = device.findObject(By.pkg(TEST_PKG).text(SAMPLE_LINES[1]))?.visibleBounds
+        val b = device.findObject(By.pkg(TEST_PKG).text(SAMPLE_LINES[2]))?.visibleBounds
+        assertTrue("sample lines not found", a != null && b != null)
+        val r = Rect(a!!).apply { union(b!!); inset(0, -8) }
+        report("region to select: $r")
+        tapAndVerify(
+            Mode.ENTIRE_SCREEN,
+            expected = listOf(SAMPLE_LINES[1], SAMPLE_LINES[2]),
+            minMatched = 2,
+            excluded = listOf(SAMPLE_LINES[0], SAMPLE_LINES[4]),
+            retryTap = false,
+        ) { bubble ->
+            val bb = bubble ?: findBubble()
+            assertTrue("bubble not found", bb != null)
+            bb!!.longClick()
+            val shown = device.wait(Until.hasObject(By.res(PKG, "regionSelect")), 5_000) == true
+            report("region selector shown=$shown")
+            shot("region-selector")
+            assertTrue("region selector overlay not shown after long-press", shown)
+            device.drag(r.left, r.top, r.right, r.bottom, 40)
+        }
+    }
+
+    /** Chia sẻ một ứng dụng rồi về màn hình chính: phải báo nội dung bị ẩn, không crash; quay lại thì dịch được. */
+    @Test
+    fun singleAppHidden() {
+        startSession(Mode.SINGLE_APP)
+        device.pressHome()
+        SystemClock.sleep(2_000)
+        shot("home")
+        val calls = DebugInfo.translateCalls
+        tapBubble(findBubble())
+        val hidden = waitUntil(5_000) { DebugInfo.lastError == "content hidden" }
+        report("hidden detected=$hidden lastError=${DebugInfo.lastError} calls=${DebugInfo.translateCalls - calls}")
+        assertTrue("expected 'content hidden' when the shared app is not visible", hidden)
+        assertTrue("service must keep running", ScreenTranslateService.isRunning)
+
+        shell("am start -W -n $SAMPLE")
+        assertTrue("sample not back in foreground", waitForSample(10_000))
+        SystemClock.sleep(1_500)
+        DebugInfo.lastError = null
+        tapAndVerify(Mode.SINGLE_APP)
+    }
+
+    /** Màn hình Cài đặt hiển thị: thay đổi từng tùy chọn, kiểm tra được lưu, khôi phục mặc định. */
+    @Test
+    fun settingsScreen() {
+        OverlayStyle.save(ctx, OverlayStyle())
+        ctx.startActivity(Intent(ctx, SettingsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        val sw = device.wait(Until.findObject(By.res(PKG, "swTransparent")), 10_000)
+        assertTrue("settings screen not shown", sw != null)
+        shot("settings-open")
+
+        sw!!.click()
+        assertTrue("transparent not saved", waitUntil(3_000) { OverlayStyle.load(ctx).transparentBg })
+
+        val color = OverlayStyle.COLORS[6]
+        val desc = ctx.getString(R.string.color_desc, String.format("#%06X", color and 0xFFFFFF))
+        val chips = device.findObjects(By.pkg(PKG).desc(desc))
+        report("color chips '$desc' found=${chips.size}")
+        assertTrue("color chips not found", chips.size >= 2)
+        chips.last().click()
+        assertTrue("text color not saved", waitUntil(3_000) { OverlayStyle.load(ctx).textColor == color })
+
+        scrollTo(By.res(PKG, "swAutoSize"))!!.click()
+        assertTrue("autoSize off not saved", waitUntil(3_000) { !OverlayStyle.load(ctx).autoSize })
+
+        val slider = scrollTo(By.res(PKG, "sliderSize"))
+        assertTrue("size slider not found", slider != null)
+        val sb = slider!!.visibleBounds
+        device.drag(sb.left + sb.width() / 4, sb.centerY(), sb.right - 4, sb.centerY(), 20)
+        assertTrue("text size not saved", waitUntil(3_000) { OverlayStyle.load(ctx).textSizeSp > 30 })
+
+        scrollTo(By.res(PKG, "spinnerFont"))!!.click()
+        val serif = OverlayStyle.FONTS.first { it.key == "serif" }.label
+        device.wait(Until.findObject(By.text(serif)), 5_000)!!.click()
+        assertTrue("font not saved", waitUntil(3_000) { OverlayStyle.load(ctx).font == "serif" })
+
+        scrollTo(By.res(PKG, "swBold"))!!.click()
+        scrollTo(By.res(PKG, "swOutline"))!!.click()
+        assertTrue("bold/outline not saved", waitUntil(3_000) {
+            OverlayStyle.load(ctx).let { it.bold && it.outline }
+        })
+        val saved = OverlayStyle.load(ctx)
+        report("saved style: $saved")
+        shot("settings-changed")
+
+        scrollTo(By.res(PKG, "btnReset"))!!.click()
+        assertTrue("reset failed", waitUntil(3_000) { OverlayStyle.load(ctx) == OverlayStyle() })
+        shot("settings-reset")
+        report("PASS settingsScreen")
+        device.pressBack()
+    }
+
     // ------------------------------------------------------------------ flow
 
     private fun runE2E(m: Mode) {
+        startSession(m)
+        tapAndVerify(m)
+    }
+
+    /** Mở app mẫu, bấm Bắt đầu, xử lý hộp thoại cấp quyền; trả về khi nút nổi đã sẵn sàng. */
+    private fun startSession(m: Mode) {
         mode = m
         report("==== START mode=${m.label} sdk=${Build.VERSION.SDK_INT}")
 
@@ -174,8 +311,6 @@ class ScreenTranslateE2ETest {
         val start = device.wait(Until.findObject(By.res(PKG, "btnStart")), 15_000)
         assertTrue("btnStart not found", start != null)
         shot("main")
-        val resultsBefore = DebugInfo.resultCount
-        val callsBefore = DebugInfo.translateCalls
         start!!.click()
 
         // D. Consent dialog (+ app selector for single app).
@@ -199,14 +334,31 @@ class ScreenTranslateE2ETest {
             shell("am start -W -n $SAMPLE --ez tick $tick")
         }
         assertTrue("sample app not in foreground after consent", waitForSample(10_000))
+        SystemClock.sleep(1_500) // let the VirtualDisplay deliver its first frame
+    }
+
+    /**
+     * Kích hoạt dịch (mặc định: chạm nút nổi) rồi kiểm tra kết quả.
+     * @param expected các câu mẫu phải được OCR đọc ra, ít nhất [minMatched] câu.
+     * @param excluded các câu mẫu KHÔNG được xuất hiện (kiểm tra chọn vùng).
+     */
+    private fun tapAndVerify(
+        m: Mode,
+        expected: List<String> = SAMPLE_LINES,
+        minMatched: Int = 2,
+        excluded: List<String> = emptyList(),
+        retryTap: Boolean = true,
+        trigger: (UiObject2?) -> Unit = { tapBubble(it) },
+    ) {
+        val resultsBefore = DebugInfo.resultCount
+        val callsBefore = DebugInfo.translateCalls
 
         // F. Tap the floating bubble.
-        SystemClock.sleep(1_500) // let the VirtualDisplay deliver its first frame
         val bubble = findBubble()
         report("bubble found via a11y=${bubble != null} bounds=${bubble?.visibleBounds}")
         shot("before-tap")
-        tapBubble(bubble)
-        if (!waitUntil(5_000) { DebugInfo.translateCalls > callsBefore }) {
+        trigger(bubble)
+        if (retryTap && !waitUntil(5_000) { DebugInfo.translateCalls > callsBefore }) {
             report("bubble tap not registered (translateCalls unchanged) -> retry by coordinates")
             tapBubble(null)
         }
@@ -237,9 +389,11 @@ class ScreenTranslateE2ETest {
 
         // OCR must have read the SAMPLE app (not MainActivity, launcher or a black frame).
         val seen = originals.joinToString(" ").lowercase().replace(Regex("\\s+"), " ")
-        val matched = SAMPLE_LINES.count { seen.contains(it.lowercase()) }
-        report("sample phrases recognized: $matched/${SAMPLE_LINES.size}")
-        assertTrue("OCR did not read the sample app (matched=$matched): $originals", matched >= 2)
+        val matched = expected.count { seen.contains(it.lowercase()) }
+        report("sample phrases recognized: $matched/${expected.size}")
+        assertTrue("OCR did not read the sample app (matched=$matched): $originals", matched >= minMatched)
+        val leaked = excluded.filter { seen.contains(it.lowercase()) }
+        assertTrue("OCR read text outside the selected region: $leaked", leaked.isEmpty())
 
         val vi = translations.count { VI_DIACRITICS.containsMatchIn(it) }
         report("vietnamese-looking translations: $vi/${translations.size}")
@@ -369,6 +523,16 @@ class ScreenTranslateE2ETest {
 
     private fun waitForSample(timeoutMs: Long): Boolean =
         device.wait(Until.hasObject(By.pkg(TEST_PKG).text(SAMPLE_LINES[1])), timeoutMs) == true
+
+    private fun scrollTo(sel: BySelector): UiObject2? {
+        device.findObject(sel)?.let { return it }
+        val sc = device.findObject(By.clazz("android.widget.ScrollView").pkg(PKG)) ?: return null
+        repeat(10) {
+            sc.scroll(Direction.DOWN, 0.5f)
+            device.findObject(sel)?.let { return it }
+        }
+        return null
+    }
 
     private fun stopServiceIfRunning() {
         if (!ScreenTranslateService.isRunning) return

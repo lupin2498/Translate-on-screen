@@ -135,7 +135,11 @@ class ScreenTranslateService : Service() {
                 return START_NOT_STICKY
             }
         }
-        if (bubble == null) showBubble()
+        if (bubble == null) {
+            showBubble()
+            val src = Prefs.source(this)
+            scope.launch(Dispatchers.Default) { ocr.warmUp(src) }
+        }
         isRunning = true
         return START_NOT_STICKY
     }
@@ -443,6 +447,7 @@ class ScreenTranslateService : Service() {
             toast(getString(R.string.capture_failed)); return
         }
         if (!cap.contentVisible) {
+            DebugInfo.lastError = "content hidden"
             toast(getString(R.string.content_hidden), long = true); return
         }
         busy = true
@@ -457,7 +462,7 @@ class ScreenTranslateService : Service() {
                     return@launch
                 }
                 val full = shot.bitmap
-                if (isBlank(full)) {
+                if (withContext(Dispatchers.Default) { isBlank(full) }) {
                     DebugInfo.lastError = "blank capture"
                     toast(getString(R.string.capture_blank), long = true)
                     return@launch
@@ -480,9 +485,10 @@ class ScreenTranslateService : Service() {
                     Bitmap.createBitmap(full, area.left, area.top, area.width(), area.height())
                 } else full
 
+                val statusBar = if (inPlace && area == null) statusBarHeight() else 0
                 val blocks = ocr.recognize(input, src).map { b ->
                     if (area != null) b.copy(rect = Rect(b.rect).apply { offset(area.left, area.top) }) else b
-                }
+                }.filter { it.rect.bottom > statusBar } // bỏ đồng hồ/biểu tượng trên thanh trạng thái
                 if (input !== full) input.recycle()
                 full.recycle()
                 Log.i(TAG, "ocr blocks=${blocks.size} inPlace=$inPlace shot=${shot.screenRect}")
@@ -516,19 +522,28 @@ class ScreenTranslateService : Service() {
         }
     }
 
-    /** Ảnh toàn màu đen (ứng dụng được chia sẻ bị ẩn hoặc chặn chụp màn hình). */
+    private fun statusBarHeight(): Int {
+        val id = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (id > 0) resources.getDimensionPixelSize(id) else 0
+    }
+
+    /**
+     * Ảnh toàn màu đen (ứng dụng được chia sẻ bị ẩn hoặc chặn chụp màn hình).
+     * Quét dày (mỗi 3 hàng, mỗi 2 điểm) để không nhầm ứng dụng nền đen có chữ nhỏ là ảnh trống.
+     */
     private fun isBlank(b: Bitmap): Boolean {
-        val sx = maxOf(1, b.width / 32)
-        val sy = maxOf(1, b.height / 64)
-        var y = sy / 2
+        val w = b.width
+        val row = IntArray(w)
+        var y = 0
         while (y < b.height) {
-            var x = sx / 2
-            while (x < b.width) {
-                val c = b.getPixel(x, y)
-                if (Color.red(c) > 12 || Color.green(c) > 12 || Color.blue(c) > 12) return false
-                x += sx
+            b.getPixels(row, 0, w, 0, y, w, 1)
+            var x = 0
+            while (x < w) {
+                val c = row[x]
+                if (Color.red(c) > 8 || Color.green(c) > 8 || Color.blue(c) > 8) return false
+                x += 2
             }
-            y += sy
+            y += 3
         }
         return true
     }

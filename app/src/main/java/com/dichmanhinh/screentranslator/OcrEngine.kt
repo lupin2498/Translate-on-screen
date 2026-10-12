@@ -46,6 +46,21 @@ class OcrEngine {
         else -> Script.LATIN
     }
 
+    /** Nạp sẵn mô hình OCR để lần dịch đầu tiên nhanh hơn. */
+    suspend fun warmUp(sourceLang: String) {
+        val bmp = Bitmap.createBitmap(64, 32, Bitmap.Config.ARGB_8888)
+        bmp.eraseColor(android.graphics.Color.WHITE)
+        try {
+            recognize(bmp, sourceLang)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // bỏ qua: chỉ là nạp sẵn
+        } finally {
+            bmp.recycle()
+        }
+    }
+
     suspend fun recognize(bitmap: Bitmap, sourceLang: String): List<OcrBlock> {
         val image = InputImage.fromBitmap(bitmap, 0)
         val fixed = scriptFor(sourceLang)

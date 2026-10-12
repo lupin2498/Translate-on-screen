@@ -35,6 +35,11 @@ class RegionSelectView(
         textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14f, resources.displayMetrics)
     }
 
+    init {
+        id = R.id.regionSelect
+        contentDescription = context.getString(R.string.select_region_hint)
+    }
+
     private var startX = 0f
     private var startY = 0f
     private var curX = 0f

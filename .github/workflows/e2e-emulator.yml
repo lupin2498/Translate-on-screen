@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api-level: [34, 35]
+        api-level: [34, 35, 36]
     env:
       AVD_TARGET: google_apis
       AVD_ARCH: x86_64
@@ -116,7 +116,7 @@ jobs:
           } >> "$SUMMARY"
 
           overall=0
-          for t in entireScreen singleApp; do
+          for t in entireScreen singleApp entireScreenForced styledOverlay regionSelect singleAppHidden settingsScreen; do
             adb shell am force-stop $PKG || true
             adb shell am force-stop $TPKG || true
             adb shell input keyevent KEYCODE_HOME || true
