@@ -25,6 +25,8 @@ class BlockRenderer(private val res: Resources, private val cfg: OverlayStyle) {
         this.style = Paint.Style.STROKE
         strokeWidth = dp(1f)
     }
+    /** Không có nền thì luôn vẽ viền chữ, nếu không chữ dịch lẫn vào chữ gốc bên dưới. */
+    private val outline = cfg.outline || cfg.transparentBg || Color.alpha(cfg.effectiveBgColor) < 60
     private val minText = sp(OverlayStyle.MIN_SIZE_SP.toFloat())
     private val maxAuto = sp(28f)
     private val pad = dp(2f)
@@ -92,7 +94,7 @@ class BlockRenderer(private val res: Resources, private val cfg: OverlayStyle) {
             if (cfg.border) canvas.drawRoundRect(it.rect, radius, radius, borderPaint)
             canvas.save()
             canvas.translate(it.rect.left + pad, it.rect.top + pad)
-            if (cfg.outline) {
+            if (outline) {
                 val p = it.paint
                 p.style = Paint.Style.STROKE
                 p.strokeWidth = outlineWidth

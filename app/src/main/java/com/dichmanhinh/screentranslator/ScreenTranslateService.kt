@@ -255,6 +255,9 @@ class ScreenTranslateService : Service() {
             if (withContext(Dispatchers.Default) { cap.resize(w, h, dpi) }) delay(300)
         }
         val b = bubble
+        // Thông báo (toast) của app cũng nằm trên màn hình -> ẩn để không bị OCR
+        lastToast?.cancel()
+        lastToast = null
         val since = cap.frames
         b?.visibility = View.INVISIBLE
         try {
@@ -474,6 +477,7 @@ class ScreenTranslateService : Service() {
                 // Chỉ vẽ đè đúng vị trí khi ảnh chụp trùng với toàn màn hình
                 val inPlace = shot.screenRect.width() == sw && shot.screenRect.height() == sh
 
+                if (region != null && !inPlace) toast(getString(R.string.region_unsupported), long = true)
                 val area = if (region != null && inPlace) {
                     Rect(region).takeIf { it.intersect(0, 0, full.width, full.height) }
                 } else null
@@ -565,9 +569,13 @@ class ScreenTranslateService : Service() {
         showOverlay(view)
     }
 
+    private var lastToast: Toast? = null
+
     private fun toast(msg: String, long: Boolean = false) {
         mainHandler.post {
-            Toast.makeText(this, msg, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+            lastToast?.cancel()
+            lastToast = Toast.makeText(this, msg, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT)
+                .also { it.show() }
         }
     }
 

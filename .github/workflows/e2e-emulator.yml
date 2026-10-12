@@ -97,6 +97,9 @@ jobs:
           adb shell input keyevent 82 || true
           adb shell wm dismiss-keyguard || true
           adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1 || true
+          # AVD từ cache có thể còn bản cài cũ ký bằng khóa debug khác -> gỡ trước khi cài
+          adb uninstall $PKG >/dev/null 2>&1 || true
+          adb uninstall $TPKG >/dev/null 2>&1 || true
           adb install -r -t -g "$APP_APK" || exit 1
           adb install -r -t "$TEST_APK" || exit 1
           adb shell appops set $PKG SYSTEM_ALERT_WINDOW allow
