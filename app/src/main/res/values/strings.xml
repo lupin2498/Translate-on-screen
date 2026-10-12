@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Dịch Màn Hình</string>
+    <string name="source_lang">Ngôn ngữ nguồn</string>
+    <string name="target_lang">Dịch sang</string>
+    <string name="start">Bắt đầu dịch màn hình</string>
+    <string name="stop">Dừng dịch màn hình</string>
+    <string name="swap">Đổi chiều</string>
+    <string name="auto_detect">Tự động phát hiện</string>
+    <string name="guide">Cách dùng:\n• Nhấn \"Bắt đầu\" và cấp quyền hiển thị trên ứng dụng khác + quyền ghi màn hình.\n• Một nút tròn nổi sẽ xuất hiện trên màn hình.\n• Chạm nút nổi: dịch toàn bộ màn hình.\n• Nhấn giữ nút nổi: chọn một vùng để dịch.\n• Kéo nút nổi để di chuyển. Chạm vào bản dịch để đóng, nhấn giữ bản dịch để sao chép.</string>
+    <string name="text_translate_title">Dịch văn bản</string>
+    <string name="text_hint">Nhập văn bản cần dịch…</string>
+    <string name="translate">Dịch</string>
+    <string name="overlay_permission_msg">Ứng dụng cần quyền \"Hiển thị trên các ứng dụng khác\" để hiện nút nổi và bản dịch. Hãy bật quyền này rồi quay lại.</string>
+    <string name="open_settings">Mở cài đặt</string>
+    <string name="cancel">Hủy</string>
+    <string name="notif_channel">Dịch màn hình</string>
+    <string name="notif_text">Đang chạy – chạm nút nổi để dịch</string>
+    <string name="no_text">Không tìm thấy chữ trên màn hình</string>
+    <string name="capture_failed">Không chụp được màn hình</string>
+    <string name="copied">Đã sao chép bản dịch</string>
+    <string name="select_region_hint">Kéo để chọn vùng cần dịch • Chạm để hủy</string>
+    <string name="tap_to_close">Chạm để đóng • Giữ để sao chép</string>
+</resources>
