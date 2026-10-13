@@ -66,6 +66,38 @@ class ParagraphBuilderTest {
         assertEquals(3 + uiLines.size, paras.size)
     }
 
+    /**
+     * Tái hiện kết quả OCR thật trên emulator: dòng không có nét thấp có khung thấp hơn
+     * (28px so với 36px) nên khoảng cách trông lớn hơn; OCR đọc nhầm "sociaux" thành "SOciaux".
+     */
+    @Test
+    fun realOcrQuirksStillMerge() {
+        val lines = listOf(
+            TextLine("que son univers visuel et son identité", 189, 1000, 1000, 1036),
+            TextLine("musicale continuent", 189, 1060, 600, 1088), // không có nét thấp
+            TextLine("d'attirer un public toujours plus large.", 189, 1112, 980, 1148),
+            TextLine("Situation en 2026: Au milieu de l'année", 189, 1164, 990, 1200),
+            TextLine("alors que sa popularité sur les réseaux", 189, 1216, 1010, 1252),
+            TextLine("SOciaux ne cesse de grandir.", 189, 1268, 760, 1304),
+        )
+        val paras = ParagraphBuilder.build(lines)
+        assertEquals(paras.joinToString("\n") { it.text }, 2, paras.size)
+        assertEquals(
+            "que son univers visuel et son identité musicale continuent d'attirer un public toujours plus large.",
+            paras[0].text
+        )
+        assertTrue(paras[1].text, paras[1].text.endsWith("sur les réseaux sociaux ne cesse de grandir."))
+    }
+
+    @Test
+    fun fixOcrCase() {
+        assertEquals("les réseaux sociaux ne", ParagraphBuilder.fixOcrCase("les réseaux SOciaux ne"))
+        assertEquals("Fin. Sociaux", ParagraphBuilder.fixOcrCase("Fin. SOciaux"))
+        assertEquals("État", ParagraphBuilder.fixOcrCase("ÉTat"))
+        assertEquals("NASA USA OK", ParagraphBuilder.fixOcrCase("NASA USA OK"))
+        assertEquals("McDonald iPhone", ParagraphBuilder.fixOcrCase("McDonald iPhone"))
+    }
+
     @Test
     fun separatedLinesStaySeparate() {
         // Các dòng cách xa nhau (mỗi dòng một mục) không được ghép

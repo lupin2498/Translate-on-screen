@@ -23,15 +23,18 @@ data class Paragraph(
  * -> "mạng / mạng xã hội"). Ghép lại thành đoạn hoàn chỉnh thì bản dịch mạch lạc hơn.
  *
  * Quy tắc ghép dòng B vào đoạn có dòng cuối A (A nằm ngay trên B):
- * - cỡ chữ gần bằng nhau (chiều cao dòng lệch không quá 35%);
- * - khoảng cách dọc nhỏ (≤ 0.75 chiều cao dòng) – khoảng cách lớn là đoạn khác/phần tử khác;
+ * - cỡ chữ gần bằng nhau (chiều cao khung dòng lệch không quá 50%);
+ * - khoảng cách dọc nhỏ (≤ 0.8 chiều cao dòng) – khoảng cách lớn là đoạn khác/phần tử khác;
  * - cùng lề trái, hoặc chồng nhau theo chiều ngang (chữ căn giữa);
  * - không phải chỗ ngắt câu thật: A kết thúc bằng dấu câu và B bắt đầu bằng chữ hoa/chữ số,
- *   hoặc A ngắn hơn hẳn bề rộng cột mà B bắt đầu bằng chữ hoa (tiêu đề, dòng xuống hàng chủ động).
+ *   hoặc A ngắn hơn hẳn bề rộng cột mà B bắt đầu bằng một từ viết hoa chữ đầu (tiêu đề, dòng
+ *   xuống hàng chủ động). Từ hoa sai kiểu OCR như "SOciaux" không tính là đầu câu.
  */
 object ParagraphBuilder {
-    private const val HEIGHT_RATIO = 1.35f
-    private const val MAX_GAP = 0.75f
+    // Khung OCR của dòng không có nét thấp (g, p, q, y) thấp hơn ~25-30% dòng có nét thấp,
+    // nên so sánh với dòng cao hơn và cho phép chênh lệch tới 50%.
+    private const val HEIGHT_RATIO = 1.5f
+    private const val MAX_GAP = 0.8f
     private const val MIN_GAP = -0.5f
     private const val SHORT_LINE = 0.8f
     private const val TERMINAL = ".!?…:;。！？"
@@ -63,9 +66,10 @@ object ParagraphBuilder {
             for (p in paras) {
                 val prev = p.last
                 val hMin = min(line.height, prev.height).toFloat()
-                if (max(line.height, prev.height) / hMin > HEIGHT_RATIO) continue
+                val hMax = max(line.height, prev.height).toFloat()
+                if (hMax / hMin > HEIGHT_RATIO) continue
                 val gap = line.top - prev.bottom
-                if (gap < MIN_GAP * hMin || gap > MAX_GAP * hMin) continue
+                if (gap < MIN_GAP * hMin || gap > MAX_GAP * hMax) continue
                 val overlap = min(line.right, p.right) - max(line.left, p.left)
                 val aligned = abs(line.left - p.left) <= hMin ||
                     overlap >= 0.6f * min(line.width, p.right - p.left)
@@ -78,7 +82,8 @@ object ParagraphBuilder {
             if (best == null) paras.add(Para(line)) else best.add(line)
         }
         return paras.map { p ->
-            Paragraph(joinLines(p.lines.map { it.text }), p.left, p.top, p.right, p.bottom, p.lines.size)
+            val text = fixOcrCase(joinLines(p.lines.map { it.text }))
+            Paragraph(text, p.left, p.top, p.right, p.bottom, p.lines.size)
         }.sortedWith(compareBy({ it.top }, { it.left }))
     }
 
@@ -87,8 +92,29 @@ object ParagraphBuilder {
         val c = next.text.trimStart { it in LEADING }.firstOrNull() ?: return false
         if (c in "•·▪●◦■□►▶✓✔☐☑") return true // gạch đầu dòng
         if ((c.isUpperCase() || c.isDigit()) && endsSentence(prev.text)) return true
-        if (c.isUpperCase() && prev.width < SHORT_LINE * columnWidth(prev, all)) return true
+        if (startsTitleWord(next.text) && prev.width < SHORT_LINE * columnWidth(prev, all)) return true
         return false
+    }
+
+    /** Từ đầu tiên viết hoa chữ cái đầu và chữ thường phía sau ("Situation", "En", "A"). */
+    private fun startsTitleWord(text: String): Boolean {
+        val word = text.trimStart { it in LEADING }.takeWhile { it.isLetter() }
+        if (word.isEmpty() || !word[0].isUpperCase()) return false
+        return word.length == 1 || word[1].isLowerCase()
+    }
+
+    /**
+     * Sửa lỗi hoa/thường kiểu OCR: "SOciaux" -> "sociaux" (giữa câu) / "Sociaux" (đầu câu).
+     * Chỉ áp dụng cho từ có đúng 2 chữ hoa đầu rồi toàn chữ thường.
+     */
+    fun fixOcrCase(text: String): String {
+        val re = Regex("(?<!\\p{L})(\\p{Lu})(\\p{Lu})(\\p{Ll}{2,})(?!\\p{L})")
+        return re.replace(text) { m ->
+            val before = text.substring(0, m.range.first).trimEnd { it in TRAILING }
+            val sentenceStart = before.isEmpty() || before.last() in TERMINAL
+            val first = if (sentenceStart) m.groupValues[1] else m.groupValues[1].lowercase()
+            first + m.groupValues[2].lowercase() + m.groupValues[3]
+        }
     }
 
     /** Bề rộng lớn nhất của các dòng cùng cột (cùng lề trái, cỡ chữ tương tự). */
