@@ -62,6 +62,22 @@ class TranslationOverlayView(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean = gestures.onTouchEvent(event)
 
+    private var showHint = true
+    private val hideHint = Runnable {
+        showHint = false
+        invalidate()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        postDelayed(hideHint, 2500)
+    }
+
+    override fun onDetachedFromWindow() {
+        removeCallbacks(hideHint)
+        super.onDetachedFromWindow()
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         laid = null
@@ -91,7 +107,8 @@ class TranslationOverlayView(
         renderer.draw(canvas, items)
         canvas.restore()
 
-        // Gợi ý thao tác ở cuối màn hình
+        // Gợi ý thao tác ở cuối màn hình (tự ẩn để không che nội dung)
+        if (!showHint) return
         val hint = context.getString(R.string.tap_to_close)
         val tw = hintPaint.measureText(hint)
         val hx = (width - tw) / 2f

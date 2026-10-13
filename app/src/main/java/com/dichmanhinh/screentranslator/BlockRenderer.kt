@@ -40,6 +40,11 @@ class BlockRenderer(private val res: Resources, private val cfg: OverlayStyle) {
     fun layout(rects: List<RectF>, texts: List<String>, lineCounts: List<Int>, maxBottom: Float): List<Laid> {
         return rects.indices.map { i ->
             val r = RectF(rects[i])
+            // Khung OCR ôm sát nét chữ: nới ra một chút để che hết chữ gốc (dấu, nét thấp)
+            val lineH = r.height() / lineCounts.getOrElse(i) { 1 }.coerceAtLeast(1)
+            r.inset(-maxOf(pad, lineH * 0.15f), -lineH * 0.12f)
+            if (r.left < 0f) r.left = 0f
+            if (r.top < 0f) r.top = 0f
             val minW = dp(40f)
             if (r.width() < minW + pad * 2) r.right = r.left + minW + pad * 2
             val w = (r.width() - pad * 2).toInt().coerceAtLeast(1)

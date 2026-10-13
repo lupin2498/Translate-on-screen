@@ -512,7 +512,14 @@ class ScreenTranslateService : Service() {
                 DebugInfo.lastError = null
                 DebugInfo.resultCount++
                 Log.i(TAG, "result blocks=${items.size} first='${items.first().translated.take(80)}'")
-                showResult(items, area, inPlace)
+                // Khối mà bản dịch giống hệt bản gốc (số liệu, tên riêng, chữ đã ở ngôn ngữ đích):
+                // để nguyên chữ gốc, không che lên.
+                val shown = items.filterNot { sameText(it.original, it.translated) }
+                if (shown.isEmpty()) {
+                    toast(getString(R.string.nothing_to_translate))
+                    return@launch
+                }
+                showResult(shown, area, inPlace)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -524,6 +531,11 @@ class ScreenTranslateService : Service() {
                 busy = false
             }
         }
+    }
+
+    private fun sameText(a: String, b: String): Boolean {
+        fun norm(s: String) = s.lowercase().filter { it.isLetterOrDigit() }
+        return norm(a) == norm(b)
     }
 
     private fun statusBarHeight(): Int {

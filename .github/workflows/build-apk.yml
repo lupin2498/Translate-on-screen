@@ -27,7 +27,7 @@ jobs:
         run: |
           chmod +x gradlew
           echo "sdk.dir=$ANDROID_HOME" > local.properties
-          ./gradlew --no-daemon assembleRelease
+          ./gradlew --no-daemon testDebugUnitTest assembleRelease
 
       - name: Copy APK
         run: |

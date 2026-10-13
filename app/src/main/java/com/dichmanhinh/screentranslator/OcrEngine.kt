@@ -114,32 +114,19 @@ class OcrEngine {
         return n
     }
 
+    /** Lấy từng dòng OCR rồi ghép thành đoạn văn để dịch trọn câu. */
     private fun toBlocks(text: Text): List<OcrBlock> {
-        val out = ArrayList<OcrBlock>()
+        val lines = ArrayList<TextLine>()
         for (block in text.textBlocks) {
-            val box = block.boundingBox ?: continue
-            val sb = StringBuilder()
-            var lineCount = 0
             for (line in block.lines) {
+                val box = line.boundingBox ?: continue
                 val t = line.text.trim()
-                if (t.isEmpty()) continue
-                lineCount++
-                if (sb.isNotEmpty()) {
-                    val last = sb[sb.length - 1]
-                    if (!isCjk(last) && !isCjk(t[0])) sb.append(' ')
-                }
-                sb.append(t)
+                if (t.isNotEmpty()) lines.add(TextLine(t, box.left, box.top, box.right, box.bottom))
             }
-            val s = sb.toString().trim()
-            if (s.isNotEmpty() && s.any { it.isLetter() }) out.add(OcrBlock(s, Rect(box), lineCount.coerceAtLeast(1)))
         }
-        return out
-    }
-
-    private fun isCjk(ch: Char): Boolean {
-        val c = ch.code
-        return c in 0x3040..0x30FF || c in 0x3400..0x4DBF || c in 0x4E00..0x9FFF ||
-            c in 0xFF00..0xFFEF || c in 0x3000..0x303F
+        return ParagraphBuilder.build(lines)
+            .filter { ParagraphBuilder.isTranslatable(it.text) }
+            .map { OcrBlock(it.text, Rect(it.left, it.top, it.right, it.bottom), it.lines) }
     }
 
     fun close() = synchronized(recognizers) {

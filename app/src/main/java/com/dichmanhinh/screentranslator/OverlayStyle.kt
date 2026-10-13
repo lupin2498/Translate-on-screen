@@ -8,7 +8,7 @@ import android.graphics.Typeface
 data class OverlayStyle(
     val transparentBg: Boolean = false,
     val bgColor: Int = Color.WHITE,
-    val bgOpacity: Int = 95,          // 0..100 (%)
+    val bgOpacity: Int = 100,         // 0..100 (%) – nền đặc để chữ gốc không lộ qua
     val textColor: Int = Color.rgb(20, 20, 20),
     val autoSize: Boolean = true,
     val textSizeSp: Int = 16,         // dùng khi autoSize = false

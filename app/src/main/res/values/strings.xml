@@ -44,4 +44,5 @@
     <string name="force_full_screen_desc">Bật để ẩn lựa chọn \"Một ứng dụng\". Nếu chọn \"Một ứng dụng\", app chỉ dịch được ứng dụng đã chọn.</string>
     <string name="fgs_start_failed">Không khởi động được dịch vụ dịch màn hình. Hãy mở lại ứng dụng và thử lại.</string>
     <string name="region_unsupported">Không xác định được vị trí ứng dụng đang chia sẻ (chia đôi màn hình/cửa sổ nổi) nên sẽ dịch toàn bộ ứng dụng.</string>
+    <string name="nothing_to_translate">Chữ trên màn hình đã ở ngôn ngữ đích, không có gì cần dịch</string>
 </resources>

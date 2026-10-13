@@ -27,6 +27,7 @@ import com.dichmanhinh.screentranslator.SettingsActivity
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.After
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Before
@@ -231,6 +232,27 @@ class ScreenTranslateE2ETest {
         tapAndVerify(Mode.SINGLE_APP)
     }
 
+    /**
+     * Đoạn văn tiếng Pháp tự xuống dòng giữa câu (giống chú thích Instagram người dùng gửi).
+     * Các dòng phải được ghép thành đoạn trước khi dịch để giữ ngữ cảnh:
+     * "réseaux / sociaux" phải ra "mạng xã hội", "Ses morceaux" không được ra "quân cờ".
+     */
+    @Test
+    fun paragraphCoherence() {
+        Prefs.save(ctx, "auto", "vi")
+        startSession(Mode.ENTIRE_SCREEN, sampleArgs = "--es mode paragraph", paragraph = true)
+        tapAndVerify(Mode.ENTIRE_SCREEN, expected = listOf("Gazo"), minMatched = 1)
+        val all = DebugInfo.lastTranslations.joinToString(" ").lowercase()
+        report("paragraph units=${DebugInfo.lastBlocks}")
+        assertTrue(
+            "paragraph lines should be merged into a few units, got ${DebugInfo.lastBlocks}",
+            DebugInfo.lastBlocks in 1..4
+        )
+        assertTrue("'réseaux sociaux' must be translated as one phrase: $all", all.contains("mạng xã hội"))
+        assertFalse("context lost ('morceaux' -> 'quân cờ'): $all", all.contains("quân cờ"))
+        report("PASS paragraphCoherence")
+    }
+
     /** Màn hình Cài đặt hiển thị: thay đổi từng tùy chọn, kiểm tra được lưu, khôi phục mặc định. */
     @Test
     fun settingsScreen() {
@@ -289,7 +311,8 @@ class ScreenTranslateE2ETest {
     }
 
     /** Mở app mẫu, bấm Bắt đầu, xử lý hộp thoại cấp quyền; trả về khi nút nổi đã sẵn sàng. */
-    private fun startSession(m: Mode) {
+    private fun startSession(m: Mode, sampleArgs: String = "", paragraph: Boolean = false) {
+        sampleParagraph = paragraph
         mode = m
         report("==== START mode=${m.label} sdk=${Build.VERSION.SDK_INT}")
 
@@ -302,7 +325,7 @@ class ScreenTranslateE2ETest {
 
         // B. "Other app" with known English text, in its own package/process/task.
         val tick = InstrumentationRegistry.getArguments().getString("sampleTick") == "true"
-        shell("am start -W -n $SAMPLE --ez tick $tick")
+        shell("am start -W -n $SAMPLE --ez tick $tick $sampleArgs")
         assertTrue("sample app not shown", waitForSample(15_000))
         shot("sample")
 
@@ -331,7 +354,7 @@ class ScreenTranslateE2ETest {
         if (m == Mode.ENTIRE_SCREEN) {
             // MainActivity.moveTaskToBack() should already reveal the sample; make it explicit.
             // (Never do this in single-app mode: a different task in front = captured content hidden.)
-            shell("am start -W -n $SAMPLE --ez tick $tick")
+            shell("am start -W -n $SAMPLE --ez tick $tick $sampleArgs")
         }
         assertTrue("sample app not in foreground after consent", waitForSample(10_000))
         SystemClock.sleep(1_500) // let the VirtualDisplay deliver its first frame
@@ -521,8 +544,13 @@ class ScreenTranslateE2ETest {
 
     // ------------------------------------------------------------------ helpers
 
-    private fun waitForSample(timeoutMs: Long): Boolean =
-        device.wait(Until.hasObject(By.pkg(TEST_PKG).text(SAMPLE_LINES[1])), timeoutMs) == true
+    private var sampleParagraph = false
+
+    private fun waitForSample(timeoutMs: Long): Boolean {
+        val sel = if (sampleParagraph) By.pkg(TEST_PKG).textContains("Gazo")
+        else By.pkg(TEST_PKG).text(SAMPLE_LINES[1])
+        return device.wait(Until.hasObject(sel), timeoutMs) == true
+    }
 
     private fun scrollTo(sel: BySelector): UiObject2? {
         device.findObject(sel)?.let { return it }

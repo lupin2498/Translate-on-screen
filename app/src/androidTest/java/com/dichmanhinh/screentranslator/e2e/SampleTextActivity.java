@@ -55,6 +55,11 @@ public class SampleTextActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        if ("paragraph".equals(getIntent().getStringExtra("mode"))) {
+            setContentView(buildParagraph());
+            return;
+        }
+
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -79,6 +84,42 @@ public class SampleTextActivity extends Activity {
         root.addView(swatch, new LinearLayout.LayoutParams(dp(6), dp(6)));
 
         setContentView(root);
+    }
+
+    /** Chú thích Instagram tiếng Pháp (ảnh người dùng gửi): xuống dòng giữa câu, nền tối. */
+    public static final String PARAGRAPH =
+            "zosterday \u201cNom complet: Gazo\n"
+            + "En m\u00e9langeant une drill sombre, des\nproductions puissantes et\n"
+            + "une mani\u00e8re de rapper imm\u00e9diatement\nreconnaissable, Gazo\n"
+            + "s\u2019est impos\u00e9 comme l\u2019une des figures\nmajeures de la sc\u00e8ne\n"
+            + "urbaine francophone. Ses morceaux\naccumulent r\u00e9guli\u00e8rement\n"
+            + "des millions d\u2019\u00e9coutes sur les plateformes\nde streaming, tandis\n"
+            + "que son univers visuel et son identit\u00e9\nmusicale continuent\n"
+            + "d\u2019attirer un public toujours plus large.\n"
+            + "Situation en 2026 : Au milieu de l\u2019ann\u00e9e\n2026, Gazo poursuit\n"
+            + "son \u00e9volution avec de nouveaux projets et\nplusieurs\n"
+            + "collaborations remarqu\u00e9es. Ses sorties\nfigurent r\u00e9guli\u00e8rement\n"
+            + "parmi les plus \u00e9cout\u00e9es, alors que sa\npopularit\u00e9 sur les r\u00e9seaux\n"
+            + "sociaux ne cesse de grandir. Gr\u00e2ce \u00e0 sa\nconstance et \u00e0 son\n"
+            + "influence dans la drill moderne, il reste\nconsid\u00e9r\u00e9 comme l\u2019un\n"
+            + "des artistes les plus importants de sa\ng\u00e9n\u00e9ration. \u201c\u2014";
+
+    private View buildParagraph() {
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(0xFF0E1116);
+        root.setPadding(dp(72), dp(48), dp(12), dp(24));
+        TextView tv = new TextView(this);
+        tv.setText(PARAGRAPH);
+        tv.setTextColor(Color.WHITE);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        tv.setLineSpacing(0f, 1.15f);
+        root.addView(tv, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        swatch = new View(this);
+        swatch.setBackgroundColor(0xFF0E1116);
+        root.addView(swatch, new LinearLayout.LayoutParams(dp(6), dp(6)));
+        return root;
     }
 
     @Override
