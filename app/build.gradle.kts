@@ -47,6 +47,10 @@ android {
     buildFeatures {
         viewBinding = false
     }
+    packaging {
+        // Nén thư viện native (ML Kit, Tesseract) trong APK: bộ cài nhỏ hơn ~40%, dễ gửi và tải
+        jniLibs { useLegacyPackaging = true }
+    }
 }
 
 dependencies {
