@@ -112,50 +112,77 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
             }.awaitAll()
         }.toMap()
 
-        val latin = linesOf(results[Script.LATIN])
+        // Dòng chữ của bộ chữ chính + dòng La-tinh; bỏ phiên âm pinyin/furigana nằm trên chữ Hán
         val primary = forced ?: bestScript(results)
-        var lines = if (primary != null) mergeScripts(linesOf(results[primary]), primary, latin) else latin
+        val primaryEls = if (primary != null) elementsOf(results[primary]) else emptyList()
+        val hanBoxes = primaryEls.filter { ParagraphBuilder.hasHan(it.text) }
+        val latin = ParagraphBuilder.removeRuby(linesOf(results[Script.LATIN], regroup = false), hanBoxes)
+        var lines = if (primary != null) {
+            val rows = ParagraphBuilder.removeRuby(linesOf(results[primary], regroup = true), hanBoxes)
+            mergeScripts(rows, primary, latin)
+        } else latin
 
         // Chữ Kirin bị ML Kit đọc thành chữ La-tinh rác -> đọc lại bằng Tesseract
         val misread = lines.filter { OcrQuality.isMisreadLine(it.text) }
         val auto = sourceLang == Languages.AUTO
-        val useTessLang = tessLang ?: if (auto && misread.isNotEmpty()) "rus" else null
-        var tessCount = 0
+        // Chỉ nghi chữ Kirin khi có đủ bằng chứng (≥ 3 từ đáng ngờ), tránh tải dữ liệu vô ích
+        val suspicious = misread.sumOf { OcrQuality.misreadTokenCount(it.text) } >= 3
+        val useTessLang = tessLang ?: if (auto && suspicious) "rus" else null
+        var tessAccepted: List<TessLine> = emptyList()
         if (useTessLang != null) {
             val region = if (tessLang != null) null else regionAround(misread, bitmap.width, bitmap.height)
             val tLines = tess.recognize(bitmap, useTessLang, region, onDownload)
                 .filter { it.confidence >= 40f && scriptMatches(it.line.text, useTessLang) }
-                .map { it.line }
-            val before = lines.size
-            lines = arbitrate(lines, tLines)
-            tessCount = lines.count { l -> tLines.any { it === l } }
+            val (kept, accepted) = arbitrate(lines, tLines)
             android.util.Log.i(
                 "ScreenTranslator",
-                "tesseract[$useTessLang] lines=${tLines.size} accepted=$tessCount (ml kit lines before=$before)"
+                "tesseract[$useTessLang] lines=${tLines.size} accepted=${accepted.size} ml=${lines.size}->${kept.size}"
             )
+            lines = kept
+            tessAccepted = accepted
         }
-        // Không bao giờ dịch chữ rác còn sót lại
-        val garbage = lines.count { OcrQuality.isMisreadLine(it.text) }
-        lines = lines.filterNot { OcrQuality.isMisreadLine(it.text) }
+        // Không bao giờ dịch chữ rác còn sót lại (một từ lạ đơn lẻ như tên hàm thì giữ)
+        fun isGarbage(l: TextLine) = OcrQuality.isMisreadLine(l.text) &&
+            (useTessLang != null || OcrQuality.misreadTokenCount(l.text) >= 2)
+        val garbage = lines.count { isGarbage(it) }
+        lines = lines.filterNot { isGarbage(it) }
 
         lastReport = Report(
             primary = (primary ?: Script.LATIN).name,
             misreadLines = misread.size,
             tesseractLang = useTessLang,
-            tesseractLines = tessCount,
+            tesseractLines = tessAccepted.size,
             droppedGarbage = garbage,
         )
-        return ParagraphBuilder.build(lines)
+        return (ParagraphBuilder.build(lines) + tessParagraphs(tessAccepted))
             .filter { ParagraphBuilder.isTranslatable(it.text) }
             .map { OcrBlock(it.text, Rect(it.left, it.top, it.right, it.bottom), it.lines) }
     }
 
-    private fun linesOf(text: Text?): List<TextLine> {
+    /**
+     * Các dòng của kết quả ML Kit. Với [regroup], dòng cao bất thường (bộ chữ Trung gộp nhiều hàng của
+     * bảng thành một dòng) được dựng lại từ từng từ.
+     */
+    private fun linesOf(text: Text?, regroup: Boolean): List<TextLine> {
         val out = ArrayList<TextLine>()
         text ?: return out
         for (block in text.textBlocks) {
             for (line in block.lines) {
                 val box = line.boundingBox ?: continue
+                if (regroup) {
+                    val els = line.elements.mapNotNull { e ->
+                        val b = e.boundingBox ?: return@mapNotNull null
+                        val t = e.text.trim()
+                        if (t.isEmpty()) null else TextLine(t, b.left, b.top, b.right, b.bottom)
+                    }
+                    if (els.size >= 2) {
+                        val h = els.map { it.height }.sorted()[els.size / 2]
+                        if (box.height() > 1.6f * h) {
+                            out.addAll(ParagraphBuilder.groupRows(els))
+                            continue
+                        }
+                    }
+                }
                 val t = line.text.trim()
                 if (t.isNotEmpty()) out.add(TextLine(t, box.left, box.top, box.right, box.bottom))
             }
@@ -163,12 +190,62 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
         return out
     }
 
-    /** Bộ chữ không phải La-tinh xuất hiện nhiều nhất (null nếu gần như không có). */
+    /** Các từ (element) của kết quả ML Kit, kèm khung. */
+    private fun elementsOf(text: Text?): List<TextLine> {
+        val out = ArrayList<TextLine>()
+        text ?: return out
+        for (block in text.textBlocks) {
+            for (line in block.lines) {
+                for (e in line.elements) {
+                    val box = e.boundingBox ?: continue
+                    val t = e.text.trim()
+                    if (t.isNotEmpty()) out.add(TextLine(t, box.left, box.top, box.right, box.bottom))
+                }
+            }
+        }
+        return out
+    }
+
+    /**
+     * Ghép dòng Tesseract thành đoạn theo khối văn bản Tesseract đã nhận ra (khung chữ, tiêu đề...),
+     * chỉ tách khi có khoảng trống dọc lớn. Khung dòng của Tesseract có thể lẫn biểu tượng xung
+     * quanh nên không dùng luật so cỡ chữ như với ML Kit.
+     */
+    private fun tessParagraphs(lines: List<TessLine>): List<Paragraph> {
+        val out = ArrayList<Paragraph>()
+        for ((_, group) in lines.groupBy { it.block }) {
+            val sorted = group.map { it.line }.sortedBy { it.top }
+            val med = sorted.map { it.height }.sorted()[sorted.size / 2]
+            var run = arrayListOf(sorted[0])
+            for (i in 1 until sorted.size) {
+                if (sorted[i].top - run.last().bottom > 1.2f * med) {
+                    out.add(toParagraph(run)); run = arrayListOf(sorted[i])
+                } else run.add(sorted[i])
+            }
+            out.add(toParagraph(run))
+        }
+        return out
+    }
+
+    private fun toParagraph(run: List<TextLine>) = Paragraph(
+        ParagraphBuilder.fixOcrCase(ParagraphBuilder.joinLines(run.map { it.text })),
+        run.minOf { it.left }, run.minOf { it.top }, run.maxOf { it.right }, run.maxOf { it.bottom }, run.size
+    )
+
+    /**
+     * Bộ chữ không phải La-tinh xuất hiện nhiều nhất (null nếu gần như không có). Cần ≥ 6 ký tự
+     * của bộ chữ đó hoặc ≥ 3% số chữ cái – vài ký tự Hán lạc trong chữ rác (ví dụ khi OCR chữ Nga)
+     * không đủ để coi màn hình là tiếng Trung.
+     */
     private fun bestScript(results: Map<Script, Text?>): Script? {
         var best: Script? = null
-        var bestScore = 2
+        var bestScore = 0
         for ((s, text) in results) {
             if (s == Script.LATIN || text == null) continue
+            val chars = text.text.count { scoreChar(s, it) > 0 }
+            val letters = text.text.count { it.isLetter() }.coerceAtLeast(1)
+            if (chars < 6 && chars < 0.03f * letters) continue
+            if (chars < 2) continue
             val score = text.text.sumOf { scoreChar(s, it) }
             if (score > bestScore) {
                 best = s; bestScore = score
@@ -207,25 +284,33 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
         return scriptLines + latinKept + extra
     }
 
-    /** Chọn giữa cách đọc của ML Kit và Tesseract theo mức "giống ngôn ngữ thật". */
-    private suspend fun arbitrate(ml: List<TextLine>, tessLines: List<TextLine>): List<TextLine> {
+    /**
+     * Chọn giữa cách đọc của ML Kit và Tesseract theo mức "giống ngôn ngữ thật".
+     * Không bao giờ thay dòng có chữ Hán/kana/hangul/Devanagari (ML Kit chuyên các chữ này).
+     */
+    private suspend fun arbitrate(
+        ml: List<TextLine>, tessLines: List<TessLine>
+    ): Pair<List<TextLine>, List<TessLine>> {
         val result = ml.toMutableList()
-        val accepted = ArrayList<TextLine>()
+        val accepted = ArrayList<TessLine>()
         for (t in tessLines) {
-            val tScore = detector.score(t.text)
-            val over = result.filter { overlap(it, t) >= 0.3f }
+            val text = t.line.text
+            if (text.count { it.isLetter() } < 4) continue
+            val over = result.filter { overlap(it, t.line) >= 0.3f }
+            if (over.any { m -> m.text.any { ParagraphBuilder.isCjk(it) || it.code in 0x0900..0x097F } }) continue
+            val tScore = detector.score(text)
             if (over.isEmpty()) {
                 if (tScore >= 0.8f) accepted.add(t)
                 continue
             }
             val mlBad = over.any { OcrQuality.isMisreadLine(it.text) }
             val mScore = if (mlBad) 0f else detector.score(over.sortedBy { it.left }.joinToString(" ") { it.text })
-            if (tScore >= 0.5f && tScore > mScore + 0.1f) {
+            if ((mlBad && tScore >= 0.5f) || (tScore >= 0.8f && tScore > mScore + 0.3f)) {
                 result.removeAll(over.toSet())
                 accepted.add(t)
             }
         }
-        return result + accepted
+        return result to accepted
     }
 
     private fun scriptMatches(text: String, tessLang: String): Boolean =

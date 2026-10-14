@@ -46,9 +46,14 @@ object OcrQuality {
         return false
     }
 
+    private fun tokens(text: String) = text.split(TOKEN_SPLIT).filter { tok -> tok.count { it.isLetter() } >= 2 }
+
+    /** Số từ đáng ngờ trong dòng. */
+    fun misreadTokenCount(text: String): Int = tokens(text).count { isMisreadToken(it) }
+
     /** Dòng có vẻ là chữ Kirin bị đọc thành La-tinh (đủ nhiều từ đáng ngờ). */
     fun isMisreadLine(text: String): Boolean {
-        val tokens = text.split(TOKEN_SPLIT).filter { tok -> tok.count { it.isLetter() } >= 2 }
+        val tokens = tokens(text)
         if (tokens.isEmpty()) return false
         val bad = tokens.count { isMisreadToken(it) }
         val ratio = bad.toFloat() / tokens.size

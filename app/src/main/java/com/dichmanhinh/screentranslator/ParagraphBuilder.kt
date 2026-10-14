@@ -228,11 +228,96 @@ object ParagraphBuilder {
         return sb.toString()
     }
 
+    /**
+     * Dựng lại các dòng từ từng từ (element) của OCR: gom các từ cùng hàng, rồi tách hàng tại khoảng
+     * trống lớn (ranh giới cột/ô bảng). Bộ nhận dạng chữ Trung có lúc gộp nhiều hàng của một bảng
+     * thành một "dòng" ("4。不對 pútuay Khong 5。沒有 ..."), nên không thể tin cách chia dòng của nó.
+     */
+    fun groupRows(elements: List<TextLine>): List<TextLine> {
+        val els = elements.filter { it.text.isNotBlank() && it.height > 0 && it.width > 0 }
+            .sortedWith(compareBy({ (it.top + it.bottom) / 2 }, { it.left }))
+        val rows = ArrayList<MutableList<TextLine>>()
+        for (e in els) {
+            val row = rows.asReversed().take(6).firstOrNull { sameRow(it, e) }
+            if (row != null) row.add(e) else rows.add(mutableListOf(e))
+        }
+        val out = ArrayList<TextLine>()
+        for (row in rows) {
+            val sorted = row.sortedBy { it.left }
+            var seg = arrayListOf(sorted[0])
+            for (i in 1 until sorted.size) {
+                val a = sorted[i - 1]
+                val b = sorted[i]
+                val gap = b.left - a.right
+                val h = max(a.height, b.height)
+                // Đổi bộ chữ (Hán <-> La-tinh) kèm khoảng trống: sang ô khác của bảng
+                val scriptChange = isCjk(a.text.last()) != isCjk(b.text.first())
+                if (gap > 0.9f * h || (scriptChange && gap > 0.4f * h)) {
+                    out.add(mergeSegment(seg)); seg = arrayListOf(b)
+                } else seg.add(b)
+            }
+            out.add(mergeSegment(seg))
+        }
+        return out
+    }
+
+    private fun sameRow(row: List<TextLine>, e: TextLine): Boolean {
+        val hs = row.map { it.height }.sorted()
+        val h = hs[hs.size / 2]
+        val cy = row.map { (it.top + it.bottom) / 2 }.sorted()[row.size / 2]
+        val ecy = (e.top + e.bottom) / 2
+        if (abs(ecy - cy) > 0.5f * max(h, e.height)) return false
+        val top = row.minOf { it.top }
+        val bottom = row.maxOf { it.bottom }
+        return min(bottom, e.bottom) - max(top, e.top) >= 0.5f * min(h, e.height)
+    }
+
+    private fun mergeSegment(seg: List<TextLine>): TextLine = TextLine(
+        joinWords(seg.map { it.text }), seg.minOf { it.left }, seg.minOf { it.top },
+        seg.maxOf { it.right }, seg.maxOf { it.bottom }
+    )
+
+    /** Nối các từ cùng dòng: có dấu cách, trừ giữa các chữ CJK. */
+    private fun joinWords(words: List<String>): String {
+        val sb = StringBuilder()
+        for (w in words) {
+            val t = w.trim()
+            if (t.isEmpty()) continue
+            if (sb.isNotEmpty() && !isCjk(sb[sb.length - 1]) && !isCjk(t[0])) sb.append(' ')
+            sb.append(t)
+        }
+        return sb.toString()
+    }
+
+    /**
+     * Bỏ phiên âm (pinyin/furigana) ở mức từng từ: từ chữ thường La-tinh hoặc kana, nhỏ hơn hẳn,
+     * nằm sát ngay trên một chữ Hán và chồng lên nó theo chiều ngang.
+     */
+    fun removeRuby(elements: List<TextLine>, hanBoxes: List<TextLine>): List<TextLine> {
+        if (hanBoxes.isEmpty()) return elements
+        return elements.filterNot { e ->
+            val letters = e.text.filter { it.isLetter() }
+            if (letters.isEmpty()) return@filterNot false
+            val kanaOnly = letters.all { it.code in 0x3040..0x30FF }
+            val pinyinLike = letters.none { it.isUpperCase() } &&
+                letters.all { Character.UnicodeScript.of(it.code) == Character.UnicodeScript.LATIN }
+            if (!kanaOnly && !pinyinLike) return@filterNot false
+            hanBoxes.any { b ->
+                val ov = min(e.right, b.right) - max(e.left, b.left)
+                e.height <= 0.75f * b.height &&
+                    b.top - e.bottom in (-(0.5f * e.height).toInt())..((0.8f * b.height).toInt()) &&
+                    ov >= 0.3f * e.width
+            }
+        }
+    }
+
+    fun hasHan(text: String): Boolean = text.any { isHan(it) }
+
     /** Có nội dung đáng dịch: ít nhất 2 chữ cái liền nhau hoặc một chữ CJK. */
     fun isTranslatable(text: String): Boolean {
         var run = 0
         for (ch in text) {
-            if (isCjk(ch)) return true
+            if (isCjk(ch) && ch.isLetter()) return true // chữ CJK (không tính dấu câu 。、)
             run = if (ch.isLetter()) run + 1 else 0
             if (run >= 2) return true
         }

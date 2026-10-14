@@ -168,6 +168,45 @@ class ParagraphBuilderTest {
         assertTrue(paras[0].text.contains("звонок. Жанна Болотова, дружившая"))
     }
 
+    /** Bộ chữ Trung gộp 2 hàng bảng thành một dòng: dựng lại từ từng từ, tách hàng và tách ô. */
+    @Test
+    fun groupRowsSplitsMergedTableRows() {
+        val els = listOf(
+            TextLine("4", 22, 700, 60, 770), TextLine("。", 100, 740, 125, 765),
+            TextLine("不對", 198, 700, 366, 770),
+            TextLine("pú", 445, 712, 520, 760), TextLine("tuây", 535, 712, 655, 760),
+            TextLine("5", 22, 823, 60, 893), TextLine("。", 100, 863, 125, 888),
+            TextLine("沒有", 198, 823, 366, 893),
+            TextLine("mấy", 420, 835, 520, 883), TextLine("dẩu", 535, 835, 650, 883),
+        )
+        val rows = ParagraphBuilder.groupRows(els).map { it.text }
+        for (x in listOf("不對", "沒有", "pú tuây", "mấy dẩu")) assertTrue("$x: $rows", rows.contains(x))
+        assertTrue(rows.toString(), rows.none { it.contains("不對") && it.contains("沒有") })
+    }
+
+    @Test
+    fun groupRowsKeepsSentenceTogether() {
+        val words = "The quick brown fox jumps".split(" ")
+        var x = 20
+        val els = words.map { w ->
+            val e = TextLine(w, x, 100, x + w.length * 22, 140); x = e.right + 12; e
+        }
+        assertEquals(listOf("The quick brown fox jumps"), ParagraphBuilder.groupRows(els).map { it.text })
+        // Chữ Trung trộn chữ La-tinh trong cùng câu (khoảng cách nhỏ) vẫn là một dòng
+        val mixed = listOf(TextLine("我喜欢", 20, 100, 200, 160), TextLine("iPhone", 212, 105, 330, 155))
+        assertEquals(listOf("我喜欢iPhone"), ParagraphBuilder.groupRows(mixed).map { it.text })
+    }
+
+    @Test
+    fun rubyElementsAreRemoved() {
+        val han = listOf(TextLine("好的", 198, 460, 366, 530))
+        val els = listOf(
+            TextLine("hǎo", 200, 430, 250, 456), TextLine("de", 310, 430, 350, 456), // pinyin
+            TextLine("hảo tơ", 445, 472, 655, 520), // phiên âm Việt cùng hàng: giữ
+        )
+        assertEquals(listOf("hảo tơ"), ParagraphBuilder.removeRuby(els, han).map { it.text })
+    }
+
     @Test
     fun furiganaIsSkipped() {
         val lines = listOf(
@@ -240,6 +279,7 @@ class ParagraphBuilderTest {
     fun translatableText() {
         assertFalse(ParagraphBuilder.isTranslatable("Q2.983"))
         assertFalse(ParagraphBuilder.isTranslatable("6:23 • 40%"))
+        assertFalse(ParagraphBuilder.isTranslatable("4 。"))
         assertTrue(ParagraphBuilder.isTranslatable("OK"))
         assertTrue(ParagraphBuilder.isTranslatable("好"))
     }

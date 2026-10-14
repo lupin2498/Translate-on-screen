@@ -13,8 +13,8 @@ import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
 
-/** Một dòng chữ do Tesseract đọc, kèm độ tin cậy 0..100. */
-data class TessLine(val line: TextLine, val confidence: Float)
+/** Một dòng chữ do Tesseract đọc, kèm độ tin cậy 0..100 và số thứ tự khối văn bản chứa nó. */
+data class TessLine(val line: TextLine, val confidence: Float, val block: Int)
 
 /**
  * OCR bằng Tesseract cho các bộ chữ mà ML Kit không hỗ trợ: Kirin (Nga, Ukraina...), Hy Lạp,
@@ -98,7 +98,9 @@ class TesseractEngine(context: Context) {
                     val iter = tess.getResultIterator() ?: return@withContext out
                     try {
                         iter.begin()
+                        var block = -1
                         do {
+                            if (block < 0 || iter.isAtBeginningOf(TessBaseAPI.PageIteratorLevel.RIL_BLOCK)) block++
                             val text = iter.getUTF8Text(TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE)?.trim()
                             if (text.isNullOrEmpty()) continue
                             val conf = iter.confidence(TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE)
@@ -106,7 +108,7 @@ class TesseractEngine(context: Context) {
                             // [left, top, right, bottom]; phòng trường hợp trả về [x, y, w, h]
                             val r = if (b[2] > b[0] && b[3] > b[1]) Rect(b[0], b[1], b[2], b[3])
                             else Rect(b[0], b[1], b[0] + b[2], b[1] + b[3])
-                            out.add(TessLine(TextLine(text, r.left, r.top, r.right, r.bottom), conf))
+                            out.add(TessLine(TextLine(text, r.left, r.top, r.right, r.bottom), conf, block))
                         } while (iter.next(TessBaseAPI.PageIteratorLevel.RIL_TEXTLINE))
                     } finally {
                         iter.delete()

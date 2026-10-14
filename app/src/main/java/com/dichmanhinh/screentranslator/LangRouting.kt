@@ -17,12 +17,18 @@ object LangRouting {
         object SkipRomanized : Action()
     }
 
-    /** Nhận diện chắc chắn theo chữ viết: có kana -> ja, có hangul -> ko, có chữ Hán -> zh. */
+    /**
+     * Nhận diện chắc chắn theo chữ viết khi chữ Hán/kana/hangul chiếm phần đáng kể (≥ 30% chữ cái):
+     * có kana -> ja, hangul -> ko, chữ Hán -> zh. Một ký tự Hán lạc trong chữ rác không tính.
+     */
     fun scriptLanguage(text: String): String? {
         var han = 0
         var kana = 0
         var hangul = 0
+        var letters = 0
         for (ch in text) {
+            if (!ch.isLetter()) continue
+            letters++
             val c = ch.code
             when {
                 c in 0x3040..0x30FF -> kana++
@@ -30,10 +36,12 @@ object LangRouting {
                 c in 0x4E00..0x9FFF || c in 0x3400..0x4DBF -> han++
             }
         }
+        if (letters == 0) return null
+        val min = 0.3f * letters
         return when {
-            kana > 0 -> "ja"
-            hangul > 0 -> "ko"
-            han > 0 -> "zh"
+            kana > 0 && kana + han >= min -> "ja"
+            hangul >= min -> "ko"
+            han >= min -> "zh"
             else -> null
         }
     }

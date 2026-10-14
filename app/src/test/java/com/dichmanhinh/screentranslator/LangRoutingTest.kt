@@ -34,5 +34,8 @@ class LangRoutingTest {
         assertEquals("ko", LangRouting.scriptLanguage("안녕하세요"))
         assertEquals("zh", LangRouting.scriptLanguage("謝謝"))
         assertEquals(null, LangRouting.scriptLanguage("Xin chào"))
+        // Ký tự Hán lạc trong chữ rác (OCR chữ Nga) không biến cả dòng thành tiếng Trung
+        assertEquals(null, LangRouting.scriptLanguage("pa3Aanc月 3BOHOK. KaHHa 5onoroBa, ApyKMBEa月 C"))
+        assertEquals("zh", LangRouting.scriptLanguage("1 。好的"))
     }
 }

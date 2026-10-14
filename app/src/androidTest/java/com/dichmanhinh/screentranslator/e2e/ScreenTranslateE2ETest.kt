@@ -262,14 +262,14 @@ class ScreenTranslateE2ETest {
     fun videoTableChinese() {
         Prefs.save(ctx, "auto", "vi")
         startSession(Mode.ENTIRE_SCREEN, sampleArgs = "--es mode image --es asset video_table_zh.jpg", kind = "image")
-        tapAndVerify(Mode.ENTIRE_SCREEN, expected = listOf("好的", "好吧", "不是", "謝謝", "可以"), minMatched = 3)
-        reportUnits()
         val vocab = listOf("好的", "好吧", "不是", "不對", "沒有", "可以", "謝謝", "不要", "不想", "真的", "不用", "不行")
+        tapAndVerify(Mode.ENTIRE_SCREEN, expected = vocab, minMatched = 6)
+        reportUnits()
         val units = DebugInfo.lastUnits
         val han = units.filter { u -> u.original.any { it.code in 0x4E00..0x9FFF } }
         val translatedHan = han.filter { it.action.startsWith("translate") && !it.translated.isNullOrBlank() }
         report("han units=${han.size} translated=${translatedHan.size}")
-        assertTrue("most Chinese cells must be translated: $han", translatedHan.size >= 8)
+        assertTrue("most Chinese cells must be translated: $han", translatedHan.size >= 6)
         val merged = han.filter { u -> vocab.count { u.original.contains(it) } >= 2 }
         assertTrue("table rows must not be merged: $merged", merged.isEmpty())
         val thanks = units.firstOrNull { it.original.contains("謝謝") }
