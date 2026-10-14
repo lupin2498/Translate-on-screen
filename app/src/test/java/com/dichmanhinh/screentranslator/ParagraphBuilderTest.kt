@@ -98,6 +98,85 @@ class ParagraphBuilderTest {
         assertEquals("McDonald iPhone", ParagraphBuilder.fixOcrCase("McDonald iPhone"))
     }
 
+    /**
+     * Bảng từ vựng trong video (ảnh người dùng gửi): mỗi hàng "1 。好的 | hảo tơ | Vâng !" và pinyin
+     * nhỏ phía trên chữ Hán. Mỗi ô phải là một đoạn riêng, pinyin bị bỏ qua.
+     */
+    @Test
+    fun vocabularyTableRowsAreNotMerged() {
+        val rows = listOf(
+            Triple("好的", "hảo tơ", "Vâng !"), Triple("好吧", "hảo ba", "Được thôi !"),
+            Triple("不是", "pú sư", "Không phải"), Triple("不對", "pú tuây", "Không đúng"),
+            Triple("沒有", "mấy dẩu", "Không có"), Triple("可以", "khửa i", "Có thể"),
+        )
+        val pinyin = listOf("hǎo de", "hǎo ba", "bù shì", "bù duì", "méi yǒu", "kě yǐ")
+        val lines = ArrayList<TextLine>()
+        lines.add(TextLine("Từ cơ bản hay dùng", 240, 245, 655, 295))
+        rows.forEachIndexed { i, (han, phon, mean) ->
+            val y = 385 + i * 103
+            lines.add(TextLine("${i + 1} 。", 22, y, 120, y + 55))
+            lines.add(TextLine(pinyin[i], 168, y - 28, 298, y - 6))
+            lines.add(TextLine(han, 165, y, 305, y + 58))
+            lines.add(TextLine(phon, 360, y + 8, 530, y + 52))
+            lines.add(TextLine(mean, 582, y + 2, 800, y + 54))
+        }
+        val texts = ParagraphBuilder.build(lines).map { it.text }
+        for ((han, phon, mean) in rows) {
+            assertTrue("$han must be its own unit: $texts", texts.contains(han))
+            assertTrue("$phon must be its own unit: $texts", texts.contains(phon))
+            assertTrue("$mean must be its own unit: $texts", texts.contains(mean))
+        }
+        for (p in pinyin) assertFalse("pinyin '$p' must be skipped: $texts", texts.any { it.contains(p) })
+        assertTrue(texts.contains("Từ cơ bản hay dùng"))
+    }
+
+    /** Đoạn văn dài có nút bấm ngang hàng ("Lưu", "720") vẫn phải được ghép trọn đoạn. */
+    @Test
+    fun paragraphNextToButtonsStillMerges() {
+        val lines = listOf(
+            TextLine("Но за несколько дней до свадьбы раздался", 90, 960, 790, 995),
+            TextLine("звонок. Жанна Болотова, дружившая с", 120, 1023, 760, 1058),
+            TextLine("720", 810, 1065, 870, 1100), // nút "thích" ngang hàng dòng 3
+            TextLine("студенческих лет, позвонила сопернице и", 100, 1060, 780, 1095),
+            TextLine("Lưu", 795, 1360, 850, 1395),
+        )
+        val paras = ParagraphBuilder.build(lines)
+        val main = paras.first { it.text.startsWith("Но за") }
+        assertEquals(paras.joinToString("\n") { it.text }, 3, main.lines)
+        assertTrue(paras.any { it.text == "720" })
+        assertTrue(paras.any { it.text == "Lưu" })
+    }
+
+    /** Khung chữ căn giữa trong video tiếng Nga: dòng dài ngắn khác nhau nhưng là một đoạn. */
+    @Test
+    fun centeredParagraphKeepsNamesTogether() {
+        val texts = listOf(
+            "Николай Губенко готовился жениться на" to 760,
+            "актрисе Марианне Вертинской. Заявление" to 800,
+            "подали, свидетелем должен был стать сам" to 780,
+            "Владимир Высоцкий. Но за несколько дней" to 890,
+            "до свадьбы раздался звонок. Жанна" to 690,
+            "Болотова, дружившая с Губенко ещё со" to 760,
+            "студенческих лет, позвонила сопернице и" to 820,
+        )
+        val lines = texts.mapIndexed { i, (t, w) ->
+            val left = 540 - w / 2
+            TextLine(t, left, 300 + i * 46, left + w, 334 + i * 46)
+        }
+        val paras = ParagraphBuilder.build(lines)
+        assertEquals(paras.joinToString("\n") { it.text }, 1, paras.size)
+        assertTrue(paras[0].text.contains("звонок. Жанна Болотова, дружившая"))
+    }
+
+    @Test
+    fun furiganaIsSkipped() {
+        val lines = listOf(
+            TextLine("にほんご", 100, 70, 260, 92),
+            TextLine("日本語を勉強します", 90, 100, 520, 160),
+        )
+        assertEquals(listOf("日本語を勉強します"), ParagraphBuilder.build(lines).map { it.text })
+    }
+
     @Test
     fun separatedLinesStaySeparate() {
         // Các dòng cách xa nhau (mỗi dòng một mục) không được ghép

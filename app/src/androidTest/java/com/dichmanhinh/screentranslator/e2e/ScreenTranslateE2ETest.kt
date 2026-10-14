@@ -19,6 +19,7 @@ import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 import com.dichmanhinh.screentranslator.DebugInfo
 import com.dichmanhinh.screentranslator.GoogleTranslator
+import com.dichmanhinh.screentranslator.OcrQuality
 import com.dichmanhinh.screentranslator.OverlayStyle
 import com.dichmanhinh.screentranslator.Prefs
 import com.dichmanhinh.screentranslator.R
@@ -240,7 +241,7 @@ class ScreenTranslateE2ETest {
     @Test
     fun paragraphCoherence() {
         Prefs.save(ctx, "auto", "vi")
-        startSession(Mode.ENTIRE_SCREEN, sampleArgs = "--es mode paragraph", paragraph = true)
+        startSession(Mode.ENTIRE_SCREEN, sampleArgs = "--es mode paragraph", kind = "paragraph")
         tapAndVerify(Mode.ENTIRE_SCREEN, expected = listOf("Gazo"), minMatched = 1)
         val all = DebugInfo.lastTranslations.joinToString(" ").lowercase()
         report("paragraph units=${DebugInfo.lastBlocks}")
@@ -251,6 +252,54 @@ class ScreenTranslateE2ETest {
         assertTrue("'réseaux sociaux' must be translated as one phrase: $all", all.contains("mạng xã hội"))
         assertFalse("context lost ('morceaux' -> 'quân cờ'): $all", all.contains("quân cờ"))
         report("PASS paragraphCoherence")
+    }
+
+    /**
+     * Ảnh thật người dùng gửi: video học tiếng Trung (bảng từ vựng chữ Hán + pinyin + phiên âm Việt +
+     * nghĩa tiếng Việt). Lỗi cũ: cả lô bị Google nhận là tiếng Việt -> "không có gì cần dịch".
+     */
+    @Test
+    fun videoTableChinese() {
+        Prefs.save(ctx, "auto", "vi")
+        startSession(Mode.ENTIRE_SCREEN, sampleArgs = "--es mode image --es asset video_table_zh.jpg", kind = "image")
+        tapAndVerify(Mode.ENTIRE_SCREEN, expected = listOf("好的", "好吧", "不是", "謝謝", "可以"), minMatched = 3)
+        reportUnits()
+        val vocab = listOf("好的", "好吧", "不是", "不對", "沒有", "可以", "謝謝", "不要", "不想", "真的", "不用", "不行")
+        val units = DebugInfo.lastUnits
+        val han = units.filter { u -> u.original.any { it.code in 0x4E00..0x9FFF } }
+        val translatedHan = han.filter { it.action.startsWith("translate") && !it.translated.isNullOrBlank() }
+        report("han units=${han.size} translated=${translatedHan.size}")
+        assertTrue("most Chinese cells must be translated: $han", translatedHan.size >= 8)
+        val merged = han.filter { u -> vocab.count { u.original.contains(it) } >= 2 }
+        assertTrue("table rows must not be merged: $merged", merged.isEmpty())
+        val thanks = units.firstOrNull { it.original.contains("謝謝") }
+        assertTrue("謝謝 must be translated as 'cảm ơn': $thanks",
+            thanks?.translated?.lowercase()?.contains("cảm ơn") == true)
+        assertTrue("Vietnamese text must be skipped, not re-translated",
+            units.any { it.action == "skip-target" })
+        report("PASS videoTableChinese")
+    }
+
+    /**
+     * Ảnh thật người dùng gửi: video tiếng Nga. ML Kit không đọc được chữ Kirin (ra chữ rác
+     * "HKONan y6eHKO") -> phải đọc lại bằng Tesseract và dịch từ tiếng Nga.
+     */
+    @Test
+    fun videoRussianCyrillic() {
+        Prefs.save(ctx, "auto", "vi")
+        startSession(Mode.ENTIRE_SCREEN, sampleArgs = "--es mode image --es asset video_text_ru.jpg", kind = "image")
+        tapAndVerify(Mode.ENTIRE_SCREEN, expected = listOf("Губенко", "Высоцкий", "свадьбы"), minMatched = 1)
+        reportUnits()
+        assertTrue("Tesseract (rus) must be used: ${DebugInfo.lastOcr}", DebugInfo.lastOcr?.contains("rus") == true)
+        val units = DebugInfo.lastUnits
+        val garbage = units.filter { OcrQuality.isMisreadLine(it.original) }
+        assertTrue("no garbage text may be translated: $garbage", garbage.isEmpty())
+        val ru = units.filter { OcrQuality.cyrillicRatio(it.original) >= 0.6f && it.action.startsWith("translate") }
+        assertTrue("Russian text must be translated: $units", ru.isNotEmpty())
+        val all = DebugInfo.lastTranslations.joinToString(" ").lowercase()
+        assertTrue("translation should mention Gubenko/Vysotsky: $all",
+            all.contains("gubenko") || all.contains("vysotsky") || all.contains("vysotskiy"))
+        report("PASS videoRussianCyrillic")
     }
 
     /** Màn hình Cài đặt hiển thị: thay đổi từng tùy chọn, kiểm tra được lưu, khôi phục mặc định. */
@@ -311,8 +360,8 @@ class ScreenTranslateE2ETest {
     }
 
     /** Mở app mẫu, bấm Bắt đầu, xử lý hộp thoại cấp quyền; trả về khi nút nổi đã sẵn sàng. */
-    private fun startSession(m: Mode, sampleArgs: String = "", paragraph: Boolean = false) {
-        sampleParagraph = paragraph
+    private fun startSession(m: Mode, sampleArgs: String = "", kind: String = "lines") {
+        sampleKind = kind
         mode = m
         report("==== START mode=${m.label} sdk=${Build.VERSION.SDK_INT}")
 
@@ -544,12 +593,22 @@ class ScreenTranslateE2ETest {
 
     // ------------------------------------------------------------------ helpers
 
-    private var sampleParagraph = false
+    private var sampleKind = "lines"
 
     private fun waitForSample(timeoutMs: Long): Boolean {
-        val sel = if (sampleParagraph) By.pkg(TEST_PKG).textContains("Gazo")
-        else By.pkg(TEST_PKG).text(SAMPLE_LINES[1])
+        val sel = when (sampleKind) {
+            "paragraph" -> By.pkg(TEST_PKG).textContains("Gazo")
+            "image" -> By.pkg(TEST_PKG).desc("sample-image")
+            else -> By.pkg(TEST_PKG).text(SAMPLE_LINES[1])
+        }
         return device.wait(Until.hasObject(sel), timeoutMs) == true
+    }
+
+    private fun reportUnits() {
+        report("ocr: ${DebugInfo.lastOcr}")
+        DebugInfo.lastUnits.forEachIndexed { i, u ->
+            report("  unit[$i] [${u.lang}/${u.action}] '${u.original.replace('\n', ' ')}' -> '${u.translated}'")
+        }
     }
 
     private fun scrollTo(sel: BySelector): UiObject2? {

@@ -47,6 +47,9 @@ object Languages {
         "cy" to "Welsh", "xh" to "Xhosa", "yi" to "Yiddish", "yo" to "Yoruba", "zu" to "Zulu"
     )
 
+    /** Mã ngôn ngữ Google Dịch hỗ trợ. */
+    val codes: Set<String> by lazy { RAW.map { it.first }.toSet() }
+
     private val VI = Locale("vi")
 
     private fun displayName(code: String, english: String): String {

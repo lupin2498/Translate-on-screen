@@ -10,4 +10,9 @@ object DebugInfo {
     @Volatile var lastError: String? = null
     @Volatile var overlayShown = 0
     @Volatile var lastCapture: String? = null
+    @Volatile var lastOcr: String? = null
+    @Volatile var lastUnits: List<UnitInfo> = emptyList()
+
+    /** Một đoạn chữ: ngôn ngữ nhận diện được, cách xử lý (dịch/bỏ qua) và bản dịch. */
+    data class UnitInfo(val original: String, val lang: String, val action: String, val translated: String?)
 }

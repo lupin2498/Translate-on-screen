@@ -76,7 +76,8 @@ class ScreenTranslateService : Service() {
     private val captureThread = HandlerThread("ScreenCapture").apply { start() }
     private val captureHandler = Handler(captureThread.looper)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-    private val ocr = OcrEngine()
+    private val detector = LanguageDetector()
+    private val ocr by lazy { OcrEngine(applicationContext, detector) }
 
     private var projection: MediaProjection? = null
     private var capturer: ScreenCapturer? = null
@@ -490,35 +491,77 @@ class ScreenTranslateService : Service() {
                 } else full
 
                 val statusBar = if (inPlace && area == null) statusBarHeight() else 0
-                val blocks = ocr.recognize(input, src).map { b ->
+                val blocks = ocr.recognize(input, src) { lang ->
+                    toast(getString(R.string.downloading_ocr_data, tessLangName(lang)), long = true)
+                }.map { b ->
                     if (area != null) b.copy(rect = Rect(b.rect).apply { offset(area.left, area.top) }) else b
                 }.filter { it.rect.bottom > statusBar } // bỏ đồng hồ/biểu tượng trên thanh trạng thái
                 if (input !== full) input.recycle()
                 full.recycle()
-                Log.i(TAG, "ocr blocks=${blocks.size} inPlace=$inPlace shot=${shot.screenRect}")
+                val report = ocr.lastReport
+                Log.i(TAG, "ocr blocks=${blocks.size} inPlace=$inPlace shot=${shot.screenRect} report=$report")
+                DebugInfo.lastOcr = report?.toString()
                 if (blocks.isEmpty()) {
                     DebugInfo.lastBlocks = 0
+                    DebugInfo.lastUnits = emptyList()
                     DebugInfo.lastError = "no text"
-                    toast(getString(R.string.no_text))
+                    val unreadable = (report?.droppedGarbage ?: 0) > 0
+                    toast(getString(if (unreadable) R.string.unreadable_text else R.string.no_text), long = unreadable)
                     return@launch
                 }
-                val translated = GoogleTranslator.translateAll(blocks.map { it.text }, src, tgt)
-                val items = blocks.mapIndexed { i, b ->
-                    TranslatedBlock(b.text, translated[i], b.rect, b.lines)
+
+                // Nhận diện ngôn ngữ TỪNG đoạn rồi mới quyết định dịch hay bỏ qua: nếu để Google tự
+                // nhận diện cả lô, màn hình trộn tiếng Việt + tiếng Trung sẽ bị coi là tiếng Việt.
+                val langs = blocks.map { detector.detect(it.text) }
+                val actions = langs.map { LangRouting.decide(it, src, tgt) }
+                val todo = blocks.indices.filter { actions[it] is LangRouting.Action.Translate }
+                val results = arrayOfNulls<String>(blocks.size)
+                var error: Exception? = null
+                if (todo.isNotEmpty()) {
+                    try {
+                        val r = GoogleTranslator.translateGrouped(
+                            todo.map { blocks[it].text },
+                            todo.map { (actions[it] as LangRouting.Action.Translate).sl },
+                            tgt
+                        )
+                        todo.forEachIndexed { k, i -> results[i] = r[k] }
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Log.e(TAG, "translate failed", e)
+                        error = e
+                    }
                 }
-                DebugInfo.lastBlocks = items.size
-                DebugInfo.lastOriginals = items.map { it.original }
-                DebugInfo.lastTranslations = items.map { it.translated }
+                val units = blocks.indices.map { i ->
+                    DebugInfo.UnitInfo(blocks[i].text, langs[i], actionName(actions[i]), results[i])
+                }
+                units.forEach {
+                    Log.i(TAG, "unit [${it.lang}/${it.action}] '${it.original.take(60)}' -> '${it.translated?.take(60)}'")
+                }
+                DebugInfo.lastUnits = units
+                DebugInfo.lastBlocks = blocks.size
+                DebugInfo.lastOriginals = blocks.map { it.text }
+                DebugInfo.lastTranslations = results.map { it ?: "" }
+
+                // Đoạn có bản dịch khác bản gốc mới được vẽ; đoạn giống hệt (số, tên riêng...) để nguyên.
+                val shown = blocks.indices.mapNotNull { i ->
+                    results[i]?.let { t -> TranslatedBlock(blocks[i].text, t, blocks[i].rect, blocks[i].lines) }
+                }.filterNot { sameText(it.original, it.translated) }
+                val failed = todo.count { results[it] == null }
+                if (shown.isEmpty()) {
+                    val allFailed = todo.isNotEmpty() && failed == todo.size
+                    DebugInfo.lastError = if (allFailed) "translate failed: $error" else "nothing to translate"
+                    toast(
+                        if (allFailed) translateErrorMessage(error)
+                        else getString(R.string.nothing_to_translate_detail, blocks.size, targetName(tgt)),
+                        long = true
+                    )
+                    return@launch
+                }
                 DebugInfo.lastError = null
                 DebugInfo.resultCount++
-                Log.i(TAG, "result blocks=${items.size} first='${items.first().translated.take(80)}'")
-                // Khối mà bản dịch giống hệt bản gốc (số liệu, tên riêng, chữ đã ở ngôn ngữ đích):
-                // để nguyên chữ gốc, không che lên.
-                val shown = items.filterNot { sameText(it.original, it.translated) }
-                if (shown.isEmpty()) {
-                    toast(getString(R.string.nothing_to_translate))
-                    return@launch
-                }
+                Log.i(TAG, "result blocks=${shown.size} first='${shown.first().translated.take(80)}'")
+                if (failed > 0) toast(getString(R.string.partial_failed, failed, todo.size), long = true)
                 showResult(shown, area, inPlace)
             } catch (e: CancellationException) {
                 throw e
@@ -531,6 +574,24 @@ class ScreenTranslateService : Service() {
                 busy = false
             }
         }
+    }
+
+    private fun actionName(a: LangRouting.Action): String = when (a) {
+        is LangRouting.Action.Translate -> "translate:${a.sl}"
+        LangRouting.Action.SkipTarget -> "skip-target"
+        LangRouting.Action.SkipRomanized -> "skip-romanized"
+    }
+
+    private fun targetName(code: String): String =
+        Languages.targets.firstOrNull { it.code == code }?.name ?: code
+
+    private fun tessLangName(tessLang: String): String =
+        TesseractEngine.googleCodeFor(tessLang)?.let { targetName(it) } ?: tessLang
+
+    private fun translateErrorMessage(e: Exception?): String = when {
+        e is GoogleTranslator.TranslateException && e.rateLimited -> getString(R.string.rate_limited)
+        e is java.io.IOException -> getString(R.string.network_error)
+        else -> "Lỗi: ${e?.message ?: "không dịch được"}"
     }
 
     private fun sameText(a: String, b: String): Boolean {
@@ -605,6 +666,7 @@ class ScreenTranslateService : Service() {
         runCatching { projection?.stop() }
         projection = null
         ocr.close()
+        detector.close()
         captureThread.quitSafely()
         super.onDestroy()
     }

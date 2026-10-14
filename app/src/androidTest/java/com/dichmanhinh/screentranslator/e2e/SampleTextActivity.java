@@ -59,6 +59,10 @@ public class SampleTextActivity extends Activity {
             setContentView(buildParagraph());
             return;
         }
+        if ("image".equals(getIntent().getStringExtra("mode"))) {
+            setContentView(buildImage(getIntent().getStringExtra("asset")));
+            return;
+        }
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -103,6 +107,29 @@ public class SampleTextActivity extends Activity {
             + "sociaux ne cesse de grandir. Gr\u00e2ce \u00e0 sa\nconstance et \u00e0 son\n"
             + "influence dans la drill moderne, il reste\nconsid\u00e9r\u00e9 comme l\u2019un\n"
             + "des artistes les plus importants de sa\ng\u00e9n\u00e9ration. \u201c\u2014";
+
+    /** Ảnh chụp màn hình thật (từ người dùng) hiển thị toàn chiều ngang, nền đen như video. */
+    private View buildImage(String asset) {
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(Color.BLACK);
+        root.setGravity(Gravity.CENTER);
+        android.widget.ImageView iv = new android.widget.ImageView(this);
+        iv.setContentDescription("sample-image");
+        iv.setAdjustViewBounds(true);
+        iv.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
+        try (java.io.InputStream in = getAssets().open(asset)) {
+            iv.setImageBitmap(android.graphics.BitmapFactory.decodeStream(in));
+        } catch (java.io.IOException e) {
+            throw new RuntimeException("missing asset " + asset, e);
+        }
+        root.addView(iv, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        swatch = new View(this);
+        swatch.setBackgroundColor(Color.BLACK);
+        root.addView(swatch, new LinearLayout.LayoutParams(dp(6), dp(6)));
+        return root;
+    }
 
     private View buildParagraph() {
         LinearLayout root = new LinearLayout(this);

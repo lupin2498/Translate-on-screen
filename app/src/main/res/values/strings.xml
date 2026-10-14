@@ -44,5 +44,10 @@
     <string name="force_full_screen_desc">Bật để ẩn lựa chọn \"Một ứng dụng\". Nếu chọn \"Một ứng dụng\", app chỉ dịch được ứng dụng đã chọn.</string>
     <string name="fgs_start_failed">Không khởi động được dịch vụ dịch màn hình. Hãy mở lại ứng dụng và thử lại.</string>
     <string name="region_unsupported">Không xác định được vị trí ứng dụng đang chia sẻ (chia đôi màn hình/cửa sổ nổi) nên sẽ dịch toàn bộ ứng dụng.</string>
-    <string name="nothing_to_translate">Chữ trên màn hình đã ở ngôn ngữ đích, không có gì cần dịch</string>
+    <string name="nothing_to_translate_detail">Đọc được %1$d đoạn chữ nhưng đều là %2$s hoặc không cần dịch</string>
+    <string name="downloading_ocr_data">Đang tải dữ liệu nhận dạng chữ cho %1$s (chỉ lần đầu, vài MB)…</string>
+    <string name="unreadable_text">Có chữ nhưng không đọc được rõ. Hãy chọn đúng ngôn ngữ nguồn (ví dụ tiếng Nga, tiếng Ả Rập, tiếng Thái) rồi thử lại.</string>
+    <string name="partial_failed">%1$d/%2$d đoạn chưa dịch được (lỗi mạng hoặc Google tạm giới hạn)</string>
+    <string name="rate_limited">Google Dịch đang tạm giới hạn yêu cầu từ mạng của bạn. Hãy thử lại sau ít phút.</string>
+    <string name="network_error">Không kết nối được Google Dịch. Hãy kiểm tra mạng rồi thử lại.</string>
 </resources>

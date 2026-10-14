@@ -63,6 +63,10 @@ dependencies {
     implementation("com.google.mlkit:text-recognition-japanese:16.0.1")
     implementation("com.google.mlkit:text-recognition-korean:16.0.1")
     implementation("com.google.mlkit:text-recognition-devanagari:16.0.1")
+    // Nhận diện ngôn ngữ từng đoạn chữ (mô hình kèm sẵn, chạy offline)
+    implementation("com.google.mlkit:language-id:17.0.6")
+    // OCR cho các bộ chữ ML Kit không hỗ trợ (dữ liệu ngôn ngữ tải khi cần)
+    implementation("cz.adaptech.tesseract4android:tesseract4android:4.9.0")
 
     testImplementation("junit:junit:4.13.2")
 
