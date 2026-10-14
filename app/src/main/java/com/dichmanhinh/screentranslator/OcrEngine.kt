@@ -114,12 +114,13 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
 
         // Dòng chữ của bộ chữ chính + dòng La-tinh; bỏ phiên âm pinyin/furigana nằm trên chữ Hán
         val primary = forced ?: bestScript(results)
-        val primaryEls = if (primary != null) elementsOf(results[primary]) else emptyList()
-        val hanBoxes = primaryEls.filter { ParagraphBuilder.hasHan(it.text) }
-        val latin = ParagraphBuilder.removeRuby(linesOf(results[Script.LATIN], regroup = false), hanBoxes)
+        val latinRaw = linesOf(results[Script.LATIN])
+        val primaryLines = if (primary != null) primaryLinesOf(results[primary], primary, bitmap, latinRaw)
+        else emptyList()
+        val hanBoxes = primaryLines.filter { ParagraphBuilder.hasHan(it.text) }
+        val latin = ParagraphBuilder.removeRuby(latinRaw, hanBoxes)
         var lines = if (primary != null) {
-            val rows = ParagraphBuilder.removeRuby(linesOf(results[primary], regroup = true), hanBoxes)
-            mergeScripts(rows, primary, latin)
+            mergeScripts(ParagraphBuilder.removeRuby(primaryLines, hanBoxes), primary, latin)
         } else latin
 
         // Chữ Kirin bị ML Kit đọc thành chữ La-tinh rác -> đọc lại bằng Tesseract
@@ -132,7 +133,7 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
         if (useTessLang != null) {
             val region = if (tessLang != null) null else regionAround(misread, bitmap.width, bitmap.height)
             val tLines = tess.recognize(bitmap, useTessLang, region, onDownload)
-                .filter { it.confidence >= 40f && scriptMatches(it.line.text, useTessLang) }
+                .filter { it.confidence >= 50f && scriptMatches(it.line.text, useTessLang) }
             val (kept, accepted) = arbitrate(lines, tLines)
             android.util.Log.i(
                 "ScreenTranslator",
@@ -159,27 +160,13 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
             .map { OcrBlock(it.text, Rect(it.left, it.top, it.right, it.bottom), it.lines) }
     }
 
-    /**
-     * Các dòng của kết quả ML Kit. Với [regroup], dòng cao bất thường (bộ chữ Trung gộp nhiều hàng của
-     * bảng thành một dòng) được dựng lại từ từng từ.
-     */
-    private fun linesOf(text: Text?, regroup: Boolean): List<TextLine> {
+    /** Các dòng của kết quả ML Kit. */
+    private fun linesOf(text: Text?): List<TextLine> {
         val out = ArrayList<TextLine>()
         text ?: return out
         for (block in text.textBlocks) {
             for (line in block.lines) {
                 val box = line.boundingBox ?: continue
-                if (regroup) {
-                    val els = line.elements.flatMap { splitByScript(it) }
-                    if (els.size >= 2) {
-                        val h = els.map { it.height }.sorted()[els.size / 2]
-                        // Dòng gộp nhiều hàng, hoặc dòng trộn chữ Hán với chữ La-tinh (ô bên cạnh)
-                        if (box.height() > 1.6f * h || mixesScripts(line.text)) {
-                            out.addAll(ParagraphBuilder.groupRows(els))
-                            continue
-                        }
-                    }
-                }
                 val t = line.text.trim()
                 if (t.isNotEmpty()) out.add(TextLine(t, box.left, box.top, box.right, box.bottom))
             }
@@ -187,57 +174,70 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
         return out
     }
 
-    private fun mixesScripts(text: String): Boolean =
-        text.any { it.isLetter() && ParagraphBuilder.isCjk(it) } &&
-            text.any { it.isLetter() && !ParagraphBuilder.isCjk(it) }
-
     /**
-     * Một "từ" của bộ chữ Trung có thể dính chữ Hán với phiên âm La-tinh ("不要pdao"): tách theo
-     * từng ký tự (symbol) thành các đoạn cùng bộ chữ.
+     * Dòng của bộ chữ chính (Trung/Nhật/Hàn/Devanagari). Bộ chữ Trung có lúc gộp nhiều hàng của một
+     * bảng thành một "dòng" cao bất thường: cắt vùng đó theo từng hàng (vị trí hàng lấy từ các dòng
+     * chữ La-tinh) và nhận dạng lại từng dải. Dòng trộn chữ Hán với phiên âm thì tách theo bộ chữ.
      */
-    private fun splitByScript(e: Text.Element): List<TextLine> {
-        val box = e.boundingBox ?: return emptyList()
-        val text = e.text.trim()
-        if (text.isEmpty()) return emptyList()
-        val symbols = e.symbols.filter { it.boundingBox != null && it.text.isNotBlank() }
-        if (!mixesScripts(text) || symbols.size < 2) {
-            return listOf(TextLine(text, box.left, box.top, box.right, box.bottom))
-        }
+    private suspend fun primaryLinesOf(
+        text: Text?, s: Script, bitmap: Bitmap, latin: List<TextLine>
+    ): List<TextLine> {
+        val raw = linesOf(text)
+        if (raw.isEmpty()) return raw
+        val med = raw.map { it.height }.sorted()[raw.size / 2]
         val out = ArrayList<TextLine>()
-        var run = ArrayList<Text.Symbol>()
-        var runCjk: Boolean? = null
-        fun flush() {
-            if (run.isEmpty()) return
-            val bs = run.map { it.boundingBox!! }
-            out.add(TextLine(run.joinToString("") { it.text }, bs.minOf { it.left }, bs.minOf { it.top },
-                bs.maxOf { it.right }, bs.maxOf { it.bottom }))
-            run = ArrayList()
+        for (l in raw) {
+            if (l.height > 1.7f * med) {
+                val bands = rowBands(l, latin)
+                if (bands.size >= 2) {
+                    android.util.Log.i("ScreenTranslator", "re-ocr multi-row line '${l.text.take(40)}' bands=${bands.size}")
+                    for (b in bands) out.addAll(reocr(bitmap, s, b))
+                    continue
+                }
+            }
+            out.addAll(ParagraphBuilder.splitByScript(l))
         }
-        for (sym in symbols) {
-            val c = sym.text.first()
-            val cjk = if (c.isLetter()) ParagraphBuilder.isCjk(c) else runCjk
-            if (runCjk != null && cjk != runCjk) flush()
-            run.add(sym)
-            runCjk = cjk
-        }
-        flush()
         return out
     }
 
-    /** Các từ (element) của kết quả ML Kit, kèm khung. */
-    private fun elementsOf(text: Text?): List<TextLine> {
-        val out = ArrayList<TextLine>()
-        text ?: return out
-        for (block in text.textBlocks) {
-            for (line in block.lines) {
-                for (e in line.elements) {
-                    val box = e.boundingBox ?: continue
-                    val t = e.text.trim()
-                    if (t.isNotEmpty()) out.add(TextLine(t, box.left, box.top, box.right, box.bottom))
-                }
-            }
+    /** Chia khung [l] thành các dải ngang theo vị trí các hàng chữ La-tinh nằm trong nó. */
+    private fun rowBands(l: TextLine, latin: List<TextLine>): List<Rect> {
+        val inside = latin.filter { (it.top + it.bottom) / 2 in l.top..l.bottom }
+        if (inside.size < 2) return emptyList()
+        val tol = inside.map { it.height }.sorted()[inside.size / 2] / 2
+        val centers = inside.map { (it.top + it.bottom) / 2 }.sorted()
+        val rows = ArrayList<Int>()
+        var cur = arrayListOf(centers[0])
+        for (c in centers.drop(1)) {
+            if (c - cur.last() > tol) {
+                rows.add(cur.average().toInt()); cur = arrayListOf(c)
+            } else cur.add(c)
         }
-        return out
+        rows.add(cur.average().toInt())
+        if (rows.size < 2) return emptyList()
+        val bounds = listOf(l.top) + rows.zipWithNext { a, b -> (a + b) / 2 } + listOf(l.bottom)
+        return bounds.zipWithNext { a, b -> Rect(l.left, a, l.right, b) }
+    }
+
+    /** Nhận dạng lại một vùng nhỏ của ảnh bằng bộ chữ [s]. */
+    private suspend fun reocr(bitmap: Bitmap, s: Script, r: Rect): List<TextLine> {
+        val left = max(0, r.left - 4)
+        val top = max(0, r.top - 4)
+        val right = min(bitmap.width, r.right + 4)
+        val bottom = min(bitmap.height, r.bottom + 4)
+        if (right - left < 8 || bottom - top < 8) return emptyList()
+        val crop = Bitmap.createBitmap(bitmap, left, top, right - left, bottom - top)
+        return try {
+            val res = recognizer(s).process(InputImage.fromBitmap(crop, 0)).await()
+            linesOf(res).map { TextLine(it.text, it.left + left, it.top + top, it.right + left, it.bottom + top) }
+                .flatMap { ParagraphBuilder.splitByScript(it) }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            emptyList()
+        } finally {
+            crop.recycle()
+        }
     }
 
     /**
@@ -267,9 +267,7 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
     )
 
     /**
-     * Bộ chữ không phải La-tinh xuất hiện nhiều nhất (null nếu gần như không có). Cần ≥ 6 ký tự
-     * của bộ chữ đó hoặc ≥ 3% số chữ cái – vài ký tự Hán lạc trong chữ rác (ví dụ khi OCR chữ Nga)
-     * không đủ để coi màn hình là tiếng Trung.
+     * Bộ chữ không phải La-tinh xuất hiện nhiều nhất (null nếu gần như không có).
      */
     private fun bestScript(results: Map<Script, Text?>): Script? {
         var best: Script? = null
@@ -278,8 +276,9 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
             if (s == Script.LATIN || text == null) continue
             val chars = text.text.count { scoreChar(s, it) > 0 }
             val letters = text.text.count { it.isLetter() }.coerceAtLeast(1)
-            if (chars < 6 && chars < 0.03f * letters) continue
-            if (chars < 2) continue
+            // Bộ chữ phải chiếm phần đáng kể (≥ 10% chữ cái, hoặc ≥ 20 ký tự): bộ nhận dạng chữ
+            // Nhật/Trung đọc chữ Nga cũng ra vài ký tự kana/Hán lạc.
+            if (chars < 2 || (chars < 20 && chars < 0.10f * letters)) continue
             val score = text.text.sumOf { scoreChar(s, it) }
             if (score > bestScore) {
                 best = s; bestScore = score
@@ -334,12 +333,12 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
             if (over.any { m -> m.text.any { ParagraphBuilder.isCjk(it) || it.code in 0x0900..0x097F } }) continue
             val tScore = detector.score(text)
             if (over.isEmpty()) {
-                if (tScore >= 0.8f) accepted.add(t)
+                if (tScore >= 0.8f && text.count { it.isLetter() } >= 6) accepted.add(t)
                 continue
             }
             val mlBad = over.any { OcrQuality.isMisreadLine(it.text) }
             val mScore = if (mlBad) 0f else detector.score(over.sortedBy { it.left }.joinToString(" ") { it.text })
-            if ((mlBad && tScore >= 0.5f) || (tScore >= 0.8f && tScore > mScore + 0.3f)) {
+            if ((mlBad && tScore >= 0.6f) || (tScore >= 0.8f && tScore > mScore + 0.3f)) {
                 result.removeAll(over.toSet())
                 accepted.add(t)
             }

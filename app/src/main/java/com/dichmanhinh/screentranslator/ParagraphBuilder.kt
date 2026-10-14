@@ -313,6 +313,48 @@ object ParagraphBuilder {
 
     fun hasHan(text: String): Boolean = text.any { isHan(it) }
 
+    /**
+     * Tách một dòng trộn chữ CJK với chữ La-tinh ("1。好的hao to") thành các mảnh cùng bộ chữ.
+     * Vị trí từng mảnh được ước lượng theo độ rộng ký tự (chữ CJK ≈ 1 em, chữ La-tinh ≈ 0.55 em),
+     * vì bộ nhận dạng chữ Trung không cho biết khung của từng ký tự.
+     */
+    fun splitByScript(line: TextLine): List<TextLine> {
+        val text = line.text
+        val hasCjkLetter = text.any { it.isLetter() && isCjk(it) }
+        val hasOtherLetter = text.any { it.isLetter() && !isCjk(it) }
+        if (!hasCjkLetter || !hasOtherLetter) return listOf(line)
+        fun weight(c: Char) = when {
+            isCjk(c) -> 1f
+            c.isWhitespace() -> 0.3f
+            else -> 0.55f
+        }
+        val total = text.sumOf { weight(it).toDouble() }.toFloat()
+        val scale = line.width / total
+        val out = ArrayList<TextLine>()
+        val sb = StringBuilder()
+        var cls: Boolean? = null
+        var start = 0f
+        var x = 0f
+        fun flush(end: Float) {
+            val t = sb.toString().trim()
+            if (t.isNotEmpty()) {
+                out.add(TextLine(t, line.left + (start * scale).toInt(), line.top,
+                    line.left + (end * scale).toInt(), line.bottom))
+            }
+            sb.setLength(0)
+            start = end
+        }
+        for (c in text) {
+            val k: Boolean? = if (c.isLetter()) isCjk(c) else null
+            if (k != null && cls != null && k != cls) flush(x)
+            if (k != null) cls = k
+            sb.append(c)
+            x += weight(c)
+        }
+        flush(x)
+        return out
+    }
+
     /** Có nội dung đáng dịch: ít nhất 2 chữ cái liền nhau hoặc một chữ CJK. */
     fun isTranslatable(text: String): Boolean {
         var run = 0

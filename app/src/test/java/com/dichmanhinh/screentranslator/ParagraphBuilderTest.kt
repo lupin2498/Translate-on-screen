@@ -197,6 +197,18 @@ class ParagraphBuilderTest {
         assertEquals(listOf("我喜欢iPhone"), ParagraphBuilder.groupRows(mixed).map { it.text })
     }
 
+    /** Bộ chữ Trung dính chữ Hán với phiên âm bên cạnh: tách theo bộ chữ, ước lượng vị trí. */
+    @Test
+    fun splitByScriptSeparatesHanAndPhonetic() {
+        val pieces = ParagraphBuilder.splitByScript(TextLine("1。好的hao to", 22, 400, 655, 470))
+        assertEquals(listOf("1。好的", "hao to"), pieces.map { it.text })
+        assertTrue(pieces[0].right <= pieces[1].left)
+        assertTrue("Han piece should end near x=366: ${pieces[0]}", pieces[0].right in 330..400)
+        val merged = ParagraphBuilder.splitByScript(TextLine("5。沒有my diu Khóngc6可以khrai Cóthé", 22, 800, 960, 990))
+        assertEquals(listOf("5。沒有", "my diu Khóngc6", "可以", "khrai Cóthé"), merged.map { it.text })
+        assertEquals(listOf("Xin chào"), ParagraphBuilder.splitByScript(TextLine("Xin chào", 0, 0, 100, 20)).map { it.text })
+    }
+
     @Test
     fun rubyElementsAreRemoved() {
         val han = listOf(TextLine("好的", 198, 460, 366, 530))
