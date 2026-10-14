@@ -170,14 +170,11 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
             for (line in block.lines) {
                 val box = line.boundingBox ?: continue
                 if (regroup) {
-                    val els = line.elements.mapNotNull { e ->
-                        val b = e.boundingBox ?: return@mapNotNull null
-                        val t = e.text.trim()
-                        if (t.isEmpty()) null else TextLine(t, b.left, b.top, b.right, b.bottom)
-                    }
+                    val els = line.elements.flatMap { splitByScript(it) }
                     if (els.size >= 2) {
                         val h = els.map { it.height }.sorted()[els.size / 2]
-                        if (box.height() > 1.6f * h) {
+                        // Dòng gộp nhiều hàng, hoặc dòng trộn chữ Hán với chữ La-tinh (ô bên cạnh)
+                        if (box.height() > 1.6f * h || mixesScripts(line.text)) {
                             out.addAll(ParagraphBuilder.groupRows(els))
                             continue
                         }
@@ -187,6 +184,43 @@ class OcrEngine(context: Context, private val detector: LanguageDetector) {
                 if (t.isNotEmpty()) out.add(TextLine(t, box.left, box.top, box.right, box.bottom))
             }
         }
+        return out
+    }
+
+    private fun mixesScripts(text: String): Boolean =
+        text.any { it.isLetter() && ParagraphBuilder.isCjk(it) } &&
+            text.any { it.isLetter() && !ParagraphBuilder.isCjk(it) }
+
+    /**
+     * Một "từ" của bộ chữ Trung có thể dính chữ Hán với phiên âm La-tinh ("不要pdao"): tách theo
+     * từng ký tự (symbol) thành các đoạn cùng bộ chữ.
+     */
+    private fun splitByScript(e: Text.Element): List<TextLine> {
+        val box = e.boundingBox ?: return emptyList()
+        val text = e.text.trim()
+        if (text.isEmpty()) return emptyList()
+        val symbols = e.symbols.filter { it.boundingBox != null && it.text.isNotBlank() }
+        if (!mixesScripts(text) || symbols.size < 2) {
+            return listOf(TextLine(text, box.left, box.top, box.right, box.bottom))
+        }
+        val out = ArrayList<TextLine>()
+        var run = ArrayList<Text.Symbol>()
+        var runCjk: Boolean? = null
+        fun flush() {
+            if (run.isEmpty()) return
+            val bs = run.map { it.boundingBox!! }
+            out.add(TextLine(run.joinToString("") { it.text }, bs.minOf { it.left }, bs.minOf { it.top },
+                bs.maxOf { it.right }, bs.maxOf { it.bottom }))
+            run = ArrayList()
+        }
+        for (sym in symbols) {
+            val c = sym.text.first()
+            val cjk = if (c.isLetter()) ParagraphBuilder.isCjk(c) else runCjk
+            if (runCjk != null && cjk != runCjk) flush()
+            run.add(sym)
+            runCjk = cjk
+        }
+        flush()
         return out
     }
 
