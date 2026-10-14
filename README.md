@@ -13,6 +13,8 @@
   diện riêng (ML Kit Language ID) nên màn hình trộn nhiều thứ tiếng vẫn dịch đúng; đoạn đã ở ngôn
   ngữ đích, phiên âm pinyin/furigana và chữ rác được bỏ qua.
 - Ghép dòng thành đoạn văn để dịch trọn câu; nhận biết bảng/danh sách để dịch từng ô.
+- Làm sạch chữ OCR trước khi dịch: bỏ ký tự rác do đọc nhầm hình ảnh trong video, bỏ khoảng trắng
+  thừa giữa chữ Hán/kana; chữ IN HOA toàn bộ được dịch ở dạng chữ thường rồi in hoa lại bản dịch.
 - Bản dịch được vẽ đè đúng vị trí chữ gốc; chạm để đóng, nhấn giữ để sao chép.
 - **Cài đặt hiển thị bản dịch**: nền trong suốt, màu nền, độ đậm nền, màu chữ, cỡ chữ (tự động/cố định),
   font chữ (12 kiểu), chữ đậm, viền chữ, khung viền – có xem trước trực tiếp.

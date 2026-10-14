@@ -494,8 +494,12 @@ class ScreenTranslateService : Service() {
                 val blocks = ocr.recognize(input, src) { lang ->
                     toast(getString(R.string.downloading_ocr_data, tessLangName(lang)), long = true)
                 }.map { b ->
-                    if (area != null) b.copy(rect = Rect(b.rect).apply { offset(area.left, area.top) }) else b
-                }.filter { it.rect.bottom > statusBar } // bỏ đồng hồ/biểu tượng trên thanh trạng thái
+                    // Bỏ ký tự rác do OCR đọc nhầm hình ảnh, khoảng trắng giữa chữ Hán ("不 是")
+                    val rect = if (area != null) Rect(b.rect).apply { offset(area.left, area.top) } else b.rect
+                    b.copy(text = TextPrep.clean(b.text), rect = rect)
+                }.filter { // bỏ đồng hồ/biểu tượng trên thanh trạng thái
+                    it.rect.bottom > statusBar && ParagraphBuilder.isTranslatable(it.text)
+                }
                 if (input !== full) input.recycle()
                 full.recycle()
                 val report = ocr.lastReport
@@ -512,7 +516,10 @@ class ScreenTranslateService : Service() {
 
                 // Nhận diện ngôn ngữ TỪNG đoạn rồi mới quyết định dịch hay bỏ qua: nếu để Google tự
                 // nhận diện cả lô, màn hình trộn tiếng Việt + tiếng Trung sẽ bị coi là tiếng Việt.
-                val langs = blocks.map { detector.detect(it.text) }
+                // Chữ IN HOA toàn bộ (tiêu đề video) được dịch ở dạng chữ thường rồi in hoa lại bản dịch.
+                val caps = blocks.map { TextPrep.isAllCaps(it.text) }
+                val query = blocks.mapIndexed { i, b -> if (caps[i]) TextPrep.toSentenceCase(b.text) else b.text }
+                val langs = query.map { detector.detect(it) }
                 val actions = langs.map { LangRouting.decide(it, src, tgt) }
                 val todo = blocks.indices.filter { actions[it] is LangRouting.Action.Translate }
                 val results = arrayOfNulls<String>(blocks.size)
@@ -520,11 +527,11 @@ class ScreenTranslateService : Service() {
                 if (todo.isNotEmpty()) {
                     try {
                         val r = GoogleTranslator.translateGrouped(
-                            todo.map { blocks[it].text },
+                            todo.map { query[it] },
                             todo.map { (actions[it] as LangRouting.Action.Translate).sl },
                             tgt
                         )
-                        todo.forEachIndexed { k, i -> results[i] = r[k] }
+                        todo.forEachIndexed { k, i -> results[i] = r[k]?.let { t -> if (caps[i]) t.uppercase() else t } }
                     } catch (e: CancellationException) {
                         throw e
                     } catch (e: Exception) {
