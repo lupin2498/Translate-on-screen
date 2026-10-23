@@ -11,7 +11,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Test
 import java.io.File
-import javax.imageio.ImageIO
 
 /**
  * Kiểm thử AI trên máy với mô hình thật – chạy trên máy tính (CI) bằng thư viện libscreenai.so
@@ -65,16 +64,23 @@ class LocalAiSmokeTest {
         val dir = env("SCREENAI_IMAGES") ?: return null
         val f = File(dir, name)
         if (!f.isFile) return null
-        val img = ImageIO.read(f) ?: return null
-        val rgb = ByteArray(img.width * img.height * 3)
+        // javax.imageio không có trong classpath biên dịch của unit test Android -> gọi qua reflection
+        val img = Class.forName("javax.imageio.ImageIO").getMethod("read", File::class.java).invoke(null, f)
+            ?: return null
+        val c = img.javaClass
+        val w = c.getMethod("getWidth").invoke(img) as Int
+        val h = c.getMethod("getHeight").invoke(img) as Int
+        val int = Int::class.javaPrimitiveType
+        val px = c.getMethod("getRGB", int, int, int, int, IntArray::class.java, int, int)
+            .invoke(img, 0, 0, w, h, null, 0, w) as IntArray
+        val rgb = ByteArray(w * h * 3)
         var j = 0
-        for (y in 0 until img.height) for (x in 0 until img.width) {
-            val p = img.getRGB(x, y)
+        for (p in px) {
             rgb[j++] = (p shr 16 and 0xFF).toByte()
             rgb[j++] = (p shr 8 and 0xFF).toByte()
             rgb[j++] = (p and 0xFF).toByte()
         }
-        return AiImage(rgb, img.width, img.height)
+        return AiImage(rgb, w, h)
     }
 
     private fun run(spec: ModelSpec, model: String, mmproj: String?) = runBlocking {
