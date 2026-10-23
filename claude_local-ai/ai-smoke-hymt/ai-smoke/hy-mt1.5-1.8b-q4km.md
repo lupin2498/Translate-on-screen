@@ -1,8 +1,8 @@
-# HY-MT 1.5 · 1.8B (Tencent)
+# HY-MT 1.5 · 1.8B (Tencent) 
 
-Nạp: 1017 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4096;params=1791080448;vision=0;template={% if messages[0]['role'] == 'system' %}{% set l · vision=false
+Nạp: 913 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4096;params=1791080448;vision=0;template={% if messages[0]['role'] == 'system' %}{% set l · vision=false
 
-## Giao diện + phụ đề tiếng Trung — 6510 ms, 1 lượt gọi, prompt 131 tok (dùng lại 0) 2269ms, sinh 105 tok 4192ms (25.0 tok/s)
+## Giao diện + phụ đề tiếng Trung — 6171 ms, 1 lượt gọi, prompt 131 tok (dùng lại 0) 2174ms, sinh 105 tok 3946ms (26.6 tok/s)
 
 - `设置` → Thiết lập
 - `账号与安全` → Tài khoản và bảo mật
@@ -11,26 +11,26 @@ Nạp: 1017 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4
 - `确定` → Xác nhận
 - `取消` → Hủy
 
-## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 3787 ms, 1 lượt gọi, prompt 131 tok (dùng lại 69) 1325ms, sinh 57 tok 2458ms (23.2 tok/s)
+## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 3398 ms, 1 lượt gọi, prompt 131 tok (dùng lại 69) 1278ms, sinh 57 tok 2116ms (26.9 tok/s)
 
 - `Пpивeт, кaк дeлa?` → Xin chào, làm việc như thế nào?
 - `Сегодня мы будем изучать новые слова` → Hôm nay chúng ta sẽ học những từ mới.
 - `Нажмите кнопку «Продолжить»` → Hãy nhấn nút “Tiếp tục”.
 
-## Tiếng Anh có lỗi OCR — 4067 ms, 1 lượt gọi, prompt 120 tok (dùng lại 68) 942ms, sinh 77 tok 3122ms (24.7 tok/s)
+## Tiếng Anh có lỗi OCR — 3745 ms, 1 lượt gọi, prompt 120 tok (dùng lại 68) 893ms, sinh 77 tok 2849ms (27.0 tok/s)
 
 - `Tap here to contiune` → Xin hãy nhập thông tin ở đây để tiếp tục
 - `Your account has been successfuly verifed` → Hóa đơn của bạn đã được xác thực thành công
 - `Download the latest verslon of the app` → Hãy tải về phiên bản mới nhất của ứng dụng
 - `Settings` → Điều chỉnh
 
-## Nhật + Hàn — 3036 ms, 1 lượt gọi, prompt 115 tok (dùng lại 68) 892ms, sinh 53 tok 2141ms (24.8 tok/s)
+## Nhật + Hàn — 2854 ms, 1 lượt gọi, prompt 115 tok (dùng lại 68) 906ms, sinh 53 tok 1947ms (27.2 tok/s)
 
 - `今日は天気がいいですね。` → Hôm nay thời tiết thật tốt phải không nào.
 - `ログイン` → Đăng nhập
 - `안녕하세요, 만나서 반갑습니다.` → Xin chào, rất vui được gặp bạn.
 
-## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 3913 ms, 1 lượt gọi, prompt 112 tok (dùng lại 69) 818ms, sinh 77 tok 3091ms (24.9 tok/s)
+## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 3644 ms, 1 lượt gọi, prompt 112 tok (dùng lại 69) 785ms, sinh 77 tok 2857ms (27.0 tok/s)
 
 - `哥哥，你什么时候回来？` → Anh trai, anh sẽ trở về khi nào vậy?
 - `我下个月就回家了，你要好好照顾妈妈。` → Em sẽ về nhà vào tháng sau, em phải chăm sóc mẹ thật tốt.

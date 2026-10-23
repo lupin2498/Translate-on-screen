@@ -7,7 +7,7 @@
 <s4>他说你不用担心，一切都会好起来的。</s4>
 <s5>确定</s5>
 <s6>取消</s6></source><｜hy_Assistant｜>
-=== OUTPUT (105 tok, 4192 ms)
+=== OUTPUT (105 tok, 3946 ms)
 <target><s1>Thiết lập</s1>
 <s2>Tài khoản và bảo mật</s2>
 <s3>Hôm nay chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.</s3>
@@ -21,7 +21,7 @@
 <source><s1>Пpивeт, кaк дeлa?</s1>
 <s2>Сегодня мы будем изучать новые слова</s2>
 <s3>Нажмите кнопку «Продолжить»</s3></source><｜hy_Assistant｜>
-=== OUTPUT (57 tok, 2458 ms)
+=== OUTPUT (57 tok, 2116 ms)
 <target><s1>Xin chào, làm việc như thế nào?</s1>
 <s2>Hôm nay chúng ta sẽ học những từ mới.</s2>
 <s3>Hãy nhấn nút “Tiếp tục”.</s3></target>
@@ -33,7 +33,7 @@
 <s2>Your account has been successfuly verifed</s2>
 <s3>Download the latest verslon of the app</s3>
 <s4>Settings</s4></source><｜hy_Assistant｜>
-=== OUTPUT (77 tok, 3122 ms)
+=== OUTPUT (77 tok, 2849 ms)
 <target><s1>Xin hãy nhập thông tin ở đây để tiếp tục</s1>
 <s2>Hóa đơn của bạn đã được xác thực thành công</s2>
 <s3>Hãy tải về phiên bản mới nhất của ứng dụng</s3>
@@ -45,7 +45,7 @@
 <source><s1>今日は天気がいいですね。</s1>
 <s2>ログイン</s2>
 <s3>안녕하세요, 만나서 반갑습니다.</s3></source><｜hy_Assistant｜>
-=== OUTPUT (53 tok, 2141 ms)
+=== OUTPUT (53 tok, 1947 ms)
 <target><s1>Hôm nay thời tiết thật tốt phải không nào.</s1>
 <s2>Đăng nhập</s2>
 <s3>Xin chào, rất vui được gặp bạn.</s3></target>
@@ -56,7 +56,7 @@
 <source><s1>哥哥，你什么时候回来？</s1>
 <s2>我下个月就回家了，你要好好照顾妈妈。</s2>
 <s3>知道了，你也要注意身体！</s3></source><｜hy_Assistant｜>
-=== OUTPUT (77 tok, 3091 ms)
+=== OUTPUT (77 tok, 2857 ms)
 <target><s1>Anh trai, anh sẽ trở về khi nào vậy?</s1>
 <s2>Em sẽ về nhà vào tháng sau, em phải chăm sóc mẹ thật tốt.</s2>
 <s3>Em biết rồi, anh cũng phải chú ý đến sức khỏe của mình!</s3></target>
