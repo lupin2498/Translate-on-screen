@@ -2,132 +2,132 @@
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 设置<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 160 ms)
+=== OUTPUT (4 tok, 130 ms)
 Thiết lập
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 账号与安全<｜hy_Assistant｜>
-=== OUTPUT (8 tok, 291 ms)
+=== OUTPUT (8 tok, 259 ms)
 Tài khoản và An ninh
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 我们明天去北京看李老师吧。<｜hy_Assistant｜>
-=== OUTPUT (25 tok, 929 ms)
+=== OUTPUT (25 tok, 826 ms)
 Ngày mai chúng ta hãy đến Bắc Kinh để gặp thầy Lý nhé.
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 他说你不用担心，一切都会好起来的。<｜hy_Assistant｜>
-=== OUTPUT (25 tok, 925 ms)
+=== OUTPUT (25 tok, 826 ms)
 Anh ấy nói rằng bạn không cần phải lo lắng, mọi chuyện sẽ ổn thôi.
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 确定<｜hy_Assistant｜>
-=== OUTPUT (7 tok, 252 ms)
+=== OUTPUT (7 tok, 231 ms)
 Xác định rõ ràng
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 取消<｜hy_Assistant｜>
-=== OUTPUT (5 tok, 182 ms)
+=== OUTPUT (5 tok, 162 ms)
 Hủy bỏ
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
-Пpивeт, кaк дeлa?<｜hy_Assistant｜>
-=== OUTPUT (9 tok, 326 ms)
-Vậy, làm như thế nào đây?
+Привет, как дела?<｜hy_Assistant｜>
+=== OUTPUT (10 tok, 326 ms)
+Chào bạn, bạn khỏe không?
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 Сегодня мы будем изучать новые слова<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 499 ms)
+=== OUTPUT (12 tok, 395 ms)
 Hôm nay, chúng ta sẽ học những từ mới.
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 Нажмите кнопку «Продолжить»<｜hy_Assistant｜>
-=== OUTPUT (15 tok, 536 ms)
+=== OUTPUT (15 tok, 491 ms)
 Hãy nhấn vào nút “Tiếp tục”.
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 Tap here to contiune<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 426 ms)
+=== OUTPUT (12 tok, 387 ms)
 Hãy nhấp vào đây để tiếp tục.
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 Your account has been successfuly verifed<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 504 ms)
+=== OUTPUT (14 tok, 469 ms)
 Hồ sơ của bạn đã được xác thực thành công.
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 Download the latest verslon of the app<｜hy_Assistant｜>
-=== OUTPUT (17 tok, 606 ms)
+=== OUTPUT (17 tok, 556 ms)
 Hãy tải về phiên bản mới nhất của ứng dụng này.
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 Settings<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 141 ms)
+=== OUTPUT (4 tok, 131 ms)
 Các thiết lập
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 今日は天気がいいですね。<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 429 ms)
+=== OUTPUT (12 tok, 389 ms)
 Hôm nay thời tiết thật tốt phải không?
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 ログイン<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 141 ms)
+=== OUTPUT (4 tok, 135 ms)
 Đăng nhập
 
 === PROMPT
 <｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
 
 안녕하세요, 만나서 반갑습니다.<｜hy_Assistant｜>
-=== OUTPUT (17 tok, 617 ms)
+=== OUTPUT (17 tok, 561 ms)
 Xin chào bạn, thật vui được gặp lại bạn.
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 哥哥，你什么时候回来？<｜hy_Assistant｜>
-=== OUTPUT (16 tok, 575 ms)
+=== OUTPUT (16 tok, 533 ms)
 Anh trai ơi, anh sẽ trở về vào lúc nào?
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 我下个月就回家了，你要好好照顾妈妈。<｜hy_Assistant｜>
-=== OUTPUT (22 tok, 802 ms)
+=== OUTPUT (22 tok, 726 ms)
 Tôi sẽ trở về nhà vào tháng sau, bạn phải chăm sóc mẹ thật tốt.
 
 === PROMPT
 <｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
 知道了，你也要注意身体！<｜hy_Assistant｜>
-=== OUTPUT (22 tok, 803 ms)
+=== OUTPUT (22 tok, 727 ms)
 Hiểu rồi, bạn cũng cần chú ý đến sức khỏe của mình nữa!
 

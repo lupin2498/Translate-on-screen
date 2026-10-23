@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.LocalAiSmokeTest" tests="3" skipped="2" failures="0" errors="0" timestamp="2026-10-23T03:24:30" hostname="runnervm8k3b6" time="14.978">
+<testsuite name="com.dichmanhinh.screentranslator.LocalAiSmokeTest" tests="3" skipped="2" failures="0" errors="0" timestamp="2026-10-23T10:35:38" hostname="runnervm8k3b6" time="12.785">
   <properties/>
-  <testcase name="gemma4" classname="com.dichmanhinh.screentranslator.LocalAiSmokeTest" time="0.038">
+  <testcase name="gemma4" classname="com.dichmanhinh.screentranslator.LocalAiSmokeTest" time="0.021">
     <skipped/>
   </testcase>
-  <testcase name="hyMtQ8" classname="com.dichmanhinh.screentranslator.LocalAiSmokeTest" time="0.002">
+  <testcase name="hyMtQ8" classname="com.dichmanhinh.screentranslator.LocalAiSmokeTest" time="0.001">
     <skipped/>
   </testcase>
-  <testcase name="hyMt" classname="com.dichmanhinh.screentranslator.LocalAiSmokeTest" time="14.937"/>
+  <testcase name="hyMt" classname="com.dichmanhinh.screentranslator.LocalAiSmokeTest" time="12.763"/>
   <system-out><![CDATA[# HY-MT 1.5 · 1.8B (Tencent) 
 
-Nạp: 875 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4096;params=1791080448;vision=0;template={% if messages[0]['role'] == 'system' %}{% set l · vision=false
+Nạp: 815 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4096;params=1791080448;vision=0;template={% if messages[0]['role'] == 'system' %}{% set l · vision=false
 
-## Giao diện + phụ đề tiếng Trung — 3903 ms, 6 lượt gọi, prompt 21 tok (dùng lại 19) 60ms, sinh 5 tok 182ms (27.5 tok/s)
+## Giao diện + phụ đề tiếng Trung — 3380 ms, 6 lượt gọi, prompt 21 tok (dùng lại 19) 49ms, sinh 5 tok 162ms (30.9 tok/s)
 
 - `设置` → Thiết lập
 - `账号与安全` → Tài khoản và An ninh
@@ -21,26 +21,26 @@ Nạp: 875 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=40
 - `确定` → Xác định rõ ràng
 - `取消` → Hủy bỏ
 
-## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 2574 ms, 3 lượt gọi, prompt 27 tok (dùng lại 12) 342ms, sinh 15 tok 536ms (28.0 tok/s)
+## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 2121 ms, 3 lượt gọi, prompt 27 tok (dùng lại 12) 244ms, sinh 15 tok 491ms (30.5 tok/s)
 
-- `Пpивeт, кaк дeлa?` → Vậy, làm như thế nào đây?
+- `Пpивeт, кaк дeлa?` → Chào bạn, bạn khỏe không?
 - `Сегодня мы будем изучать новые слова` → Hôm nay, chúng ta sẽ học những từ mới.
 - `Нажмите кнопку «Продолжить»` → Hãy nhấn vào nút “Tiếp tục”.
 
-## Tiếng Anh có lỗi OCR — 2394 ms, 4 lượt gọi, prompt 14 tok (dùng lại 12) 61ms, sinh 4 tok 141ms (28.4 tok/s)
+## Tiếng Anh có lỗi OCR — 2066 ms, 4 lượt gọi, prompt 14 tok (dùng lại 12) 49ms, sinh 4 tok 131ms (30.5 tok/s)
 
 - `Tap here to contiune` → Hãy nhấp vào đây để tiếp tục.
 - `Your account has been successfuly verifed` → Hồ sơ của bạn đã được xác thực thành công.
 - `Download the latest verslon of the app` → Hãy tải về phiên bản mới nhất của ứng dụng này.
 - `Settings` → Các thiết lập
 
-## Nhật + Hàn — 1906 ms, 3 lượt gọi, prompt 27 tok (dùng lại 12) 345ms, sinh 17 tok 617ms (27.6 tok/s)
+## Nhật + Hàn — 1608 ms, 3 lượt gọi, prompt 27 tok (dùng lại 12) 253ms, sinh 17 tok 561ms (30.3 tok/s)
 
 - `今日は天気がいいですね。` → Hôm nay thời tiết thật tốt phải không?
 - `ログイン` → Đăng nhập
 - `안녕하세요, 만나서 반갑습니다.` → Xin chào bạn, thật vui được gặp lại bạn.
 
-## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 3129 ms, 3 lượt gọi, prompt 26 tok (dùng lại 19) 176ms, sinh 22 tok 803ms (27.4 tok/s)
+## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 2642 ms, 3 lượt gọi, prompt 26 tok (dùng lại 19) 128ms, sinh 22 tok 727ms (30.3 tok/s)
 
 - `哥哥，你什么时候回来？` → Anh trai ơi, anh sẽ trở về vào lúc nào?
 - `我下个月就回家了，你要好好照顾妈妈。` → Tôi sẽ trở về nhà vào tháng sau, bạn phải chăm sóc mẹ thật tốt.
