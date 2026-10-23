@@ -48,7 +48,7 @@ init_audio: audio input is in experimental stage and may have reduced quality:
     https://github.com/ggml-org/llama.cpp/discussions/13759
 [ScreenAI] model loaded: ctx=6144 threads=4 vision=1
 > Task :app:testDebugUnitTest
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792723398009.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792724128637.json
 
-BUILD SUCCESSFUL in 7m 34s
+BUILD SUCCESSFUL in 5m 24s
 23 actionable tasks: 23 executed
