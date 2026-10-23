@@ -5,7 +5,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -21,7 +21,7 @@ Translate into Vietnamese:
 <s6>取消</s6><turn|>
 <|turn>model
 
-=== OUTPUT (90 tok, 4729 ms)
+=== OUTPUT (90 tok, 3758 ms)
 <s1>Cài đặt</s1>
 <s2>Tài khoản và bảo mật</s2>
 <s3>Ngày mai chúng ta đi Bắc Kinh gặp thầy Lý nhé.</s3>
@@ -36,7 +36,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -49,7 +49,7 @@ Translate into Vietnamese:
 <s3>Нажмите кнопку «Продолжить»</s3><turn|>
 <|turn>model
 
-=== OUTPUT (50 tok, 2582 ms)
+=== OUTPUT (50 tok, 2085 ms)
 <s1>Chào bạn, dạo này thế nào?</s1>
 <s2>Hôm nay chúng ta sẽ học từ mới</s2>
 <s3>Nhấn nút "Tiếp tục"</s3>
@@ -61,7 +61,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -75,10 +75,10 @@ Translate into Vietnamese:
 <s4>Settings</s4><turn|>
 <|turn>model
 
-=== OUTPUT (65 tok, 3370 ms)
+=== OUTPUT (64 tok, 2633 ms)
 <s1>Nhấn tại đây để tiếp tục</s1>
 <s2>Tài khoản của bạn đã được xác minh thành công</s2>
-<s3>Tải phiên bản mới nhất của ứng dụng</s3>
+<s3>Tải phiên bản ứng dụng mới nhất</s3>
 <s4>Cài đặt</s4>
 
 === PROMPT
@@ -88,7 +88,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -100,7 +100,7 @@ Translate into Vietnamese:
 <s3>안녕하세요, 만나서 반갑습니다.</s3><turn|>
 <|turn>model
 
-=== OUTPUT (44 tok, 2236 ms)
+=== OUTPUT (44 tok, 1795 ms)
 <s1>Hôm nay thời tiết đẹp nhỉ.</s1>
 <s2>Đăng nhập</s2>
 <s3>Xin chào, rất vui được gặp bạn.</s3>
@@ -112,7 +112,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -125,8 +125,8 @@ Translate into Vietnamese:
 <s3>知道了，你也要注意身体！</s3><turn|>
 <|turn>model
 
-=== OUTPUT (61 tok, 3217 ms)
-<s1>Anh, khi nào anh về?</s1>
+=== OUTPUT (63 tok, 2622 ms)
+<s1>Anh ơi, anh về khi nào vậy?</s1>
 <s2>Em sẽ về nhà vào tháng sau, anh phải chăm sóc mẹ cho tốt nhé.</s2>
 <s3>Biết rồi, anh cũng phải giữ gìn sức khỏe nha!</s3>
 
@@ -134,7 +134,7 @@ Translate into Vietnamese:
 <|turn>system
 You are the translation engine of an on-screen translator app. You receive a screenshot. Read ALL text in the image in natural reading order (including stylized text, speech bubbles and signs), group it into lines or paragraphs, and translate each one into Vietnamese.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 Output only, one item per line: <p><o>original text</o><t>translation</t></p>
@@ -144,9 +144,9 @@ Skip text that is already in Vietnamese. If there is no text, output <none/>.<tu
 Read and translate the text in this screenshot into Vietnamese.<turn|>
 <|turn>model
 
-=== OUTPUT (470 tok, 25688 ms)
+=== OUTPUT (467 tok, 20279 ms)
 <p><o>ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ — И ЖИЗНЬ ИЗМЕНИЛАСЬ НА 57 ЛЕТ</o><t>Cô ấy đã gọi cho đối thủ ngay trước đám cưới — và cuộc đời đã thay đổi ở tuổi 57</t></p>
-<p><o>Николай Губенко готовился жениться на актрисе Марианне Вертинской. Заявление подали, свидетелем должен был стать Владимир Высоцкий. Но за несколько дней до свадьбы раздался звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьба сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовце, мечтавший об актёрстве, стал последним министром культуры СССР. Поставьте лайк, если Вы считаете, что настоящую любовь стоит отстаивать, даже когда кажется, что уже слишком поздно.</o><t>Nikolai Gubenko chuẩn bị kết hôn với nữ diễn viên Marianne Vertinskaya. Lời tuyên bố đã được đưa ra, người làm chứng phải là Vladimir Vysotsky. Nhưng vài ngày trước đám cưới, có một cuộc gọi đến. Zhanna Bolotova, người đã là bạn của Gubenko từ thời sinh viên, đã gọi cho đối thủ và nói một câu: làm sao anh có thể kết hôn nếu chúng ta yêu nhau? Đám cưới đã bị hủy bỏ. Và thế là một mối tình bắt đầu, kéo dài năm mươi bảy năm. Mà con đường của Gubenko bắt đầu ở các hang động Odessa, nơi ông đã mất mẹ. Người từng là trẻ mồ côi, mơ ước trở thành diễn viên, đã trở thành bộ trưởng văn hóa Liên Xô. Hãy nhấn thích nếu bạn nghĩ rằng tình yêu đích thực đáng để đấu tranh, ngay cả khi dường như đã quá muộn.</t></p>
+<p><o>Николай Губенко готовился жениться на актрисе Марианне Вертинской. Заявление подали, свидетелем должен был стать Владимир Высоцкий. Но за несколько дней до свадьбы звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьба сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовце, мечтавший об актёрстве, стал последним министром культуры СССР. Поставьте лайк, если Вы считаете, что настоящую любовь стоит отстаивать, даже когда кажется, что уже слишком поздно.</o><t>Nikolai Gubenko chuẩn bị kết hôn với nữ diễn viên Marianne Vertinskaya. Lời tuyên bố đã được đưa ra, người làm chứng phải là Vladimir Vysotsky. Nhưng vài ngày trước đám cưới, có một cuộc gọi. Zhanna Bolotova, người đã là bạn của Gubenko từ thời sinh viên, đã gọi cho đối thủ và nói một câu: làm sao anh có thể kết hôn nếu chúng ta yêu nhau? Đám cưới đã bị hủy bỏ. Và thế là một mối tình bắt đầu, kéo dài năm mươi bảy năm. Mà con đường của Gubenko bắt đầu ở các hang động Odessa, nơi anh đã mất mẹ. Từ một đứa trẻ mồ côi, mơ ước trở thành diễn viên, anh đã trở thành bộ trưởng văn hóa Liên Xô. Hãy nhấn thích nếu bạn nghĩ rằng tình yêu đích thực đáng để đấu tranh, ngay cả khi dường như đã quá muộn.</t></p>
 
 === PROMPT
 <|turn>system
@@ -155,7 +155,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Look at the image to read what is really written. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -167,7 +167,7 @@ Translate into Vietnamese:
 <s2>нoвые cлoвa</s2><turn|>
 <|turn>model
 
-=== OUTPUT (24 tok, 1283 ms)
+=== OUTPUT (24 tok, 1006 ms)
 <s1>Hôm nay</s1>
 <s2>những từ mới</s2>
 
@@ -175,7 +175,7 @@ Translate into Vietnamese:
 <|turn>system
 You are the translation engine of an on-screen translator app. You receive a screenshot. Read ALL text in the image in natural reading order (including stylized text, speech bubbles and signs), group it into lines or paragraphs, and translate each one into Vietnamese.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 Output only, one item per line: <p><o>original text</o><t>translation</t></p>
@@ -185,20 +185,20 @@ Skip text that is already in Vietnamese. If there is no text, output <none/>.<tu
 Read and translate the text in this screenshot into Vietnamese.<turn|>
 <|turn>model
 
-=== OUTPUT (337 tok, 18052 ms)
+=== OUTPUT (328 tok, 14060 ms)
 <p><o>Từ cơ bản hay dùng</o><t>Từ cơ bản hay dùng</t></p>
 <p><o>1. hảo de</o><t>1. hảo to Vâng!</t></p>
 <p><o>2. hảo ba</o><t>2. hảo ba Được thôi!</t></p>
 <p><o>3. bù shi</o><t>3. không phải</t></p>
-<p><o>4. bù duì</o><t>4. không phải tư</t></p>
-<p><o>5. về có máy dầu</o><t>5. không có máy dầu</t></p>
-<p><o>6. có ý</o><t>6. có khả</t></p>
-<p><o>7. xiề xiề</o><t>7. xià xia Cảm ơn!</t></p>
+<p><o>4. bù dui</o><t>4. không phải tư</t></p>
+<p><o>5. 웨이 요</o><t>5. không có</t></p>
+<p><o>6. 可以</o><t>6. có thể</t></p>
+<p><o>7. 謝 谢</o><t>7. cảm ơn!</t></p>
 <p><o>8. bù yào</o><t>8. không cần</t></p>
 <p><o>9. bù xiàng</o><t>9. không muốn</t></p>
-<p><o>10. thật to</o><t>10. thật đấy</t></p>
-<p><o>11. không dùng</o><t>11. không cần</t></p>
-<p><o>12. không dùng</o><t>12. không dùng</t></p>
+<p><o>10. thật de</o><t>10. thật đấy</t></p>
+<p><o>11. bù dùng</o><t>11. không cần</t></p>
+<p><o>12. bù xing</o><t>12. không đi</t></p>
 
 === PROMPT
 <|turn>system
@@ -207,7 +207,7 @@ Rules:
 - OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Look at the image to read what is really written. Translate what is really meant, never the OCR noise.
 - Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
 - Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
-- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or chat lines are often a dialogue: work out who says each line to whom (a reply comes from the other person) before choosing pronouns.
 - Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
 - UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
 - Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
@@ -219,12 +219,11 @@ Translate into Vietnamese:
 <s2>单词</s2><turn|>
 <|turn>model
 
-=== OUTPUT (86 tok, 4647 ms)
+=== OUTPUT (86 tok, 3622 ms)
 <s1>Từ cơ bản hay dùng</s1>
 <s2>hào to Vàng!</s2>
 <s3>hào ba Được thôi!</s3>
 <s4>bù shi Không phải</s4>
-<s5>bù dui không đúng</s5>
-<s6>mới yêu không có</s6>
-<
+<s5>bù dui pú su Không được</s5>
+<s6>mới yêu Không có</s6>
 
