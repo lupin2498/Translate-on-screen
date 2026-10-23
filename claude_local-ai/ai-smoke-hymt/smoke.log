@@ -20,46 +20,30 @@ Daemon will be stopped at the end of the build
 > Task :app:mapDebugSourceSetPaths
 > Task :app:generateDebugResources
 > Task :app:packageDebugResources
-> Task :app:mergeDebugResources
 > Task :app:createDebugCompatibleScreenManifests
 > Task :app:extractDeepLinksDebug
 > Task :app:parseDebugLocalResources
+> Task :app:mergeDebugResources
 > Task :app:processDebugMainManifest
 > Task :app:processDebugManifest
 > Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:processDebugManifestForPackage
 > Task :app:javaPreCompileDebug
 > Task :app:javaPreCompileDebugUnitTest
-> Task :app:processDebugManifestForPackage
 > Task :app:processDebugResources
 > Task :app:compileDebugKotlin
 > Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:processDebugJavaRes
 > Task :app:bundleDebugClassesToRuntimeJar
 > Task :app:bundleDebugClassesToCompileJar
-> Task :app:processDebugJavaRes
 > Task :app:compileDebugUnitTestKotlin
 > Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :app:processDebugUnitTestJavaRes
 load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
 ....................................................................................
 [ScreenAI] model loaded: ctx=4096 threads=4 vision=0
-load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
-....................................................................................
-[ScreenAI] model loaded: ctx=4096 threads=4 vision=0
 > Task :app:testDebugUnitTest
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792725762884.json
 
-load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
-....................................................................................
-[ScreenAI] model loaded: ctx=4096 threads=4 vision=0
-load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
-........................................................................................
-[ScreenAI] model loaded: ctx=4096 threads=4 vision=0
-load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
-........................................................................................
-[ScreenAI] model loaded: ctx=4096 threads=4 vision=0
-load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
-....................................................................................
-[ScreenAI] model loaded: ctx=4096 threads=4 vision=0
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792724689220.json
-
-BUILD SUCCESSFUL in 4m 8s
+BUILD SUCCESSFUL in 2m 13s
 23 actionable tasks: 23 executed

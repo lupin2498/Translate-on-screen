@@ -1,38 +1,38 @@
 # HY-MT 1.5 · 1.8B (Tencent) 
 
-Nạp: 601 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4096;params=1791080448;vision=0;template={% if messages[0]['role'] == 'system' %}{% set l · vision=false
+Nạp: 875 ms · arch=hunyuan-dense;desc=hunyuan-dense 1.8B Q4_K - Medium;ctx=4096;params=1791080448;vision=0;template={% if messages[0]['role'] == 'system' %}{% set l · vision=false
 
-## Giao diện + phụ đề tiếng Trung — 4881 ms, 1 lượt gọi, prompt 131 tok (dùng lại 0) 1352ms, sinh 104 tok 3526ms (29.5 tok/s)
+## Giao diện + phụ đề tiếng Trung — 3903 ms, 6 lượt gọi, prompt 21 tok (dùng lại 19) 60ms, sinh 5 tok 182ms (27.5 tok/s)
 
 - `设置` → Thiết lập
-- `账号与安全` → Tài khoản và bảo mật
-- `我们明天去北京看李老师吧。` → Hôm nay chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.
-- `他说你不用担心，一切都会好起来的。` → Gìà, bạn không cần lo lắng, mọi chuyện sẽ ổn thôi.
-- `确定` → Xác nhận
-- `取消` → Hủy
+- `账号与安全` → Tài khoản và An ninh
+- `我们明天去北京看李老师吧。` → Ngày mai chúng ta hãy đến Bắc Kinh để gặp thầy Lý nhé.
+- `他说你不用担心，一切都会好起来的。` → Anh ấy nói rằng bạn không cần phải lo lắng, mọi chuyện sẽ ổn thôi.
+- `确定` → Xác định rõ ràng
+- `取消` → Hủy bỏ
 
-## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 2658 ms, 1 lượt gọi, prompt 131 tok (dùng lại 69) 712ms, sinh 57 tok 1944ms (29.3 tok/s)
+## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 2574 ms, 3 lượt gọi, prompt 27 tok (dùng lại 12) 342ms, sinh 15 tok 536ms (28.0 tok/s)
 
-- `Пpивeт, кaк дeлa?` → Xin chào, làm việc như thế nào?
-- `Сегодня мы будем изучать новые слова` → Hôm nay chúng ta sẽ học những từ mới.
-- `Нажмите кнопку «Продолжить»` → Hãy nhấn nút “Tiếp tục”.
+- `Пpивeт, кaк дeлa?` → Vậy, làm như thế nào đây?
+- `Сегодня мы будем изучать новые слова` → Hôm nay, chúng ta sẽ học những từ mới.
+- `Нажмите кнопку «Продолжить»` → Hãy nhấn vào nút “Tiếp tục”.
 
-## Tiếng Anh có lỗi OCR — 3177 ms, 1 lượt gọi, prompt 120 tok (dùng lại 68) 574ms, sinh 77 tok 2601ms (29.6 tok/s)
+## Tiếng Anh có lỗi OCR — 2394 ms, 4 lượt gọi, prompt 14 tok (dùng lại 12) 61ms, sinh 4 tok 141ms (28.4 tok/s)
 
-- `Tap here to contiune` → Xin hãy nhập mã số ở đây để tiếp tục
-- `Your account has been successfuly verifed` → Hóa đơn của bạn đã được xác thực thành công
-- `Download the latest verslon of the app` → Hãy tải về phiên bản mới nhất của ứng dụng
-- `Settings` → Điều chỉnh
+- `Tap here to contiune` → Hãy nhấp vào đây để tiếp tục.
+- `Your account has been successfuly verifed` → Hồ sơ của bạn đã được xác thực thành công.
+- `Download the latest verslon of the app` → Hãy tải về phiên bản mới nhất của ứng dụng này.
+- `Settings` → Các thiết lập
 
-## Nhật + Hàn — 2340 ms, 1 lượt gọi, prompt 115 tok (dùng lại 68) 569ms, sinh 53 tok 1769ms (30.0 tok/s)
+## Nhật + Hàn — 1906 ms, 3 lượt gọi, prompt 27 tok (dùng lại 12) 345ms, sinh 17 tok 617ms (27.6 tok/s)
 
-- `今日は天気がいいですね。` → Hôm nay thời tiết thật tốt phải không nào.
+- `今日は天気がいいですね。` → Hôm nay thời tiết thật tốt phải không?
 - `ログイン` → Đăng nhập
-- `안녕하세요, 만나서 반갑습니다.` → Xin chào, rất vui được gặp bạn.
+- `안녕하세요, 만나서 반갑습니다.` → Xin chào bạn, thật vui được gặp lại bạn.
 
-## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 3160 ms, 1 lượt gọi, prompt 112 tok (dùng lại 69) 516ms, sinh 77 tok 2642ms (29.1 tok/s)
+## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 3129 ms, 3 lượt gọi, prompt 26 tok (dùng lại 19) 176ms, sinh 22 tok 803ms (27.4 tok/s)
 
-- `哥哥，你什么时候回来？` → Anh trai, anh sẽ trở về khi nào vậy?
-- `我下个月就回家了，你要好好照顾妈妈。` → Em sẽ về nhà vào tháng sau, em phải chăm sóc mẹ thật tốt.
-- `知道了，你也要注意身体！` → Em biết rồi, anh cũng phải chú ý đến sức khỏe của mình!
+- `哥哥，你什么时候回来？` → Anh trai ơi, anh sẽ trở về vào lúc nào?
+- `我下个月就回家了，你要好好照顾妈妈。` → Tôi sẽ trở về nhà vào tháng sau, bạn phải chăm sóc mẹ thật tốt.
+- `知道了，你也要注意身体！` → Hiểu rồi, bạn cũng cần chú ý đến sức khỏe của mình nữa!
 

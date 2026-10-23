@@ -1,659 +1,133 @@
 === PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
 
-<source><s1>设置</s1>
-<s2>账号与安全</s2>
-<s3>我们明天去北京看李老师吧。</s3>
-<s4>他说你不用担心，一切都会好起来的。</s4>
-<s5>确定</s5>
-<s6>取消</s6></source><｜hy_Assistant｜>
-=== OUTPUT (108 tok, 3831 ms)
-<target><s1>Thiết lập</s1>
-<s2>Tài khoản và bảo mật</s2>
-<s3>Hôm nay chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.</s3>
-<s4>Giáo viên Lý nói rằng bạn không cần lo lắng, mọi chuyện sẽ ổn thôi.</s4>
-<s5>Xác nhận</s5>
-<s6>Hủy</s6></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>Пpивeт, кaк дeлa?</s1>
-<s2>Сегодня мы будем изучать новые слова</s2>
-<s3>Нажмите кнопку «Продолжить»</s3></source><｜hy_Assistant｜>
-=== OUTPUT (57 tok, 1971 ms)
-<target><s1>Xin chào, làm việc như thế nào?</s1>
-<s2>Hôm nay chúng ta sẽ học những từ mới.</s2>
-<s3>Hãy nhấn nút “Tiếp tục”.</s3></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>Tap here to contiune</s1>
-<s2>Your account has been successfuly verifed</s2>
-<s3>Download the latest verslon of the app</s3>
-<s4>Settings</s4></source><｜hy_Assistant｜>
-=== OUTPUT (81 tok, 2803 ms)
-<target><s1>Xin hãy nhập mã số ở đây để tiếp tục</s1>
-<s2>Hồ sơ tài khoản của bạn đã được xác thực thành công</s2>
-<s3>Hãy tải về phiên bản mới nhất của ứng dụng</s3>
-<s4>Điều chỉnh</s4></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>今日は天気がいいですね。</s1>
-<s2>ログイン</s2>
-<s3>안녕하세요, 만나서 반갑습니다.</s3></source><｜hy_Assistant｜>
-=== OUTPUT (53 tok, 1804 ms)
-<target><s1>Hôm nay thời tiết thật tốt phải không nào.</s1>
-<s2>Đăng nhập</s2>
-<s3>Xin chào, rất vui được gặp bạn.</s3></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>哥哥，你什么时候回来？</s1>
-<s2>我下个月就回家了，你要好好照顾妈妈。</s2>
-<s3>知道了，你也要注意身体！</s3></source><｜hy_Assistant｜>
-=== OUTPUT (77 tok, 2659 ms)
-<target><s1>Anh trai, anh sẽ trở về khi nào vậy?</s1>
-<s2>Em sẽ về nhà vào tháng sau, em phải chăm sóc mẹ thật tốt.</s2>
-<s3>Em biết rồi, anh cũng phải chú ý đến sức khỏe của mình!</s3></target>
-
-=== PROMPT
-<｜hy_User｜>账号与安全
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
 设置<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 130 ms)
+=== OUTPUT (4 tok, 160 ms)
 Thiết lập
 
 === PROMPT
-<｜hy_User｜>设置
-我们明天去北京看李老师吧。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 账号与安全<｜hy_Assistant｜>
-=== OUTPUT (8 tok, 260 ms)
+=== OUTPUT (8 tok, 291 ms)
 Tài khoản và An ninh
 
 === PROMPT
-<｜hy_User｜>设置
-账号与安全
-他说你不用担心，一切都会好起来的。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 我们明天去北京看李老师吧。<｜hy_Assistant｜>
-=== OUTPUT (24 tok, 781 ms)
-Ngày mai chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.
+=== OUTPUT (25 tok, 929 ms)
+Ngày mai chúng ta hãy đến Bắc Kinh để gặp thầy Lý nhé.
 
 === PROMPT
-<｜hy_User｜>账号与安全
-我们明天去北京看李老师吧。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 他说你不用担心，一切都会好起来的。<｜hy_Assistant｜>
-=== OUTPUT (25 tok, 825 ms)
+=== OUTPUT (25 tok, 925 ms)
 Anh ấy nói rằng bạn không cần phải lo lắng, mọi chuyện sẽ ổn thôi.
 
 === PROMPT
-<｜hy_User｜>我们明天去北京看李老师吧。
-他说你不用担心，一切都会好起来的。
-取消
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 确定<｜hy_Assistant｜>
-=== OUTPUT (7 tok, 229 ms)
-Chắc chắn rồi.
+=== OUTPUT (7 tok, 252 ms)
+Xác định rõ ràng
 
 === PROMPT
-<｜hy_User｜>他说你不用担心，一切都会好起来的。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 取消<｜hy_Assistant｜>
-=== OUTPUT (5 tok, 162 ms)
+=== OUTPUT (5 tok, 182 ms)
 Hủy bỏ
 
 === PROMPT
-<｜hy_User｜>Сегодня мы будем изучать новые слова
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Пpивeт, кaк дeлa?<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 394 ms)
-Hôm nay, chúng ta sẽ học những từ mới.
+=== OUTPUT (9 tok, 326 ms)
+Vậy, làm như thế nào đây?
 
 === PROMPT
-<｜hy_User｜>Пpивeт, кaк дeлa?
-Нажмите кнопку «Продолжить»
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Сегодня мы будем изучать новые слова<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 394 ms)
+=== OUTPUT (12 tok, 499 ms)
 Hôm nay, chúng ta sẽ học những từ mới.
 
 === PROMPT
-<｜hy_User｜>Пpивeт, кaк дeлa?
-Сегодня мы будем изучать новые слова
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Нажмите кнопку «Продолжить»<｜hy_Assistant｜>
-=== OUTPUT (11 tok, 377 ms)
-Nhấn nút “Tiếp tục”.
-
-=== PROMPT
-<｜hy_User｜>Your account has been successfuly verifed
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Tap here to contiune<｜hy_Assistant｜>
-=== OUTPUT (9 tok, 290 ms)
-Nhấp vào đây để tiếp tục.
-
-=== PROMPT
-<｜hy_User｜>Tap here to contiune
-Download the latest verslon of the app
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Your account has been successfuly verifed<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 463 ms)
-Tài khoản của bạn đã được xác thực thành công.
-
-=== PROMPT
-<｜hy_User｜>Tap here to contiune
-Your account has been successfuly verifed
-Settings
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Download the latest verslon of the app<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 474 ms)
-Tải về phiên bản mới nhất của ứng dụng này.
-
-=== PROMPT
-<｜hy_User｜>Your account has been successfuly verifed
-Download the latest verslon of the app
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Settings<｜hy_Assistant｜>
-=== OUTPUT (3 tok, 97 ms)
-Cài đặt
-
-=== PROMPT
-<｜hy_User｜>ログイン
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-今日は天気がいいですね。<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 406 ms)
-Hôm nay thời tiết thật tốt phải không?
-
-=== PROMPT
-<｜hy_User｜>今日は天気がいいですね。
-안녕하세요, 만나서 반갑습니다.
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-ログイン<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 129 ms)
-Đăng nhập
-
-=== PROMPT
-<｜hy_User｜>今日は天気がいいですね。
-ログイン
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-안녕하세요, 만나서 반갑습니다.<｜hy_Assistant｜>
-=== OUTPUT (16 tok, 526 ms)
-Xin chào, thật vui khi được gặp bạn.
-
-=== PROMPT
-<｜hy_User｜>我下个月就回家了，你要好好照顾妈妈。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-哥哥，你什么时候回来？<｜hy_Assistant｜>
-=== OUTPUT (29 tok, 948 ms)
-Anh trai ơi, anh sẽ trở về vào tháng sau. Em phải chăm sóc mẹ thật tốt nhé.
-
-=== PROMPT
-<｜hy_User｜>哥哥，你什么时候回来？
-知道了，你也要注意身体！
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-我下个月就回家了，你要好好照顾妈妈。<｜hy_Assistant｜>
-=== OUTPUT (24 tok, 806 ms)
-Tôi sẽ trở về nhà vào tháng tới. Bạn cần phải chăm sóc mẹ thật tốt.
-
-=== PROMPT
-<｜hy_User｜>哥哥，你什么时候回来？
-我下个月就回家了，你要好好照顾妈妈。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-知道了，你也要注意身体！<｜hy_Assistant｜>
-=== OUTPUT (22 tok, 722 ms)
-Hiểu rồi, bạn cũng cần chú ý đến sức khỏe của mình nữa!
-
-=== PROMPT
-<｜hy_User｜>账号与安全
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-设置<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 134 ms)
-Thiết lập
-
-=== PROMPT
-<｜hy_User｜>设置
-我们明天去北京看李老师吧。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-账号与安全<｜hy_Assistant｜>
-=== OUTPUT (8 tok, 272 ms)
-Tài khoản và An ninh
-
-=== PROMPT
-<｜hy_User｜>设置
-账号与安全
-他说你不用担心，一切都会好起来的。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-我们明天去北京看李老师吧。<｜hy_Assistant｜>
-=== OUTPUT (25 tok, 829 ms)
-Ngày mai, chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.
-
-=== PROMPT
-<｜hy_User｜>账号与安全
-我们明天去北京看李老师吧。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-他说你不用担心，一切都会好起来的。<｜hy_Assistant｜>
-=== OUTPUT (25 tok, 819 ms)
-Anh ấy nói rằng bạn không cần phải lo lắng, mọi chuyện sẽ ổn thôi.
-
-=== PROMPT
-<｜hy_User｜>我们明天去北京看李老师吧。
-他说你不用担心，一切都会好起来的。
-取消
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-确定<｜hy_Assistant｜>
-=== OUTPUT (7 tok, 227 ms)
-Chắc chắn rồi.
-
-=== PROMPT
-<｜hy_User｜>他说你不用担心，一切都会好起来的。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-取消<｜hy_Assistant｜>
-=== OUTPUT (5 tok, 164 ms)
-Hủy bỏ
-
-=== PROMPT
-<｜hy_User｜>Сегодня мы будем изучать новые слова
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Пpивeт, кaк дeлa?<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 393 ms)
-Hôm nay, chúng ta sẽ học những từ mới.
-
-=== PROMPT
-<｜hy_User｜>Пpивeт, кaк дeлa?
-Нажмите кнопку «Продолжить»
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Сегодня мы будем изучать новые слова<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 420 ms)
-Hôm nay, chúng ta sẽ học những từ mới.
-
-=== PROMPT
-<｜hy_User｜>Пpивeт, кaк дeлa?
-Сегодня мы будем изучать новые слова
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Нажмите кнопку «Продолжить»<｜hy_Assistant｜>
-=== OUTPUT (11 tok, 362 ms)
-Nhấn nút “Tiếp tục”.
-
-=== PROMPT
-<｜hy_User｜>Your account has been successfuly verifed
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Tap here to contiune<｜hy_Assistant｜>
-=== OUTPUT (9 tok, 297 ms)
-Nhấn vào đây để tiếp tục.
-
-=== PROMPT
-<｜hy_User｜>Tap here to contiune
-Download the latest verslon of the app
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Your account has been successfuly verifed<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 471 ms)
-Tài khoản của bạn đã được xác thực thành công.
-
-=== PROMPT
-<｜hy_User｜>Tap here to contiune
-Your account has been successfuly verifed
-Settings
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Download the latest verslon of the app<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 462 ms)
-Tải về phiên bản mới nhất của ứng dụng này.
-
-=== PROMPT
-<｜hy_User｜>Your account has been successfuly verifed
-Download the latest verslon of the app
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Settings<｜hy_Assistant｜>
-=== OUTPUT (3 tok, 97 ms)
-Cài đặt
-
-=== PROMPT
-<｜hy_User｜>ログイン
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-今日は天気がいいですね。<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 388 ms)
-Hôm nay thời tiết thật tốt phải không?
-
-=== PROMPT
-<｜hy_User｜>今日は天気がいいですね。
-안녕하세요, 만나서 반갑습니다.
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-ログイン<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 137 ms)
-Đăng nhập
-
-=== PROMPT
-<｜hy_User｜>今日は天気がいいですね。
-ログイン
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-안녕하세요, 만나서 반갑습니다.<｜hy_Assistant｜>
-=== OUTPUT (16 tok, 557 ms)
-Xin chào bạn, thật vui được gặp bạn.
-
-=== PROMPT
-<｜hy_User｜>我下个月就回家了，你要好好照顾妈妈。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-哥哥，你什么时候回来？<｜hy_Assistant｜>
-=== OUTPUT (29 tok, 950 ms)
-Anh trai ơi, anh sẽ trở về vào tháng sau. Em phải chăm sóc mẹ thật tốt nhé.
-
-=== PROMPT
-<｜hy_User｜>哥哥，你什么时候回来？
-知道了，你也要注意身体！
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-我下个月就回家了，你要好好照顾妈妈。<｜hy_Assistant｜>
-=== OUTPUT (24 tok, 831 ms)
-Tôi sẽ trở về nhà vào tháng tới. Bạn cần phải chăm sóc mẹ thật tốt.
-
-=== PROMPT
-<｜hy_User｜>哥哥，你什么时候回来？
-我下个月就回家了，你要好好照顾妈妈。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-知道了，你也要注意身体！<｜hy_Assistant｜>
-=== OUTPUT (22 tok, 718 ms)
-Hiểu rồi, bạn cũng cần chú ý đến sức khỏe của mình nữa!
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>设置</s1>
-<s2>账号与安全</s2>
-<s3>我们明天去北京看李老师吧。</s3>
-<s4>他说你不用担心，一切都会好起来的。</s4>
-<s5>确定</s5>
-<s6>取消</s6></source><｜hy_Assistant｜>
-=== OUTPUT (109 tok, 6262 ms)
-<target><s1>Đặt cài đặt</s1>
-<s2>Tài khoản và bảo mật</s2>
-<s3>Hôm mai chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.</s3>
-<s4>Giáo viên Lý nói rằng bạn không cần lo lắng, mọi chuyện sẽ ổn thôi.</s4>
-<s5Đồng ý</s5>
-<s6Hủy</s6></target>
-
-=== PROMPT
-<｜hy_User｜>我们明天去北京看李老师吧。
-他说你不用担心，一切都会好起来的。
-取消
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-确定<｜hy_Assistant｜>
-=== OUTPUT (7 tok, 383 ms)
-Chắc chắn rồi.
-
-=== PROMPT
-<｜hy_User｜>他说你不用担心，一切都会好起来的。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-取消<｜hy_Assistant｜>
-=== OUTPUT (5 tok, 278 ms)
-Hủy bỏ
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>Пpивeт, кaк дeлa?</s1>
-<s2>Сегодня мы будем изучать новые слова</s2>
-<s3>Нажмите кнопку «Продолжить»</s3></source><｜hy_Assistant｜>
-=== OUTPUT (62 tok, 3550 ms)
-<target><s1>Xin chào, mọi người làm việc như thế nào rồi?</s1>
-<s2>Hôm nay chúng ta sẽ học những từ mới.</s2>
-<s3>Hãy nhấn nút “Tiếp tục”.</s3></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>Tap here to contiune</s1>
-<s2>Your account has been successfuly verifed</s2>
-<s3>Download the latest verslon of the app</s3>
-<s4>Settings</s4></source><｜hy_Assistant｜>
-=== OUTPUT (79 tok, 4587 ms)
-<target><s1>Xin vui lòng nhập thông tin ở đây để tiếp tục</s1>
-<s2>Tài khoản của bạn đã được xác thực thành công</s2>
-<s3>Hãy tải về phiên bản mới nhất của ứng dụng</s3>
-<s4>Điều chỉnh</s4></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>今日は天気がいいですね。</s1>
-<s2>ログイン</s2>
-<s3>안녕하세요, 만나서 반갑습니다.</s3></source><｜hy_Assistant｜>
-=== OUTPUT (53 tok, 3006 ms)
-<target><s1>Hôm nay thời tiết thật tốt nhỉ.</s1>
-<s2>Đăng nhập đi.</s2>
-<s3>Xin chào, rất vui được gặp bạn.</s3></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>哥哥，你什么时候回来？</s1>
-<s2>我下个月就回家了，你要好好照顾妈妈。</s2>
-<s3>知道了，你也要注意身体！</s3></source><｜hy_Assistant｜>
-=== OUTPUT (82 tok, 4775 ms)
-<target><s1>Anh trai, anh sẽ về nhà lúc nào vậy?</s1>
-<s2>Tháng tới tôi sẽ về nhà, em phải chăm sóc mẹ thật tốt nhé.</s2>
-<s3>Được rồi, anh cũng phải chú ý đến sức khỏe của mình nữa!</s3></target>
-
-=== PROMPT
-<｜hy_User｜>账号与安全
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-设置<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 258 ms)
-Thiết lập
-
-=== PROMPT
-<｜hy_User｜>设置
-我们明天去北京看李老师吧。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-账号与安全<｜hy_Assistant｜>
-=== OUTPUT (8 tok, 434 ms)
-Tài khoản và An ninh
-
-=== PROMPT
-<｜hy_User｜>设置
-账号与安全
-他说你不用担心，一切都会好起来的。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-我们明天去北京看李老师吧。<｜hy_Assistant｜>
-=== OUTPUT (23 tok, 1255 ms)
-Ngày mai chúng ta hãy đến Bắc Kinh để gặp cô Lý nhé.
-
-=== PROMPT
-<｜hy_User｜>账号与安全
-我们明天去北京看李老师吧。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-他说你不用担心，一切都会好起来的。<｜hy_Assistant｜>
-=== OUTPUT (25 tok, 1377 ms)
-Anh ấy nói rằng bạn không cần phải lo lắng, mọi chuyện sẽ ổn thôi.
-
-=== PROMPT
-<｜hy_User｜>我们明天去北京看李老师吧。
-他说你不用担心，一切都会好起来的。
-取消
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-确定<｜hy_Assistant｜>
-=== OUTPUT (7 tok, 379 ms)
-Chắc chắn rồi.
-
-=== PROMPT
-<｜hy_User｜>他说你不用担心，一切都会好起来的。
-确定
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-取消<｜hy_Assistant｜>
-=== OUTPUT (5 tok, 270 ms)
-Hủy bỏ
-
-=== PROMPT
-<｜hy_User｜>Сегодня мы будем изучать новые слова
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Пpивeт, кaк дeлa?<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 663 ms)
-Xin chào, bạn làm việc như thế nào?
-
-=== PROMPT
-<｜hy_User｜>Пpивeт, кaк дeлa?
-Нажмите кнопку «Продолжить»
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Сегодня мы будем изучать новые слова<｜hy_Assistant｜>
-=== OUTPUT (12 tok, 762 ms)
-Hôm nay, chúng ta sẽ học những từ mới.
-
-=== PROMPT
-<｜hy_User｜>Пpивeт, кaк дeлa?
-Сегодня мы будем изучать новые слова
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
-Нажмите кнопку «Продолжить»<｜hy_Assistant｜>
-=== OUTPUT (15 tok, 838 ms)
+=== OUTPUT (15 tok, 536 ms)
 Hãy nhấn vào nút “Tiếp tục”.
 
 === PROMPT
-<｜hy_User｜>Your account has been successfuly verifed
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Tap here to contiune<｜hy_Assistant｜>
-=== OUTPUT (9 tok, 489 ms)
-Nhấn vào đây để tiếp tục.
+=== OUTPUT (12 tok, 426 ms)
+Hãy nhấp vào đây để tiếp tục.
 
 === PROMPT
-<｜hy_User｜>Tap here to contiune
-Download the latest verslon of the app
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Your account has been successfuly verifed<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 780 ms)
-Tài khoản của bạn đã được xác thực thành công.
+=== OUTPUT (14 tok, 504 ms)
+Hồ sơ của bạn đã được xác thực thành công.
 
 === PROMPT
-<｜hy_User｜>Tap here to contiune
-Your account has been successfuly verifed
-Settings
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Download the latest verslon of the app<｜hy_Assistant｜>
-=== OUTPUT (17 tok, 904 ms)
+=== OUTPUT (17 tok, 606 ms)
 Hãy tải về phiên bản mới nhất của ứng dụng này.
 
 === PROMPT
-<｜hy_User｜>Your account has been successfuly verifed
-Download the latest verslon of the app
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 Settings<｜hy_Assistant｜>
-=== OUTPUT (3 tok, 157 ms)
-Cài đặt
+=== OUTPUT (4 tok, 141 ms)
+Các thiết lập
 
 === PROMPT
-<｜hy_User｜>ログイン
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 今日は天気がいいですね。<｜hy_Assistant｜>
-=== OUTPUT (16 tok, 855 ms)
-Hôm nay thời tiết thật dễ chịu phải không?
+=== OUTPUT (12 tok, 429 ms)
+Hôm nay thời tiết thật tốt phải không?
 
 === PROMPT
-<｜hy_User｜>今日は天気がいいですね。
-안녕하세요, 만나서 반갑습니다.
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 ログイン<｜hy_Assistant｜>
-=== OUTPUT (4 tok, 211 ms)
+=== OUTPUT (4 tok, 141 ms)
 Đăng nhập
 
 === PROMPT
-<｜hy_User｜>今日は天気がいいですね。
-ログイン
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>Translate the following segment into Vietnamese, without additional explanation.
+
 안녕하세요, 만나서 반갑습니다.<｜hy_Assistant｜>
-=== OUTPUT (14 tok, 743 ms)
-Xin chào, rất vui được gặp bạn.
+=== OUTPUT (17 tok, 617 ms)
+Xin chào bạn, thật vui được gặp lại bạn.
 
 === PROMPT
-<｜hy_User｜>我下个月就回家了，你要好好照顾妈妈。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 哥哥，你什么时候回来？<｜hy_Assistant｜>
-=== OUTPUT (16 tok, 840 ms)
+=== OUTPUT (16 tok, 575 ms)
 Anh trai ơi, anh sẽ trở về vào lúc nào?
 
 === PROMPT
-<｜hy_User｜>哥哥，你什么时候回来？
-知道了，你也要注意身体！
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 我下个月就回家了，你要好好照顾妈妈。<｜hy_Assistant｜>
-=== OUTPUT (27 tok, 1469 ms)
-Tháng tới tôi sẽ trở về nhà. Bạn hãy chăm sóc mẹ mình thật tốt nhé.
+=== OUTPUT (22 tok, 802 ms)
+Tôi sẽ trở về nhà vào tháng sau, bạn phải chăm sóc mẹ thật tốt.
 
 === PROMPT
-<｜hy_User｜>哥哥，你什么时候回来？
-我下个月就回家了，你要好好照顾妈妈。
-参考上面的信息，把下面的文本翻译成越南语，注意不需要翻译上文，也不要额外解释：
+<｜hy_User｜>将以下文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释：
+
 知道了，你也要注意身体！<｜hy_Assistant｜>
-=== OUTPUT (22 tok, 1193 ms)
+=== OUTPUT (22 tok, 803 ms)
 Hiểu rồi, bạn cũng cần chú ý đến sức khỏe của mình nữa!
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>设置</s1>
-<s2>账号与安全</s2>
-<s3>我们明天去北京看李老师吧。</s3>
-<s4>他说你不用担心，一切都会好起来的。</s4>
-<s5>确定</s5>
-<s6>取消</s6></source><｜hy_Assistant｜>
-=== OUTPUT (104 tok, 3526 ms)
-<target><s1>Thiết lập</s1>
-<s2>Tài khoản và bảo mật</s2>
-<s3>Hôm nay chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.</s3>
-<s4>Gìà, bạn không cần lo lắng, mọi chuyện sẽ ổn thôi.</s4>
-<s5>Xác nhận</s5>
-<s6>Hủy</s6></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>Пpивeт, кaк дeлa?</s1>
-<s2>Сегодня мы будем изучать новые слова</s2>
-<s3>Нажмите кнопку «Продолжить»</s3></source><｜hy_Assistant｜>
-=== OUTPUT (57 tok, 1944 ms)
-<target><s1>Xin chào, làm việc như thế nào?</s1>
-<s2>Hôm nay chúng ta sẽ học những từ mới.</s2>
-<s3>Hãy nhấn nút “Tiếp tục”.</s3></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>Tap here to contiune</s1>
-<s2>Your account has been successfuly verifed</s2>
-<s3>Download the latest verslon of the app</s3>
-<s4>Settings</s4></source><｜hy_Assistant｜>
-=== OUTPUT (77 tok, 2601 ms)
-<target><s1>Xin hãy nhập mã số ở đây để tiếp tục</s1>
-<s2>Hóa đơn của bạn đã được xác thực thành công</s2>
-<s3>Hãy tải về phiên bản mới nhất của ứng dụng</s3>
-<s4>Điều chỉnh</s4></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>今日は天気がいいですね。</s1>
-<s2>ログイン</s2>
-<s3>안녕하세요, 만나서 반갑습니다.</s3></source><｜hy_Assistant｜>
-=== OUTPUT (53 tok, 1769 ms)
-<target><s1>Hôm nay thời tiết thật tốt phải không nào.</s1>
-<s2>Đăng nhập</s2>
-<s3>Xin chào, rất vui được gặp bạn.</s3></target>
-
-=== PROMPT
-<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
-
-<source><s1>哥哥，你什么时候回来？</s1>
-<s2>我下个月就回家了，你要好好照顾妈妈。</s2>
-<s3>知道了，你也要注意身体！</s3></source><｜hy_Assistant｜>
-=== OUTPUT (77 tok, 2642 ms)
-<target><s1>Anh trai, anh sẽ trở về khi nào vậy?</s1>
-<s2>Em sẽ về nhà vào tháng sau, em phải chăm sóc mẹ thật tốt.</s2>
-<s3>Em biết rồi, anh cũng phải chú ý đến sức khỏe của mình!</s3></target>
 
