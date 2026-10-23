@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.OcrQualityTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:23:50" hostname="runnervm8k3b6" time="0.013">
+<testsuite name="com.dichmanhinh.screentranslator.OcrQualityTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:33:13" hostname="runnervm8k3b6" time="0.013">
   <properties/>
-  <testcase name="scriptRatios" classname="com.dichmanhinh.screentranslator.OcrQualityTest" time="0.005"/>
-  <testcase name="detectsCyrillicMisreadAsLatin" classname="com.dichmanhinh.screentranslator.OcrQualityTest" time="0.004"/>
+  <testcase name="scriptRatios" classname="com.dichmanhinh.screentranslator.OcrQualityTest" time="0.004"/>
+  <testcase name="detectsCyrillicMisreadAsLatin" classname="com.dichmanhinh.screentranslator.OcrQualityTest" time="0.005"/>
   <testcase name="doesNotFlagNormalText" classname="com.dichmanhinh.screentranslator.OcrQualityTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

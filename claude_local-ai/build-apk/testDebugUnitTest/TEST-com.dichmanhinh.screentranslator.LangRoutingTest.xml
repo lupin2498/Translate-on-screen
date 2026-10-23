@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.LangRoutingTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:23:50" hostname="runnervm8k3b6" time="0.01">
+<testsuite name="com.dichmanhinh.screentranslator.LangRoutingTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:33:13" hostname="runnervm8k3b6" time="0.006">
   <properties/>
-  <testcase name="fixedSourceLanguage" classname="com.dichmanhinh.screentranslator.LangRoutingTest" time="0.006"/>
-  <testcase name="codeMapping" classname="com.dichmanhinh.screentranslator.LangRoutingTest" time="0.003"/>
-  <testcase name="mixedVietnameseChineseScreen" classname="com.dichmanhinh.screentranslator.LangRoutingTest" time="0.0"/>
+  <testcase name="fixedSourceLanguage" classname="com.dichmanhinh.screentranslator.LangRoutingTest" time="0.004"/>
+  <testcase name="codeMapping" classname="com.dichmanhinh.screentranslator.LangRoutingTest" time="0.001"/>
+  <testcase name="mixedVietnameseChineseScreen" classname="com.dichmanhinh.screentranslator.LangRoutingTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
