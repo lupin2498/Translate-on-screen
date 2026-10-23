@@ -1,9 +1,0 @@
-ro.build.fingerprint=google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys
-ro.build.id=AE3A.240806.043
-ro.build.version.sdk=35
-ro.build.version.release=15
-ro.build.version.security_patch=2024-09-05
-ro.product.cpu.abilist=x86_64,arm64-v8a
-ro.dalvik.vm.native.bridge=libndk_translation.so
-Physical size: 1080x2400
-Physical density: 420
