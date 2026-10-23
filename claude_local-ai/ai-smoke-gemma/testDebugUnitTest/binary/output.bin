@@ -1,0 +1,64 @@
+'# Gemma 4 E2B (Google) · đọc ảnh
+
+�Nạp: 1369 ms · arch=gemma4;desc=gemma4 E2B Q4_0;ctx=6144;params=4628569635;vision=1;template={#   Template: Google Gemma 4 Canonical Chat Tem · vision=true
+
+�## Giao diện + phụ đề tiếng Trung — 17166 ms, 1 lượt gọi, prompt 493 tok (dùng lại 0) 11361ms, sinh 90 tok 5702ms (15.8 tok/s)
+
+- `设置` → Cài đặt
+5- `账号与安全` → Tài khoản và bảo mật
+j- `我们明天去北京看李老师吧。` → Ngày mai chúng ta đi Bắc Kinh gặp thầy Lý nhé.
+y- `他说你不用担心，一切都会好起来的。` → Anh ấy nói em đừng lo, mọi chuyện sẽ ổn thôi.
+- `确定` → Xác nhận
+- `取消` → Hủy
+
+�## Tiếng Nga (có chữ OCR đọc nhầm La-tinh) — 5032 ms, 1 lượt gọi, prompt 470 tok (dùng lại 403) 1927ms, sinh 50 tok 3101ms (16.1 tok/s)
+
+F- `Пpивeт, кaк дeлa?` → Chào bạn, dạo này thế nào?
+u- `Сегодня мы будем изучать новые слова` → Hôm nay chúng ta sẽ học từ mới
+X- `Нажмите кнопку «Продолжить»` → Nhấn nút "Tiếp tục"
+
+�## Tiếng Anh có lỗi OCR — 5919 ms, 1 lượt gọi, prompt 472 tok (dùng lại 403) 1845ms, sinh 65 tok 4070ms (16.0 tok/s)
+
+C- `Tap here to contiune` → Nhấn tại đây để tiếp tục
+p- `Your account has been successfuly verifed` → Tài khoản của bạn đã được xác minh thành công
+b- `Download the latest verslon of the app` → Tải phiên bản mới nhất của ứng dụng
+- `Settings` → Cài đặt
+
+x## Nhật + Hàn — 4032 ms, 1 lượt gọi, prompt 441 tok (dùng lại 394) 1261ms, sinh 44 tok 2768ms (15.9 tok/s)
+
+R- `今日は天気がいいですね。` → Hôm nay thời tiết đẹp nhỉ.
+#- `ログイン` → Đăng nhập
+_- `안녕하세요, 만나서 반갑습니다.` → Xin chào, rất vui được gặp bạn.
+
+�## Hội thoại nhiều câu (ngữ cảnh, xưng hô) — 5712 ms, 1 lượt gọi, prompt 466 tok (dùng lại 394) 1844ms, sinh 61 tok 3865ms (15.8 tok/s)
+
+F- `哥哥，你什么时候回来？` → Anh ơi, khi nào anh về?
+�- `我下个月就回家了，你要好好照顾妈妈。` → Em tháng sau sẽ về nhà, anh phải chăm sóc mẹ cho tốt nhé.
+i- `知道了，你也要注意身体！` → Biết rồi, anh cũng phải giữ gìn sức khỏe nha!
+
+�## Đọc ảnh video_text_ru.jpg (1080x1092) — 75400 ms, prompt 798 tok (dùng lại 0) 44971ms, sinh 463 tok 30417ms (15.2 tok/s)
+
+�- `ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ — И ЖИЗНЬ ИЗМЕНИЛАСЬ НА 57 ЛЕТ` → Cô ấy đã gọi cho đối thủ ngay trước đám cưới — và cuộc đời đã thay đổi ở tuổi 57
+�- `Николай Губенко готовился жениться на актрисе Марианне Вертинской. Заявление подали, свидетелем должен был стать Владимир Высоцкий. Но за несколько дней до свадьбы звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьба сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовце, мечтавший об актёрстве, стал последним министром культуры СССР. Поставьте лайк, если Вы считаете, что настоящую любовь стоит отстаивать, даже когда кажется, что уже слишком поздно.` → Nikolai Gubenko chuẩn bị kết hôn với nữ diễn viên Marianne Vertinskaya. Lời tuyên bố đã được đưa ra, Vladimir Vysotsky sẽ là nhân chứng. Nhưng vài ngày trước đám cưới, có một cuộc gọi. Zhanna Bolotova, người đã là bạn của Gubenko từ thời sinh viên, đã gọi cho đối thủ và nói một câu: làm sao anh có thể kết hôn nếu chúng ta yêu nhau? Đám cưới đã bị hủy bỏ. Và câu chuyện tình yêu đó đã bắt đầu, kéo dài năm mươi bảy năm. Nhưng con đường của Gubenko bắt đầu từ những hang động ở Odessa, nơi anh đã mất mẹ. Người từng mơ ước trở thành diễn viên, đã trở thành bộ trưởng văn hóa cuối cùng của Liên Xô. Hãy nhấn thích nếu bạn nghĩ rằng tình yêu đích thực đáng để đấu tranh, ngay cả khi dường như đã quá muộn.
+
+cKèm ảnh, OCR sai [Ceгoдня, нoвые cлoвa] → [Hôm nay, những từ mới] (50750 ms)
+
+�## Đọc ảnh video_table_zh.jpg (1080x1626) — 98595 ms, prompt 1051 tok (dùng lại 0) 70965ms, sinh 416 tok 27620ms (15.1 tok/s)
+
+:- `Từ cơ bản hay dùng` → Từ cơ bản hay dùng
+.- `1. hảo de Vàng!` → 1. hảo de Vàng!
+@- `2. hảo ba Được thôi!` → 2. hảo ba Được thôi!
+H- `3. 不是 pú sư Không phải` → 3. 不是 pú sư Không phải
+O- `4. 不對 pú tụy Không đúng` → 4. 不đối pú tụy Không đúng
+H- `5. 沒有 máy dầu Không có` → 5. 沒有 máy dầu Không có
+@- `6. có ý khả i Có thể` → 6. có ý khả i Có thể
+8- `7. xẻ xẻ Cảm ơn!` → 7. xẻ xẻ Cảm ơn!
+F- `8. 不要 pú dao Không cần` → 8. 不要 pú dao Không cần
+J- `9. 不想 pu xèng Không muốn` → 9. 不想 pu xèng Không muốn
+\- `10. thật của Trần tơ Thật đấy` → 10. thật của Trần tơ Thật đấy
+V- `11. không dùng pú dung Không cần` → 11. không dùng pú dung Không cần
+X- `12. không đi pu xíng Không được` → 12. không đi pu xíng Không được
+
+FKèm ảnh, OCR sai [学习, 单词] → [Hào de, Vàng!] (80894 ms)
+
+

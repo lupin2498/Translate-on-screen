@@ -28,39 +28,27 @@ Daemon will be stopped at the end of the build
 > Task :app:processDebugManifest
 > Task :app:preDebugUnitTestBuild UP-TO-DATE
 > Task :app:javaPreCompileDebug
-> Task :app:javaPreCompileDebugUnitTest
 > Task :app:processDebugManifestForPackage
+> Task :app:javaPreCompileDebugUnitTest
 > Task :app:processDebugResources
 > Task :app:compileDebugKotlin
 > Task :app:compileDebugJavaWithJavac NO-SOURCE
 > Task :app:processDebugJavaRes
 > Task :app:bundleDebugClassesToCompileJar
 > Task :app:bundleDebugClassesToRuntimeJar
+> Task :app:compileDebugUnitTestKotlin
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processDebugUnitTestJavaRes
+load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+load: '</s>' is a normal token here, removing it from EOG list
+.....................................
+llama_kv_cache_iswa: using full-size SWA cache (ref: https://github.com/ggml-org/llama.cpp/pull/13194#issuecomment-2868343055)
+init_audio: audio input is in experimental stage and may have reduced quality:
+    https://github.com/ggml-org/llama.cpp/discussions/13759
+[ScreenAI] model loaded: ctx=6144 threads=4 vision=1
+> Task :app:testDebugUnitTest
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792723398009.json
 
-> Task :app:compileDebugUnitTestKotlin FAILED
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:14:14 Unresolved reference: imageio
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:68:19 Unresolved reference: ImageIO
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:69:33 Unresolved reference: width
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:69:45 Unresolved reference: height
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:71:31 Unresolved reference: height
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:71:61 Unresolved reference: width
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:72:25 Unresolved reference: getRGB
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:77:33 Unresolved reference: width
-e: file:///home/runner/work/Translate-on-screen/Translate-on-screen/app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt:77:44 Unresolved reference: height
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792722994748.json
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':app:compileDebugUnitTestKotlin'.
-> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
-   > Compilation error. See log for more details
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 1m 46s
-21 actionable tasks: 21 executed
+BUILD SUCCESSFUL in 7m 34s
+23 actionable tasks: 23 executed

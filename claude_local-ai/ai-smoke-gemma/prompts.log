@@ -1,0 +1,231 @@
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+Source language (detected, may be wrong): Simplified Chinese
+Translate into Vietnamese:
+<s1>设置</s1>
+<s2>账号与安全</s2>
+<s3>我们明天去北京看李老师吧。</s3>
+<s4>他说你不用担心，一切都会好起来的。</s4>
+<s5>确定</s5>
+<s6>取消</s6><turn|>
+<|turn>model
+
+=== OUTPUT (90 tok, 5702 ms)
+<s1>Cài đặt</s1>
+<s2>Tài khoản và bảo mật</s2>
+<s3>Ngày mai chúng ta đi Bắc Kinh gặp thầy Lý nhé.</s3>
+<s4>Anh ấy nói em đừng lo, mọi chuyện sẽ ổn thôi.</s4>
+<s5>Xác nhận</s5>
+<s6>Hủy</s6>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+Source language (detected, may be wrong): Russian
+Translate into Vietnamese:
+<s1>Пpивeт, кaк дeлa?</s1>
+<s2>Сегодня мы будем изучать новые слова</s2>
+<s3>Нажмите кнопку «Продолжить»</s3><turn|>
+<|turn>model
+
+=== OUTPUT (50 tok, 3101 ms)
+<s1>Chào bạn, dạo này thế nào?</s1>
+<s2>Hôm nay chúng ta sẽ học từ mới</s2>
+<s3>Nhấn nút "Tiếp tục"</s3>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+Source language (detected, may be wrong): English
+Translate into Vietnamese:
+<s1>Tap here to contiune</s1>
+<s2>Your account has been successfuly verifed</s2>
+<s3>Download the latest verslon of the app</s3>
+<s4>Settings</s4><turn|>
+<|turn>model
+
+=== OUTPUT (65 tok, 4070 ms)
+<s1>Nhấn tại đây để tiếp tục</s1>
+<s2>Tài khoản của bạn đã được xác minh thành công</s2>
+<s3>Tải phiên bản mới nhất của ứng dụng</s3>
+<s4>Cài đặt</s4>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+Translate into Vietnamese:
+<s1>今日は天気がいいですね。</s1>
+<s2>ログイン</s2>
+<s3>안녕하세요, 만나서 반갑습니다.</s3><turn|>
+<|turn>model
+
+=== OUTPUT (44 tok, 2768 ms)
+<s1>Hôm nay thời tiết đẹp nhỉ.</s1>
+<s2>Đăng nhập</s2>
+<s3>Xin chào, rất vui được gặp bạn.</s3>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Use the context of the whole screen to infer the intended text. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+Source language (detected, may be wrong): Simplified Chinese
+Translate into Vietnamese:
+<s1>哥哥，你什么时候回来？</s1>
+<s2>我下个月就回家了，你要好好照顾妈妈。</s2>
+<s3>知道了，你也要注意身体！</s3><turn|>
+<|turn>model
+
+=== OUTPUT (61 tok, 3865 ms)
+<s1>Anh ơi, khi nào anh về?</s1>
+<s2>Em tháng sau sẽ về nhà, anh phải chăm sóc mẹ cho tốt nhé.</s2>
+<s3>Biết rồi, anh cũng phải giữ gìn sức khỏe nha!</s3>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app. You receive a screenshot. Read ALL text in the image in natural reading order (including stylized text, speech bubbles and signs), group it into lines or paragraphs, and translate each one into Vietnamese.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+Output only, one item per line: <p><o>original text</o><t>translation</t></p>
+Skip text that is already in Vietnamese. If there is no text, output <none/>.<turn|>
+<|turn>user
+<__media__>
+Read and translate the text in this screenshot into Vietnamese.<turn|>
+<|turn>model
+
+=== OUTPUT (463 tok, 30417 ms)
+<p><o>ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ — И ЖИЗНЬ ИЗМЕНИЛАСЬ НА 57 ЛЕТ</o><t>Cô ấy đã gọi cho đối thủ ngay trước đám cưới — và cuộc đời đã thay đổi ở tuổi 57</t></p>
+<p><o>Николай Губенко готовился жениться на актрисе Марианне Вертинской. Заявление подали, свидетелем должен был стать Владимир Высоцкий. Но за несколько дней до свадьбы звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьба сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовце, мечтавший об актёрстве, стал последним министром культуры СССР. Поставьте лайк, если Вы считаете, что настоящую любовь стоит отстаивать, даже когда кажется, что уже слишком поздно.</o><t>Nikolai Gubenko chuẩn bị kết hôn với nữ diễn viên Marianne Vertinskaya. Lời tuyên bố đã được đưa ra, Vladimir Vysotsky sẽ là nhân chứng. Nhưng vài ngày trước đám cưới, có một cuộc gọi. Zhanna Bolotova, người đã là bạn của Gubenko từ thời sinh viên, đã gọi cho đối thủ và nói một câu: làm sao anh có thể kết hôn nếu chúng ta yêu nhau? Đám cưới đã bị hủy bỏ. Và câu chuyện tình yêu đó đã bắt đầu, kéo dài năm mươi bảy năm. Nhưng con đường của Gubenko bắt đầu từ những hang động ở Odessa, nơi anh đã mất mẹ. Người từng mơ ước trở thành diễn viên, đã trở thành bộ trưởng văn hóa cuối cùng của Liên Xô. Hãy nhấn thích nếu bạn nghĩ rằng tình yêu đích thực đáng để đấu tranh, ngay cả khi dường như đã quá muộn.</t></p>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order, together with the screenshot itself.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Look at the image to read what is really written. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+<__media__>
+Translate into Vietnamese:
+<s1>Ceгoдня</s1>
+<s2>нoвые cлoвa</s2><turn|>
+<|turn>model
+
+=== OUTPUT (24 tok, 1517 ms)
+<s1>Hôm nay</s1>
+<s2>những từ mới</s2>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app. You receive a screenshot. Read ALL text in the image in natural reading order (including stylized text, speech bubbles and signs), group it into lines or paragraphs, and translate each one into Vietnamese.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+Output only, one item per line: <p><o>original text</o><t>translation</t></p>
+Skip text that is already in Vietnamese. If there is no text, output <none/>.<turn|>
+<|turn>user
+<__media__>
+Read and translate the text in this screenshot into Vietnamese.<turn|>
+<|turn>model
+
+=== OUTPUT (416 tok, 27620 ms)
+<p><o>Từ cơ bản hay dùng</o><t>Từ cơ bản hay dùng</t></p>
+<p><o>1. hảo de Vàng!</o><t>1. hảo de Vàng!</t></p>
+<p><o>2. hảo ba Được thôi!</o><t>2. hảo ba Được thôi!</t></p>
+<p><o>3. 不是 pú sư Không phải</o><t>3. 不是 pú sư Không phải</t></p>
+<p><o>4. 不對 pú tụy Không đúng</o><t>4. 不đối pú tụy Không đúng</t></p>
+<p><o>5. 沒有 máy dầu Không có</o><t>5. 沒有 máy dầu Không có</t></p>
+<p><o>6. có ý khả i Có thể</o><t>6. có ý khả i Có thể</t></p>
+<p><o>7. xẻ xẻ Cảm ơn!</o><t>7. xẻ xẻ Cảm ơn!</t></p>
+<p><o>8. 不要 pú dao Không cần</o><t>8. 不要 pú dao Không cần</t></p>
+<p><o>9. 不想 pu xèng Không muốn</o><t>9. 不想 pu xèng Không muốn</t></p>
+<p><o>10. thật của Trần tơ Thật đấy</o><t>10. thật của Trần tơ Thật đấy</t></p>
+<p><o>11. không dùng pú dung Không cần</o><t>11. không dùng pú dung Không cần</t></p>
+<p><o>12. không đi pu xíng Không được</o><t>12. không đi pu xíng Không được</t></p>
+
+=== PROMPT
+<|turn>system
+You are the translation engine of an on-screen translator app on a phone. The user sends text that OCR recognized from a screenshot, split into numbered segments <s1>…</s1>, <s2>…</s2>… in screen order, together with the screenshot itself.
+Rules:
+- OCR makes mistakes: wrong or missing diacritics, confused letters (rn/m, l/I/1, 0/O, Latin/Cyrillic look-alikes), wrong similar-looking Chinese characters, broken or merged words. Look at the image to read what is really written. Translate what is really meant, never the OCR noise.
+- Translate every segment into Vietnamese. Use the whole screen as context so terms, names and pronouns stay consistent.
+- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.
+- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the speakers' relationship and tone; keep them consistent across the screen.
+- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual romanization.
+- UI labels (buttons, menus) should be short, like a Vietnamese app would say them.
+- Keep numbers, prices, dates, URLs, @handles, code and brand names as they are. A segment already in Vietnamese, or that is only a name/number, is copied unchanged.
+- Output ONLY the translations, each wrapped in the same tag as its segment (<s1>…</s1>, <s2>…</s2>…), one per line, same count and order. No notes, no explanations.<turn|>
+<|turn>user
+<__media__>
+Translate into Vietnamese:
+<s1>学习</s1>
+<s2>单词</s2><turn|>
+<|turn>model
+
+=== OUTPUT (86 tok, 5666 ms)
+<s1>Hào de</s1>
+<s2>Vàng!</s2>
+<s3>Hào to</s3>
+<s4>Được thôi!</s4>
+<s5>Không phải</s5>
+<s6>Không được</s6>
+<s7>Không có</s7>
+<s8>Có thể
+
