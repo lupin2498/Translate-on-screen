@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.AiTranslatorTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:33:13" hostname="runnervm8k3b6" time="0.227">
+<testsuite name="com.dichmanhinh.screentranslator.AiTranslatorTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-23T10:35:17" hostname="runnervm8k3b6" time="0.13">
   <properties/>
-  <testcase name="readImageNeedsVision" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.087"/>
-  <testcase name="missingSegmentIsRetriedAlone" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.011"/>
-  <testcase name="hyMtTranslatesEachSegmentWithOfficialTemplate" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.009"/>
-  <testcase name="imageOnlyForVisionModels" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.006"/>
-  <testcase name="brokenOutputIsRejected" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.01"/>
-  <testcase name="largeScreenIsSplitWithContext" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.092"/>
-  <testcase name="generalTranslatesWholeScreenInOneCall" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.001"/>
-  <testcase name="allFailedThrows" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.006"/>
+  <testcase name="readImageNeedsVision" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.041"/>
+  <testcase name="missingSegmentIsRetriedAlone" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.007"/>
+  <testcase name="hyMtTranslatesEachSegmentWithOfficialTemplate" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.004"/>
+  <testcase name="imageOnlyForVisionModels" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.004"/>
+  <testcase name="brokenOutputIsRejected" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.008"/>
+  <testcase name="largeScreenIsSplitWithContext" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.053"/>
+  <testcase name="generalTranslatesWholeScreenInOneCall" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.003"/>
+  <testcase name="allFailedThrows" classname="com.dichmanhinh.screentranslator.AiTranslatorTest" time="0.004"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

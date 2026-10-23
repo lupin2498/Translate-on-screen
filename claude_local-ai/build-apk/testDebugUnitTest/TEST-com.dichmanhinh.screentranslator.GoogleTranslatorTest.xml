@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.GoogleTranslatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:33:13" hostname="runnervm8k3b6" time="0.127">
+<testsuite name="com.dichmanhinh.screentranslator.GoogleTranslatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-23T10:35:17" hostname="runnervm8k3b6" time="0.046">
   <properties/>
-  <testcase name="longTextIsSplitAtSentences" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.028"/>
-  <testcase name="batchesStayUnderGetLimit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.008"/>
-  <testcase name="shortTextIsSingleRequest" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.0"/>
-  <testcase name="hugeSentenceIsHardSplit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.086"/>
+  <testcase name="longTextIsSplitAtSentences" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.011"/>
+  <testcase name="batchesStayUnderGetLimit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.004"/>
+  <testcase name="shortTextIsSingleRequest" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.001"/>
+  <testcase name="hugeSentenceIsHardSplit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.03"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.ParagraphBuilderTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:33:13" hostname="runnervm8k3b6" time="0.074">
+<testsuite name="com.dichmanhinh.screentranslator.ParagraphBuilderTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-10-23T10:35:17" hostname="runnervm8k3b6" time="0.041">
   <properties/>
-  <testcase name="captionIsGroupedIntoWholeSentences" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.025"/>
+  <testcase name="captionIsGroupedIntoWholeSentences" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.009"/>
   <testcase name="translatableText" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
   <testcase name="sentenceEndDetection" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
-  <testcase name="joinHandlesHyphenAndCjk" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
+  <testcase name="joinHandlesHyphenAndCjk" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
   <testcase name="fixOcrCase" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
-  <testcase name="centeredParagraphKeepsNamesTogether" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.004"/>
-  <testcase name="splitByScriptSeparatesHanAndPhonetic" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.015"/>
+  <testcase name="centeredParagraphKeepsNamesTogether" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
+  <testcase name="splitByScriptSeparatesHanAndPhonetic" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.007"/>
   <testcase name="centeredTextIsMerged" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
-  <testcase name="vocabularyTableRowsAreNotMerged" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.012"/>
-  <testcase name="groupRowsSplitsMergedTableRows" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.006"/>
-  <testcase name="bulletsStartNewParagraph" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
+  <testcase name="vocabularyTableRowsAreNotMerged" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.005"/>
+  <testcase name="groupRowsSplitsMergedTableRows" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.003"/>
+  <testcase name="bulletsStartNewParagraph" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
   <testcase name="paragraphNextToButtonsStillMerges" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
   <testcase name="furiganaIsSkipped" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
-  <testcase name="separatedLinesStaySeparate" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
+  <testcase name="separatedLinesStaySeparate" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.003"/>
   <testcase name="sideBySideColumnsAreNotMerged" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
   <testcase name="differentFontSizesAreNotMerged" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
   <testcase name="realOcrQuirksStillMerge" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
-  <testcase name="rubyElementsAreRemoved" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.0"/>
+  <testcase name="rubyElementsAreRemoved" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.003"/>
   <testcase name="groupRowsKeepsSentenceTogether" classname="com.dichmanhinh.screentranslator.ParagraphBuilderTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -3,9 +3,9 @@ Archive:  apk/DichManHinh.apk
 ---------  ---------- -----   ----
        56  1981-01-01 01:01   META-INF/com/android/build/gradle/app-metadata.properties
       120  1981-01-01 01:01   META-INF/version-control-info.textproto
-     2246  1981-01-01 01:01   assets/dexopt/baseline.prof
-      237  1981-01-01 01:01   assets/dexopt/baseline.profm
-  8296796  1981-01-01 01:01   classes.dex
+     2515  1981-01-01 01:01   assets/dexopt/baseline.prof
+      236  1981-01-01 01:01   assets/dexopt/baseline.profm
+  8301804  1981-01-01 01:01   classes.dex
   2959108  1981-01-01 01:01   classes2.dex
   1423696  1981-01-01 01:01   lib/arm64-v8a/libc++_shared.so
    756280  1981-01-01 01:01   lib/arm64-v8a/libggml-base.so
@@ -374,7 +374,7 @@ Archive:  apk/DichManHinh.apk
       464  1981-01-01 01:01   res/Hd.xml
      1255  1981-01-01 01:01   res/I3.9.png
       524  1981-01-01 01:01   res/I3.xml
-      928  1981-01-01 01:01   res/I6.xml
+     1220  1981-01-01 01:01   res/I6.xml
       704  1981-01-01 01:01   res/IR.xml
      1544  1981-01-01 01:01   res/IX.9.png
       820  1981-01-01 01:01   res/Ib.xml
@@ -1059,6 +1059,6 @@ Archive:  apk/DichManHinh.apk
       464  1981-01-01 01:01   res/zq.xml
      1510  1981-01-01 01:01   res/zw.9.png
       884  1981-01-01 01:01   res/zz.png
-  1180356  1981-01-01 01:01   resources.arsc
+  1180396  1981-01-01 01:01   resources.arsc
 ---------                     -------
- 71774745                     1059 files
+ 71780353                     1059 files
