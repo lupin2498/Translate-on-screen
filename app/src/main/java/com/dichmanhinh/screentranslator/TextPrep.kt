@@ -14,11 +14,57 @@ object TextPrep {
 
     /** Làm sạch chữ OCR (giữ nguyên nghĩa, chỉ bỏ ký tự rác và khoảng trắng thừa). */
     fun clean(text: String): String {
-        var s = joinCjkSpaces(text)
+        var s = joinCjkSpaces(fixMixedScript(text))
         s = s.replace(LONE_SYMBOL, " ")
         s = s.replace(JUNK_TAIL, "")
         s = dropUnbalancedClosers(s)
         return s.replace(SPACES, " ").trim()
+    }
+
+    /** Cặp chữ La-tinh / Kirin trông giống hệt nhau mà OCR hay đọc lẫn. */
+    private val LOOKALIKES = listOf(
+        'a' to 'а', 'c' to 'с', 'e' to 'е', 'o' to 'о', 'p' to 'р', 'x' to 'х', 'y' to 'у', 'k' to 'к',
+        'A' to 'А', 'B' to 'В', 'C' to 'С', 'E' to 'Е', 'H' to 'Н', 'K' to 'К', 'M' to 'М', 'O' to 'О',
+        'P' to 'Р', 'T' to 'Т', 'X' to 'Х', 'Y' to 'У',
+    )
+    private val LAT_TO_CYR = LOOKALIKES.toMap()
+    private val CYR_TO_LAT = LOOKALIKES.associate { (l, c) -> c to l }
+
+    private fun isCyrillic(c: Char) = c in '\u0400'..'\u04FF'
+    private fun isLatin(c: Char) = c in 'A'..'Z' || c in 'a'..'z'
+
+    /**
+     * Một từ lẫn cả chữ La-tinh và chữ Kirin là do OCR đọc lẫn chữ trông giống nhau ("Пpивeт" có p, e
+     * La-tinh): đổi các chữ lẫn về bộ chữ chiếm đa số trong từ, để máy dịch nhận ra đúng từ "Привет".
+     * Chỉ đổi khi mọi chữ thiểu số đều có chữ giống hệt ở bộ chữ kia; từ thuần một bộ chữ giữ nguyên.
+     */
+    fun fixMixedScript(s: String): String {
+        if (s.none { isCyrillic(it) } || s.none { isLatin(it) }) return s
+        val sb = StringBuilder(s)
+        var i = 0
+        while (i < sb.length) {
+            if (!sb[i].isLetter()) { i++; continue }
+            var j = i
+            var cyr = 0
+            var lat = 0
+            while (j < sb.length && sb[j].isLetter()) {
+                if (isCyrillic(sb[j])) cyr++ else if (isLatin(sb[j])) lat++
+                j++
+            }
+            if (cyr > 0 && lat > 0) {
+                val word = sb.substring(i, j)
+                val toCyr = cyr >= lat && word.all { !isLatin(it) || it in LAT_TO_CYR }
+                val toLat = !toCyr && lat > cyr && word.all { !isCyrillic(it) || it in CYR_TO_LAT }
+                if (toCyr || toLat) {
+                    for (k in i until j) {
+                        val c = sb[k]
+                        sb.setCharAt(k, if (toCyr) LAT_TO_CYR[c] ?: c else CYR_TO_LAT[c] ?: c)
+                    }
+                }
+            }
+            i = j
+        }
+        return sb.toString()
     }
 
     /** Tiếng Trung/Nhật không dùng khoảng trắng giữa các chữ: khoảng trắng ở đó là do OCR. */

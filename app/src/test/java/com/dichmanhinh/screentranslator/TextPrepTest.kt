@@ -19,6 +19,19 @@ class TextPrepTest {
     }
 
     @Test
+    fun mixedScriptLookalikesAreFixed() {
+        // ML Kit đọc vài chữ Kirin thành chữ La-tinh giống hệt (p, e, a): máy dịch không nhận ra từ
+        assertEquals("Привет, как дела?", TextPrep.clean("Пpивeт, кaк дeлa?"))
+        assertEquals("СЕГОДНЯ", TextPrep.fixMixedScript("СЕГOДНЯ"))
+        // Chữ Kirin lẫn vào từ La-tinh
+        assertEquals("Hello world", TextPrep.fixMixedScript("Hеllo wоrld"))
+        // Từ thuần một bộ chữ, hoặc chữ lẫn không có cặp giống hệt: giữ nguyên
+        assertEquals("Привет Mike, iPhone 15", TextPrep.fixMixedScript("Привет Mike, iPhone 15"))
+        assertEquals("Пrивет", TextPrep.fixMixedScript("Пrивет"))
+        assertEquals("Москва", TextPrep.fixMixedScript("Москва"))
+    }
+
+    @Test
     fun russianVideoNoiseIsRemoved() {
         // Chữ Tesseract đọc từ video tiếng Nga (viền chữ, khuôn mặt bị đọc thành ký tự)
         assertEquals(
