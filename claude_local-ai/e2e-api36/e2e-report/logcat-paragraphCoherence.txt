@@ -1,43 +1,43 @@
-10-23 03:46:07.637  7085  7085 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:46:07.641  7085  7085 I AndroidRuntime: Using default boot image
-10-23 03:46:07.641  7085  7085 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:46:07.762  7085  7085 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:46:08.307  7096  7110 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
-10-23 03:46:09.957  7096  7110 I ST-E2E  : ==== START mode=entire-screen sdk=36
-10-23 03:46:10.621  7096  7110 I ST-E2E  : translate pre-check: Chào buổi sáng
-10-23 03:46:12.538  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
-10-23 03:46:14.512  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
-10-23 03:46:16.481  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
-10-23 03:46:16.495  7096  7110 I ST-E2E  : consent dialog: spinner=true title='Share your screen with Dịch Màn Hình?' positive='Next'
-10-23 03:46:18.288  7096  7110 I ST-E2E  : spinner -> '(Entire screen|Share entire screen|Full screen)' selected=true
-10-23 03:46:18.609  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-consent-selected.png
-10-23 03:46:18.627  7096  7110 I ST-E2E  : click consent button 'Share screen'
-10-23 03:46:19.156  7096  7249 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:46:19.157  7096  7249 I ScreenTranslator: captured content visible=true
-10-23 03:46:19.267  7096  7110 I ST-E2E  : service running=true lastError=null
-10-23 03:46:22.728  7096  7110 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
-10-23 03:46:23.045  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-before-tap.png
-10-23 03:46:23.413  7096  7096 I ScreenTranslator: capture singleApp=false newFrame=true frames=25 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:47:14.349  7096  7096 I ScreenTranslator: ocr blocks=3 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:47:14.439  7096  7096 I ScreenTranslator: unit [en/translate:en] 'zosterday "Nom complet: Gazo' -> 'zosterday "Nom đầy đủ: Gazo'
-10-23 03:47:14.439  7096  7096 I ScreenTranslator: unit [fr/translate:fr] 'En mélangeant une drill sombre, des productions puissantes e' -> 'Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh'
-10-23 03:47:14.439  7096  7096 I ScreenTranslator: unit [fr/translate:fr] 'Situation en 2026: Au milieu de l'année 2026, Gazo poursuit ' -> 'Tình hình năm 2026: Vào giữa năm 2026, Gazo tiếp tục phát tr'
-10-23 03:47:14.440  7096  7096 I ScreenTranslator: result blocks=3 first='zosterday "Nom đầy đủ: Gazo'
-10-23 03:47:14.446  7096  7096 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:47:15.983  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
-10-23 03:47:15.984  7096  7110 I ST-E2E  : RESULT mode=entire-screen sdk=36 done=true results=1 calls=1 blocks=3 lastError=null
-10-23 03:47:15.984  7096  7110 I ST-E2E  :   block[0] 'zosterday "Nom complet: Gazo' -> 'zosterday "Nom đầy đủ: Gazo'
-10-23 03:47:15.984  7096  7110 I ST-E2E  :   block[1] 'En mélangeant une drill sombre, des productions puissantes et une manière de rapper immédiatement reconnaissable, Gazo s'est imposé comme I'une des figures majeures de la scène urbaine francophone. Ses morceaux accumulent régulièrement des millions d'écoutes sur les plateformes de streaming, tandis que son univers visuel et son identité musicale continuent d'attirer un public toujours plus large.' -> 'Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh mẽ và phong cách đọc rap dễ nhận biết, Gazo đã tự khẳng định mình là một trong những nhân vật chính của bối cảnh đô thị nói tiếng Pháp. Các bài hát của anh thường xuyên tích lũy hàng triệu lượt phát trên các nền tảng phát trực tuyến, trong khi vũ trụ hình ảnh và bản sắc âm nhạc của anh tiếp tục thu hút lượng khán giả ngày càng mở rộng.'
-10-23 03:47:15.984  7096  7110 I ST-E2E  :   block[2] 'Situation en 2026: Au milieu de l'année 2026, Gazo poursuit son évolution avec de nouveaux projets et plusieurs collaborations remarquées. Ses sorties figurent régulièrement parmi les plus écoutées, alors que sa popularité sur les réseaux sociaux ne cesse de grandir. Grâce à sa Constance et à son influence dans la drill moderne, il reste considéré comme l'un des artistes les plus importants de sa génération.' -> 'Tình hình năm 2026: Vào giữa năm 2026, Gazo tiếp tục phát triển với các dự án mới và một số hợp tác đáng chú ý. Các bản phát hành của anh ấy thường xuyên nằm trong số những bản được nghe nhiều nhất, đồng thời mức độ phổ biến của anh ấy trên mạng xã hội vẫn tiếp tục tăng lên. Nhờ sự kiên định và tầm ảnh hưởng của mình trong lĩnh vực diễn tập hiện đại, anh ấy vẫn được coi là một trong những nghệ sĩ quan trọng nhất trong thế hệ của mình.'
-10-23 03:47:15.986  7096  7110 I ST-E2E  : sample phrases recognized: 1/1
-10-23 03:47:15.987  7096  7110 I ST-E2E  : vietnamese-looking translations: 3/3
-10-23 03:47:16.014  7096  7110 I ST-E2E  : overlay window: OK via id; desc='zosterday "Nom đầy đủ: Gazo
-10-23 03:47:16.014  7096  7110 I ST-E2E  : Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh mẽ và phong cách đọc rap dễ nhận biết, Gazo đã tự khẳng định mình là một trong những nhân vật chính của bối cản'
-10-23 03:47:16.014  7096  7110 I ST-E2E  : PASS mode=entire-screen sdk=36 blocks=3 matched=1
-10-23 03:47:16.015  7096  7110 I ST-E2E  : paragraph units=3
-10-23 03:47:16.015  7096  7110 I ST-E2E  : PASS paragraphCoherence
-10-23 03:47:16.015  7096  7110 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=3 lastError=null
-10-23 03:47:16.361  7096  7110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
-10-23 03:47:16.701  7096  7110 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
-10-23 03:47:16.713  7096  7249 I ScreenTranslator: projection stopped
-10-23 03:47:17.710  7085  7085 I AndroidRuntime: VM exiting with result code 0.
+10-23 10:49:11.369  7338  7338 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 10:49:11.374  7338  7338 I AndroidRuntime: Using default boot image
+10-23 10:49:11.375  7338  7338 I AndroidRuntime: Leaving lock profiling enabled
+10-23 10:49:11.560  7338  7338 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 10:49:12.400  7349  7363 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
+10-23 10:49:14.135  7349  7363 I ST-E2E  : ==== START mode=entire-screen sdk=36
+10-23 10:49:14.788  7349  7363 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 10:49:16.991  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
+10-23 10:49:19.746  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
+10-23 10:49:21.894  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
+10-23 10:49:22.282  7349  7363 I ST-E2E  : consent dialog: spinner=true title='Share your screen with Dịch Màn Hình?' positive='Next'
+10-23 10:49:24.317  7349  7363 I ST-E2E  : spinner -> '(Entire screen|Share entire screen|Full screen)' selected=true
+10-23 10:49:24.769  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-consent-selected.png
+10-23 10:49:24.788  7349  7363 I ST-E2E  : click consent button 'Share screen'
+10-23 10:49:25.165  7349  7532 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 10:49:25.165  7349  7532 I ScreenTranslator: captured content visible=true
+10-23 10:49:25.389  7349  7363 I ST-E2E  : service running=true lastError=null
+10-23 10:49:28.786  7349  7363 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
+10-23 10:49:29.245  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-before-tap.png
+10-23 10:49:29.765  7349  7349 I ScreenTranslator: capture singleApp=false newFrame=true frames=29 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 10:50:15.348  7349  7349 I ScreenTranslator: ocr blocks=3 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 10:50:15.490  7349  7349 I ScreenTranslator: unit [en/translate:en] 'zosterday "Nom complet: Gazo' -> 'zosterday "Nom đầy đủ: Gazo'
+10-23 10:50:15.490  7349  7349 I ScreenTranslator: unit [fr/translate:fr] 'En mélangeant une drill sombre, des productions puissantes e' -> 'Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh'
+10-23 10:50:15.490  7349  7349 I ScreenTranslator: unit [fr/translate:fr] 'Situation en 2026: Au milieu de l'année 2026, Gazo poursuit ' -> 'Tình hình năm 2026: Vào giữa năm 2026, Gazo tiếp tục phát tr'
+10-23 10:50:15.491  7349  7349 I ScreenTranslator: result blocks=3 first='zosterday "Nom đầy đủ: Gazo'
+10-23 10:50:15.501  7349  7349 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 10:50:17.163  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
+10-23 10:50:17.164  7349  7363 I ST-E2E  : RESULT mode=entire-screen sdk=36 done=true results=1 calls=1 blocks=3 lastError=null
+10-23 10:50:17.165  7349  7363 I ST-E2E  :   block[0] 'zosterday "Nom complet: Gazo' -> 'zosterday "Nom đầy đủ: Gazo'
+10-23 10:50:17.165  7349  7363 I ST-E2E  :   block[1] 'En mélangeant une drill sombre, des productions puissantes et une manière de rapper immédiatement reconnaissable, Gazo s'est imposé comme I'une des figures majeures de la scène urbaine francophone. Ses morceaux accumulent régulièrement des millions d'écoutes sur les plateformes de streaming, tandis que son univers visuel et son identité musicale continuent d'attirer un public toujours plus large.' -> 'Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh mẽ và phong cách đọc rap dễ nhận biết, Gazo đã tự khẳng định mình là một trong những nhân vật chính của bối cảnh đô thị nói tiếng Pháp. Các bài hát của anh thường xuyên tích lũy hàng triệu lượt phát trên các nền tảng phát trực tuyến, trong khi vũ trụ hình ảnh và bản sắc âm nhạc của anh tiếp tục thu hút lượng khán giả ngày càng mở rộng.'
+10-23 10:50:17.165  7349  7363 I ST-E2E  :   block[2] 'Situation en 2026: Au milieu de l'année 2026, Gazo poursuit son évolution avec de nouveaux projets et plusieurs collaborations remarquées. Ses sorties figurent régulièrement parmi les plus écoutées, alors que sa popularité sur les réseaux sociaux ne cesse de grandir. Grâce à sa Constance et à son influence dans la drill moderne, il reste considéré comme l'un des artistes les plus importants de sa génération.' -> 'Tình hình năm 2026: Vào giữa năm 2026, Gazo tiếp tục phát triển với các dự án mới và một số hợp tác đáng chú ý. Các bản phát hành của anh ấy thường xuyên nằm trong số những bản được nghe nhiều nhất, đồng thời mức độ phổ biến của anh ấy trên mạng xã hội vẫn tiếp tục tăng lên. Nhờ sự kiên định và tầm ảnh hưởng của mình trong lĩnh vực diễn tập hiện đại, anh ấy vẫn được coi là một trong những nghệ sĩ quan trọng nhất trong thế hệ của mình.'
+10-23 10:50:17.176  7349  7363 I ST-E2E  : sample phrases recognized: 1/1
+10-23 10:50:17.177  7349  7363 I ST-E2E  : vietnamese-looking translations: 3/3
+10-23 10:50:17.216  7349  7363 I ST-E2E  : overlay window: OK via id; desc='zosterday "Nom đầy đủ: Gazo
+10-23 10:50:17.216  7349  7363 I ST-E2E  : Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh mẽ và phong cách đọc rap dễ nhận biết, Gazo đã tự khẳng định mình là một trong những nhân vật chính của bối cản'
+10-23 10:50:17.217  7349  7363 I ST-E2E  : PASS mode=entire-screen sdk=36 blocks=3 matched=1
+10-23 10:50:17.217  7349  7363 I ST-E2E  : paragraph units=3
+10-23 10:50:17.217  7349  7363 I ST-E2E  : PASS paragraphCoherence
+10-23 10:50:17.217  7349  7363 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=3 lastError=null
+10-23 10:50:17.673  7349  7363 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
+10-23 10:50:17.782  7349  7363 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
+10-23 10:50:17.809  7349  7532 I ScreenTranslator: projection stopped
+10-23 10:50:18.686  7338  7338 I AndroidRuntime: VM exiting with result code 0.

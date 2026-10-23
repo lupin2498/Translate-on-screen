@@ -1,162 +1,162 @@
-10-23 03:47:19.577  7611  7611 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:47:19.582  7611  7611 I AndroidRuntime: Using default boot image
-10-23 03:47:19.582  7611  7611 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:47:19.700  7611  7611 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:47:20.231  7622  7636 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
-10-23 03:47:21.989  7622  7636 I ST-E2E  : ==== START mode=entire-screen sdk=36
-10-23 03:47:22.583  7622  7636 I ST-E2E  : translate pre-check: Chào buổi sáng
-10-23 03:47:24.909  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
-10-23 03:47:27.510  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
-10-23 03:47:29.505  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
-10-23 03:47:29.683  7622  7636 I ST-E2E  : consent dialog: spinner=true title='Share your screen with Dịch Màn Hình?' positive='Next'
-10-23 03:47:31.522  7622  7636 I ST-E2E  : spinner -> '(Entire screen|Share entire screen|Full screen)' selected=true
-10-23 03:47:31.856  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-consent-selected.png
-10-23 03:47:31.864  7622  7636 I ST-E2E  : click consent button 'Share screen'
-10-23 03:47:32.257  7622  7773 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:47:32.257  7622  7773 I ScreenTranslator: captured content visible=true
-10-23 03:47:32.492  7622  7636 I ST-E2E  : service running=true lastError=null
-10-23 03:47:35.828  7622  7636 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
-10-23 03:47:36.477  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-before-tap.png
-10-23 03:47:37.241  7622  7622 I ScreenTranslator: capture singleApp=false newFrame=true frames=28 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:48:22.031  7622  7622 I ScreenTranslator: ocr blocks=38 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=CHINESE, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Từ cơ bàn hay dùng' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Vâng!' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '1。好的' -> '1. Được rồi'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'hao to' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Được thôi !' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '2。好四' -> '2. Bốn điều tốt'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'hảo ba' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không ph' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '不是' -> 'Không'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'pú sư' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Pây bút: Sách Trung Dài' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '4。不對' -> '4. Sai'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'pú tuây' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không đi' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '5。沒有' -> '5. Không'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'mấy dẩu' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không có' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Có thể' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '可以' -> 'được rồi'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Cám ơn!' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '謝謝' -> 'cảm ơn bạn'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh-Latn/skip-romanized] 'xia xia' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '8。不要' -> '8. Đừng'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [und/translate:auto] 'pú dao' -> 'pú dao'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '9。不想' -> '9. Không muốn'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [und/translate:auto] 'pu xėng' -> 'pu xėng'
-10-23 03:48:22.121  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không mua' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '10。真的' -> '10. Thật đấy'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'N Trân tơ' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Thật đấy' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '不用西' -> 'Không cần phải lo lắng'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [und/translate:auto] 'dung' -> 'dung'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'xíng' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [zh/translate:zh-CN] '12。不行' -> '12. không'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'pu xíng' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: unit [vi/skip-target] 'Không đữựca' -> 'null'
-10-23 03:48:22.122  7622  7622 I ScreenTranslator: result blocks=12 first='1. Được rồi'
-10-23 03:48:22.129  7622  7622 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:48:23.782  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
-10-23 03:48:23.783  7622  7636 I ST-E2E  : RESULT mode=entire-screen sdk=36 done=true results=1 calls=1 blocks=38 lastError=null
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[0] 'Từ cơ bàn hay dùng' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[1] 'Vâng!' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[2] '1。好的' -> '1. Được rồi'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[3] 'hao to' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[4] 'Được thôi !' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[5] '2。好四' -> '2. Bốn điều tốt'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[6] 'hảo ba' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[7] 'Không ph' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[8] '不是' -> 'Không'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[9] 'pú sư' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[10] 'Pây bút: Sách Trung Dài' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[11] '4。不對' -> '4. Sai'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[12] 'pú tuây' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[13] 'Không đi' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[14] '5。沒有' -> '5. Không'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[15] 'mấy dẩu' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[16] 'Không có' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[17] 'Có thể' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[18] '可以' -> 'được rồi'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[19] 'Cám ơn!' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[20] '謝謝' -> 'cảm ơn bạn'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[21] 'xia xia' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[22] '8。不要' -> '8. Đừng'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[23] 'pú dao' -> 'pú dao'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[24] 'Không cần' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[25] '9。不想' -> '9. Không muốn'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[26] 'pu xėng' -> 'pu xėng'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[27] 'Không mua' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[28] '10。真的' -> '10. Thật đấy'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[29] 'N Trân tơ' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[30] 'Thật đấy' -> ''
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[31] '不用西' -> 'Không cần phải lo lắng'
-10-23 03:48:23.784  7622  7636 I ST-E2E  :   block[32] 'dung' -> 'dung'
-10-23 03:48:23.785  7622  7636 I ST-E2E  :   block[33] 'Không cần' -> ''
-10-23 03:48:23.785  7622  7636 I ST-E2E  :   block[34] 'xíng' -> ''
-10-23 03:48:23.785  7622  7636 I ST-E2E  :   block[35] '12。不行' -> '12. không'
-10-23 03:48:23.785  7622  7636 I ST-E2E  :   block[36] 'pu xíng' -> ''
-10-23 03:48:23.785  7622  7636 I ST-E2E  :   block[37] 'Không đữựca' -> ''
-10-23 03:48:23.790  7622  7636 I ST-E2E  : sample phrases recognized: 11/12
-10-23 03:48:23.790  7622  7636 I ST-E2E  : vietnamese-looking translations: 12/38
-10-23 03:48:23.835  7622  7636 I ST-E2E  : overlay window: OK via id; desc='1. Được rồi
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 2. Bốn điều tốt
-10-23 03:48:23.835  7622  7636 I ST-E2E  : Không
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 4. Sai
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 5. Không
-10-23 03:48:23.835  7622  7636 I ST-E2E  : được rồi
-10-23 03:48:23.835  7622  7636 I ST-E2E  : cảm ơn bạn
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 8. Đừng
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 9. Không muốn
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 10. Thật đấy
-10-23 03:48:23.835  7622  7636 I ST-E2E  : Không cần phải lo lắng
-10-23 03:48:23.835  7622  7636 I ST-E2E  : 12. không'
-10-23 03:48:23.835  7622  7636 I ST-E2E  : PASS mode=entire-screen sdk=36 blocks=38 matched=11
-10-23 03:48:23.835  7622  7636 I ST-E2E  : ocr: Report(primary=CHINESE, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[0] [vi/skip-target] 'Từ cơ bàn hay dùng' -> 'null'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[1] [vi/skip-target] 'Vâng!' -> 'null'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[2] [zh/translate:zh-CN] '1。好的' -> '1. Được rồi'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[3] [vi/skip-target] 'hao to' -> 'null'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[4] [vi/skip-target] 'Được thôi !' -> 'null'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[5] [zh/translate:zh-CN] '2。好四' -> '2. Bốn điều tốt'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[6] [vi/skip-target] 'hảo ba' -> 'null'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[7] [vi/skip-target] 'Không ph' -> 'null'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[8] [zh/translate:zh-CN] '不是' -> 'Không'
-10-23 03:48:23.835  7622  7636 I ST-E2E  :   unit[9] [vi/skip-target] 'pú sư' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[10] [vi/skip-target] 'Pây bút: Sách Trung Dài' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[11] [zh/translate:zh-CN] '4。不對' -> '4. Sai'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[12] [vi/skip-target] 'pú tuây' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[13] [vi/skip-target] 'Không đi' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[14] [zh/translate:zh-CN] '5。沒有' -> '5. Không'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[15] [vi/skip-target] 'mấy dẩu' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[16] [vi/skip-target] 'Không có' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[17] [vi/skip-target] 'Có thể' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[18] [zh/translate:zh-CN] '可以' -> 'được rồi'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[19] [vi/skip-target] 'Cám ơn!' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[20] [zh/translate:zh-CN] '謝謝' -> 'cảm ơn bạn'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[21] [zh-Latn/skip-romanized] 'xia xia' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[22] [zh/translate:zh-CN] '8。不要' -> '8. Đừng'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[23] [und/translate:auto] 'pú dao' -> 'pú dao'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[24] [vi/skip-target] 'Không cần' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[25] [zh/translate:zh-CN] '9。不想' -> '9. Không muốn'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[26] [und/translate:auto] 'pu xėng' -> 'pu xėng'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[27] [vi/skip-target] 'Không mua' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[28] [zh/translate:zh-CN] '10。真的' -> '10. Thật đấy'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[29] [vi/skip-target] 'N Trân tơ' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[30] [vi/skip-target] 'Thật đấy' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[31] [zh/translate:zh-CN] '不用西' -> 'Không cần phải lo lắng'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[32] [und/translate:auto] 'dung' -> 'dung'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[33] [vi/skip-target] 'Không cần' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[34] [vi/skip-target] 'xíng' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[35] [zh/translate:zh-CN] '12。不行' -> '12. không'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[36] [vi/skip-target] 'pu xíng' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  :   unit[37] [vi/skip-target] 'Không đữựca' -> 'null'
-10-23 03:48:23.836  7622  7636 I ST-E2E  : han units=12 translated=12
-10-23 03:48:23.836  7622  7636 I ST-E2E  : PASS videoTableChinese
-10-23 03:48:23.837  7622  7636 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=38 lastError=null
-10-23 03:48:24.417  7622  7636 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
-10-23 03:48:24.831  7622  7636 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
-10-23 03:48:24.839  7622  7773 I ScreenTranslator: projection stopped
-10-23 03:48:25.726  7611  7611 I AndroidRuntime: VM exiting with result code 0.
+10-23 10:50:21.150  7862  7862 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 10:50:21.157  7862  7862 I AndroidRuntime: Using default boot image
+10-23 10:50:21.157  7862  7862 I AndroidRuntime: Leaving lock profiling enabled
+10-23 10:50:21.369  7862  7862 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 10:50:22.066  7873  7888 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
+10-23 10:50:23.768  7873  7888 I ST-E2E  : ==== START mode=entire-screen sdk=36
+10-23 10:50:24.415  7873  7888 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 10:50:27.071  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
+10-23 10:50:29.868  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
+10-23 10:50:32.284  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
+10-23 10:50:32.541  7873  7888 I ST-E2E  : consent dialog: spinner=true title='Share your screen with Dịch Màn Hình?' positive='Next'
+10-23 10:50:34.376  7873  7888 I ST-E2E  : spinner -> '(Entire screen|Share entire screen|Full screen)' selected=true
+10-23 10:50:34.812  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-consent-selected.png
+10-23 10:50:34.848  7873  7888 I ST-E2E  : click consent button 'Share screen'
+10-23 10:50:35.283  7873  8027 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 10:50:35.288  7873  8027 I ScreenTranslator: captured content visible=true
+10-23 10:50:35.488  7873  7888 I ST-E2E  : service running=true lastError=null
+10-23 10:50:39.016  7873  7888 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
+10-23 10:50:39.811  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-before-tap.png
+10-23 10:50:40.419  7873  7873 I ScreenTranslator: capture singleApp=false newFrame=true frames=24 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 10:51:20.089  7873  7873 I ScreenTranslator: ocr blocks=38 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=CHINESE, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 10:51:20.242  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Từ cơ bàn hay dùng' -> 'null'
+10-23 10:51:20.242  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Vâng!' -> 'null'
+10-23 10:51:20.242  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '1。好的' -> '1. Được rồi'
+10-23 10:51:20.242  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'hao to' -> 'null'
+10-23 10:51:20.242  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Được thôi !' -> 'null'
+10-23 10:51:20.242  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '2。好四' -> '2. Bốn điều tốt'
+10-23 10:51:20.243  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'hảo ba' -> 'null'
+10-23 10:51:20.243  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không ph' -> 'null'
+10-23 10:51:20.243  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '不是' -> 'Không'
+10-23 10:51:20.243  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'pú sư' -> 'null'
+10-23 10:51:20.243  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Pây bút: Sách Trung Dài' -> 'null'
+10-23 10:51:20.243  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '4。不對' -> '4. Sai'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'pú tuây' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không đi' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '5。沒有' -> '5. Không'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'mấy dẩu' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không có' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Có thể' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '可以' -> 'được rồi'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Cám ơn!' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '謝謝' -> 'cảm ơn bạn'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [zh-Latn/skip-romanized] 'xia xia' -> 'null'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '8。不要' -> '8. Đừng'
+10-23 10:51:20.244  7873  7873 I ScreenTranslator: unit [und/translate:auto] 'pú dao' -> 'pú dao'
+10-23 10:51:20.245  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
+10-23 10:51:20.245  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '9。不想' -> '9. Không muốn'
+10-23 10:51:20.245  7873  7873 I ScreenTranslator: unit [und/translate:auto] 'pu xėng' -> 'pu xėng'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không mua' -> 'null'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '10。真的' -> '10. Thật đấy'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'N Trân tơ' -> 'null'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Thật đấy' -> 'null'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '不用西' -> 'Không cần phải lo lắng'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [und/translate:auto] 'dung' -> 'dung'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'xíng' -> 'null'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [zh/translate:zh-CN] '12。不行' -> '12. không'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'pu xíng' -> 'null'
+10-23 10:51:20.246  7873  7873 I ScreenTranslator: unit [vi/skip-target] 'Không đữựca' -> 'null'
+10-23 10:51:20.247  7873  7873 I ScreenTranslator: result blocks=12 first='1. Được rồi'
+10-23 10:51:20.257  7873  7873 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 10:51:22.165  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
+10-23 10:51:22.166  7873  7888 I ST-E2E  : RESULT mode=entire-screen sdk=36 done=true results=1 calls=1 blocks=38 lastError=null
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[0] 'Từ cơ bàn hay dùng' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[1] 'Vâng!' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[2] '1。好的' -> '1. Được rồi'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[3] 'hao to' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[4] 'Được thôi !' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[5] '2。好四' -> '2. Bốn điều tốt'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[6] 'hảo ba' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[7] 'Không ph' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[8] '不是' -> 'Không'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[9] 'pú sư' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[10] 'Pây bút: Sách Trung Dài' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[11] '4。不對' -> '4. Sai'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[12] 'pú tuây' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[13] 'Không đi' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[14] '5。沒有' -> '5. Không'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[15] 'mấy dẩu' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[16] 'Không có' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[17] 'Có thể' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[18] '可以' -> 'được rồi'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[19] 'Cám ơn!' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[20] '謝謝' -> 'cảm ơn bạn'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[21] 'xia xia' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[22] '8。不要' -> '8. Đừng'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[23] 'pú dao' -> 'pú dao'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[24] 'Không cần' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[25] '9。不想' -> '9. Không muốn'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[26] 'pu xėng' -> 'pu xėng'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[27] 'Không mua' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[28] '10。真的' -> '10. Thật đấy'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[29] 'N Trân tơ' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[30] 'Thật đấy' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[31] '不用西' -> 'Không cần phải lo lắng'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[32] 'dung' -> 'dung'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[33] 'Không cần' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[34] 'xíng' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[35] '12。不行' -> '12. không'
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[36] 'pu xíng' -> ''
+10-23 10:51:22.170  7873  7888 I ST-E2E  :   block[37] 'Không đữựca' -> ''
+10-23 10:51:22.174  7873  7888 I ST-E2E  : sample phrases recognized: 11/12
+10-23 10:51:22.175  7873  7888 I ST-E2E  : vietnamese-looking translations: 12/38
+10-23 10:51:22.216  7873  7888 I ST-E2E  : overlay window: OK via id; desc='1. Được rồi
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 2. Bốn điều tốt
+10-23 10:51:22.216  7873  7888 I ST-E2E  : Không
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 4. Sai
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 5. Không
+10-23 10:51:22.216  7873  7888 I ST-E2E  : được rồi
+10-23 10:51:22.216  7873  7888 I ST-E2E  : cảm ơn bạn
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 8. Đừng
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 9. Không muốn
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 10. Thật đấy
+10-23 10:51:22.216  7873  7888 I ST-E2E  : Không cần phải lo lắng
+10-23 10:51:22.216  7873  7888 I ST-E2E  : 12. không'
+10-23 10:51:22.216  7873  7888 I ST-E2E  : PASS mode=entire-screen sdk=36 blocks=38 matched=11
+10-23 10:51:22.217  7873  7888 I ST-E2E  : ocr: Report(primary=CHINESE, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[0] [vi/skip-target] 'Từ cơ bàn hay dùng' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[1] [vi/skip-target] 'Vâng!' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[2] [zh/translate:zh-CN] '1。好的' -> '1. Được rồi'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[3] [vi/skip-target] 'hao to' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[4] [vi/skip-target] 'Được thôi !' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[5] [zh/translate:zh-CN] '2。好四' -> '2. Bốn điều tốt'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[6] [vi/skip-target] 'hảo ba' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[7] [vi/skip-target] 'Không ph' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[8] [zh/translate:zh-CN] '不是' -> 'Không'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[9] [vi/skip-target] 'pú sư' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[10] [vi/skip-target] 'Pây bút: Sách Trung Dài' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[11] [zh/translate:zh-CN] '4。不對' -> '4. Sai'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[12] [vi/skip-target] 'pú tuây' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[13] [vi/skip-target] 'Không đi' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[14] [zh/translate:zh-CN] '5。沒有' -> '5. Không'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[15] [vi/skip-target] 'mấy dẩu' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[16] [vi/skip-target] 'Không có' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[17] [vi/skip-target] 'Có thể' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[18] [zh/translate:zh-CN] '可以' -> 'được rồi'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[19] [vi/skip-target] 'Cám ơn!' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[20] [zh/translate:zh-CN] '謝謝' -> 'cảm ơn bạn'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[21] [zh-Latn/skip-romanized] 'xia xia' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[22] [zh/translate:zh-CN] '8。不要' -> '8. Đừng'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[23] [und/translate:auto] 'pú dao' -> 'pú dao'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[24] [vi/skip-target] 'Không cần' -> 'null'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[25] [zh/translate:zh-CN] '9。不想' -> '9. Không muốn'
+10-23 10:51:22.217  7873  7888 I ST-E2E  :   unit[26] [und/translate:auto] 'pu xėng' -> 'pu xėng'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[27] [vi/skip-target] 'Không mua' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[28] [zh/translate:zh-CN] '10。真的' -> '10. Thật đấy'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[29] [vi/skip-target] 'N Trân tơ' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[30] [vi/skip-target] 'Thật đấy' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[31] [zh/translate:zh-CN] '不用西' -> 'Không cần phải lo lắng'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[32] [und/translate:auto] 'dung' -> 'dung'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[33] [vi/skip-target] 'Không cần' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[34] [vi/skip-target] 'xíng' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[35] [zh/translate:zh-CN] '12。不行' -> '12. không'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[36] [vi/skip-target] 'pu xíng' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  :   unit[37] [vi/skip-target] 'Không đữựca' -> 'null'
+10-23 10:51:22.218  7873  7888 I ST-E2E  : han units=12 translated=12
+10-23 10:51:22.219  7873  7888 I ST-E2E  : PASS videoTableChinese
+10-23 10:51:22.221  7873  7888 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=38 lastError=null
+10-23 10:51:22.946  7873  7888 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
+10-23 10:51:23.021  7873  7888 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
+10-23 10:51:23.049  7873  8027 I ScreenTranslator: projection stopped
+10-23 10:51:23.918  7862  7862 I AndroidRuntime: VM exiting with result code 0.
