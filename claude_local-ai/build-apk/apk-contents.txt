@@ -3,21 +3,37 @@ Archive:  apk/DichManHinh.apk
 ---------  ---------- -----   ----
        56  1981-01-01 01:01   META-INF/com/android/build/gradle/app-metadata.properties
       120  1981-01-01 01:01   META-INF/version-control-info.textproto
-     2502  1981-01-01 01:01   assets/dexopt/baseline.prof
-      236  1981-01-01 01:01   assets/dexopt/baseline.profm
-  8181756  1981-01-01 01:01   classes.dex
+     2517  1981-01-01 01:01   assets/dexopt/baseline.prof
+      237  1981-01-01 01:01   assets/dexopt/baseline.profm
+  8293504  1981-01-01 01:01   classes.dex
   2959108  1981-01-01 01:01   classes2.dex
+  1423696  1981-01-01 01:01   lib/arm64-v8a/libc++_shared.so
+   756280  1981-01-01 01:01   lib/arm64-v8a/libggml-base.so
+  1020592  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv8.0_1.so
+  1042160  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv8.2_1.so
+  1041232  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv8.2_2.so
+  1054752  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv8.6_1.so
+  1056400  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv9.0_1.so
+  1056400  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv9.2_1.so
+  1056416  1981-01-01 01:01   lib/arm64-v8a/libggml-cpu-android_armv9.2_2.so
+    55936  1981-01-01 01:01   lib/arm64-v8a/libggml.so
    251888  1981-01-01 01:01   lib/arm64-v8a/libjpeg.so
-  1019560  1981-01-01 01:01   lib/arm64-v8a/liblanguage_id_l2c_jni.so
+  1019552  1981-01-01 01:01   lib/arm64-v8a/liblanguage_id_l2c_jni.so
   2878240  1981-01-01 01:01   lib/arm64-v8a/libleptonica.so
+  4565896  1981-01-01 01:01   lib/arm64-v8a/libllama-common.so
+  3757920  1981-01-01 01:01   lib/arm64-v8a/libllama.so
  11064544  1981-01-01 01:01   lib/arm64-v8a/libmlkit_google_ocr_pipeline.so
+  1470584  1981-01-01 01:01   lib/arm64-v8a/libmtmd.so
    219880  1981-01-01 01:01   lib/arm64-v8a/libpngx.so
+    80240  1981-01-01 01:01   lib/arm64-v8a/libscreenai.so
   4164360  1981-01-01 01:01   lib/arm64-v8a/libtesseract.so
+   994772  1981-01-01 01:01   lib/armeabi-v7a/libc++_shared.so
    187096  1981-01-01 01:01   lib/armeabi-v7a/libjpeg.so
-   609636  1981-01-01 01:01   lib/armeabi-v7a/liblanguage_id_l2c_jni.so
+   609628  1981-01-01 01:01   lib/armeabi-v7a/liblanguage_id_l2c_jni.so
   2160740  1981-01-01 01:01   lib/armeabi-v7a/libleptonica.so
   6781940  1981-01-01 01:01   lib/armeabi-v7a/libmlkit_google_ocr_pipeline.so
    162104  1981-01-01 01:01   lib/armeabi-v7a/libpngx.so
+     5944  1981-01-01 01:01   lib/armeabi-v7a/libscreenai.so
   3004948  1981-01-01 01:01   lib/armeabi-v7a/libtesseract.so
       276  1981-01-01 01:01   assets/mlkit-google-ocr-models/aksara/aksara_page_layout_analysis_rpn_gcn.binarypb
       278  1981-01-01 01:01   assets/mlkit-google-ocr-models/aksara/aksara_page_layout_analysis_ti_rpn_gcn.binarypb
@@ -166,7 +182,7 @@ Archive:  apk/DichManHinh.apk
        70  1981-01-01 01:01   transport-runtime.properties
        64  1981-01-01 01:01   vision-common.properties
        72  1981-01-01 01:01   vision-interfaces.properties
-    10948  1981-01-01 01:01   AndroidManifest.xml
+    11180  1981-01-01 01:01   AndroidManifest.xml
       744  1981-01-01 01:01   res/-1.xml
       352  1981-01-01 01:01   res/-5.xml
       712  1981-01-01 01:01   res/-7.xml
@@ -942,6 +958,7 @@ Archive:  apk/DichManHinh.apk
       452  1981-01-01 01:01   res/qA.xml
      2834  1981-01-01 01:01   res/qD.9.png
       197  1981-01-01 01:01   res/qp.png
+     4464  1981-01-01 01:01   res/qr.xml
      2780  1981-01-01 01:01   res/qx.xml
      1656  1981-01-01 01:01   res/qz.xml
      1116  1981-01-01 01:01   res/rI.xml
@@ -988,7 +1005,7 @@ Archive:  apk/DichManHinh.apk
       204  1981-01-01 01:01   res/uu.9.png
       940  1981-01-01 01:01   res/v-.xml
       208  1981-01-01 01:01   res/v4.9.png
-     3704  1981-01-01 01:01   res/v9.xml
+     4024  1981-01-01 01:01   res/v9.xml
      1396  1981-01-01 01:01   res/vG.xml
       556  1981-01-01 01:01   res/vH.xml
       528  1981-01-01 01:01   res/vJ.xml
@@ -1042,6 +1059,6 @@ Archive:  apk/DichManHinh.apk
       464  1981-01-01 01:01   res/zq.xml
      1510  1981-01-01 01:01   res/zw.9.png
       884  1981-01-01 01:01   res/zz.png
-  1159956  1981-01-01 01:01   resources.arsc
+  1179932  1981-01-01 01:01   resources.arsc
 ---------                     -------
- 51195340                     1042 files
+ 71771300                     1059 files
