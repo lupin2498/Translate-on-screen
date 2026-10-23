@@ -1,0 +1,63 @@
+=== PROMPT
+<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
+
+<source><s1>设置</s1>
+<s2>账号与安全</s2>
+<s3>我们明天去北京看李老师吧。</s3>
+<s4>他说你不用担心，一切都会好起来的。</s4>
+<s5>确定</s5>
+<s6>取消</s6></source><｜hy_Assistant｜>
+=== OUTPUT (105 tok, 4192 ms)
+<target><s1>Thiết lập</s1>
+<s2>Tài khoản và bảo mật</s2>
+<s3>Hôm nay chúng ta hãy đến Bắc Kinh để gặp giáo viên Lý đi.</s3>
+<s4>Gì anh nói, em không cần lo lắng, mọi chuyện sẽ ổn thôi.</s4>
+<s5>Xác nhận</s5>
+<s6>Hủy</s6></target>
+
+=== PROMPT
+<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
+
+<source><s1>Пpивeт, кaк дeлa?</s1>
+<s2>Сегодня мы будем изучать новые слова</s2>
+<s3>Нажмите кнопку «Продолжить»</s3></source><｜hy_Assistant｜>
+=== OUTPUT (57 tok, 2458 ms)
+<target><s1>Xin chào, làm việc như thế nào?</s1>
+<s2>Hôm nay chúng ta sẽ học những từ mới.</s2>
+<s3>Hãy nhấn nút “Tiếp tục”.</s3></target>
+
+=== PROMPT
+<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
+
+<source><s1>Tap here to contiune</s1>
+<s2>Your account has been successfuly verifed</s2>
+<s3>Download the latest verslon of the app</s3>
+<s4>Settings</s4></source><｜hy_Assistant｜>
+=== OUTPUT (77 tok, 3122 ms)
+<target><s1>Xin hãy nhập thông tin ở đây để tiếp tục</s1>
+<s2>Hóa đơn của bạn đã được xác thực thành công</s2>
+<s3>Hãy tải về phiên bản mới nhất của ứng dụng</s3>
+<s4>Điều chỉnh</s4></target>
+
+=== PROMPT
+<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
+
+<source><s1>今日は天気がいいですね。</s1>
+<s2>ログイン</s2>
+<s3>안녕하세요, 만나서 반갑습니다.</s3></source><｜hy_Assistant｜>
+=== OUTPUT (53 tok, 2141 ms)
+<target><s1>Hôm nay thời tiết thật tốt phải không nào.</s1>
+<s2>Đăng nhập</s2>
+<s3>Xin chào, rất vui được gặp bạn.</s3></target>
+
+=== PROMPT
+<｜hy_User｜>将以下<source></source>之间的文本翻译为越南语，注意只需要输出翻译后的结果，不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。输出格式为：<target>str</target>
+
+<source><s1>哥哥，你什么时候回来？</s1>
+<s2>我下个月就回家了，你要好好照顾妈妈。</s2>
+<s3>知道了，你也要注意身体！</s3></source><｜hy_Assistant｜>
+=== OUTPUT (77 tok, 3091 ms)
+<target><s1>Anh trai, anh sẽ trở về khi nào vậy?</s1>
+<s2>Em sẽ về nhà vào tháng sau, em phải chăm sóc mẹ thật tốt.</s2>
+<s3>Em biết rồi, anh cũng phải chú ý đến sức khỏe của mình!</s3></target>
+
