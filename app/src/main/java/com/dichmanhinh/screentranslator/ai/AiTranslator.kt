@@ -25,7 +25,11 @@ class AiException(message: String) : Exception(message)
  * - Mô hình đa năng được dặn sửa lỗi OCR; nếu nhìn được ảnh thì đọc lại chữ trên ảnh chụp.
  * - Đoạn nào mô hình bỏ sót hoặc dịch hỏng thì dịch lại riêng (kèm chữ xung quanh làm ngữ cảnh).
  */
-class AiTranslator(private val llm: LlmBackend) {
+class AiTranslator(
+    private val llm: LlmBackend,
+    /** true: dịch từng đoạn riêng (kèm chữ xung quanh làm ngữ cảnh) thay vì cả màn hình một lần. */
+    private val perSegment: Boolean = false,
+) {
 
     data class Progress(val done: Int, val total: Int)
 
@@ -52,14 +56,15 @@ class AiTranslator(private val llm: LlmBackend) {
         // Ngân sách token cho phần chữ nguồn của một lô (còn chỗ cho bản dịch dài hơn ~2.5 lần)
         val imageTokens = if (useImage) 1200 else 0
         val budget = ((llm.contextSize - 900 - imageTokens) / 3.6f).toInt().coerceIn(200, 1400)
-        val batches = AiPrompts.packBatches(clean, budget)
+        val batches = if (perSegment) clean.indices.map { listOf(it) } else AiPrompts.packBatches(clean, budget)
         var done = 0
         var lastError: Exception? = null
         for ((bi, idx) in batches.withIndex()) {
             val texts = idx.map { clean[it] }
             try {
+                val ctx = if (perSegment) neighbors(clean, idx[0]) else contextFor(clean, idx)
                 val res = translateBatch(texts, idx.map { sources[it] }, target,
-                    if (useImage && bi == 0) image else null, contextFor(clean, idx))
+                    if (useImage && bi == 0) image else null, ctx)
                 idx.forEachIndexed { k, i -> out[i] = res[k] }
             } catch (e: CancellationException) {
                 throw e

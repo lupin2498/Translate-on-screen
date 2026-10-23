@@ -90,7 +90,7 @@ class NativeBackend private constructor(
          */
         fun load(
             spec: ModelSpec, modelPath: String, mmprojPath: String?, threads: Int, backendDir: String?,
-            imageMaxTokens: Int = 1120,
+            imageMaxTokens: Int = 560,
         ): NativeBackend {
             if (!LlamaNative.isLoaded && !LlamaNative.loadLibrary()) {
                 throw AiException("Không nạp được thư viện AI: ${LlamaNative.loadError}")

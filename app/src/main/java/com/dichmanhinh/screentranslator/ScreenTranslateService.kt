@@ -532,7 +532,7 @@ class ScreenTranslateService : Service() {
                     (area != null || blocks.isEmpty() || Prefs.aiVisionFull(this@ScreenTranslateService))
                 ) {
                     withContext(Dispatchers.Default) {
-                        AiImages.fromBitmap(input, if (area != null) 2_000_000 else 1_300_000)
+                        AiImages.fromBitmap(input, if (area != null) 1_300_000 else 1_000_000)
                     }
                 } else null
                 if (input !== full) input.recycle()

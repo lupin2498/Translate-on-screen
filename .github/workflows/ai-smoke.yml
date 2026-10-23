@@ -52,6 +52,11 @@ jobs:
           if [ "${{ matrix.model }}" = hymt ]; then
             get https://huggingface.co/tencent/HY-MT1.5-1.8B-GGUF/resolve/main/HY-MT1.5-1.8B-Q4_K_M.gguf HY-MT1.5-1.8B-Q4_K_M.gguf
             echo "SCREENAI_HYMT=$HOME/models/HY-MT1.5-1.8B-Q4_K_M.gguf" >> $GITHUB_ENV
+            if [ "${{ github.event_name }}" = workflow_dispatch ] || [ -n "${{ vars.AI_VARIANTS }}" ] || git log -1 --format=%B | grep -q "\[variants\]"; then
+              get https://huggingface.co/tencent/HY-MT1.5-1.8B-GGUF/resolve/main/HY-MT1.5-1.8B-Q8_0.gguf HY-MT1.5-1.8B-Q8_0.gguf
+              echo "SCREENAI_HYMT_Q8=$HOME/models/HY-MT1.5-1.8B-Q8_0.gguf" >> $GITHUB_ENV
+              echo "SCREENAI_VARIANTS=1" >> $GITHUB_ENV
+            fi
           else
             get https://huggingface.co/ggml-org/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q4_0.gguf gemma-4-E2B-it-Q4_0.gguf
             get https://huggingface.co/ggml-org/gemma-4-E2B-it-GGUF/resolve/main/mmproj-gemma-4-E2B-it-Q8_0.gguf mmproj-gemma-4-E2B-it-Q8_0.gguf

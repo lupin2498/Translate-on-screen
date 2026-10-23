@@ -83,8 +83,8 @@ class LocalAiSmokeTest {
         return AiImage(rgb, w, h)
     }
 
-    private fun run(spec: ModelSpec, model: String, mmproj: String?) = runBlocking {
-        val report = StringBuilder("# ${spec.name}\n\n")
+    private fun run(spec: ModelSpec, model: String, mmproj: String?, perSegment: Boolean = false, tag: String = "") = runBlocking {
+        val report = StringBuilder("# ${spec.name} $tag\n\n")
         val t0 = System.currentTimeMillis()
         val threads = Runtime.getRuntime().availableProcessors().coerceIn(2, 8)
         NativeBackend.load(spec, model, mmproj, threads, null).use { ai ->
@@ -92,7 +92,7 @@ class LocalAiSmokeTest {
             var total = 0
             var ok = 0
             for (c in cases) {
-                val tr = AiTranslator(ai)
+                val tr = AiTranslator(ai, perSegment)
                 val s = System.currentTimeMillis()
                 val res = tr.translate(c.segments, c.sources, "vi")
                 val ms = System.currentTimeMillis() - s
@@ -104,7 +104,7 @@ class LocalAiSmokeTest {
                 total += c.segments.size
                 ok += res.count { it != null }
             }
-            if (ai.hasVision) {
+            if (ai.hasVision && tag.isEmpty()) {
                 for (name in listOf("video_text_ru.jpg", "video_table_zh.jpg")) {
                     val img = image(name) ?: continue
                     val s = System.currentTimeMillis()
@@ -120,7 +120,7 @@ class LocalAiSmokeTest {
                 }
             }
             val out = File("build/ai-smoke").apply { mkdirs() }
-            File(out, "${spec.id}.md").writeText(report.toString())
+            File(out, "${spec.id}${tag.replace(' ', '_')}.md").writeText(report.toString())
             println(report)
             assertTrue("dịch được $ok/$total đoạn", ok >= total * 0.8)
         }
@@ -131,6 +131,21 @@ class LocalAiSmokeTest {
         val model = env("SCREENAI_HYMT")
         assumeTrue("không có mô hình HY-MT", model != null && loadLib())
         run(ModelCatalog.HY_MT, model!!, null)
+    }
+
+    /** So sánh cấu hình (chỉ khi SCREENAI_VARIANTS=1): giải mã tham lam, dịch từng đoạn, bản Q8_0. */
+    @Test
+    fun hyMtVariants() {
+        val model = env("SCREENAI_HYMT")
+        assumeTrue("không so sánh cấu hình", model != null && env("SCREENAI_VARIANTS") != null && loadLib())
+        val greedy = ModelCatalog.HY_MT.sampling.copy(temperature = 0f)
+        run(ModelCatalog.HY_MT.copy(sampling = greedy), model!!, null, tag = "greedy")
+        run(ModelCatalog.HY_MT.copy(sampling = greedy), model, null, perSegment = true, tag = "greedy per-segment")
+        run(ModelCatalog.HY_MT, model, null, perSegment = true, tag = "t0.3 per-segment")
+        env("SCREENAI_HYMT_Q8")?.let { q8 ->
+            run(ModelCatalog.HY_MT.copy(sampling = greedy), q8, null, tag = "Q8_0 greedy")
+            run(ModelCatalog.HY_MT.copy(sampling = greedy), q8, null, perSegment = true, tag = "Q8_0 greedy per-segment")
+        }
     }
 
     @Test
