@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.AiPromptsTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-23T02:56:58" hostname="runnervm8k3b6" time="0.16">
+<testsuite name="com.dichmanhinh.screentranslator.AiPromptsTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-10-23T03:23:50" hostname="runnervm8k3b6" time="0.243">
   <properties/>
-  <testcase name="packBatchesRespectsBudget" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.033"/>
-  <testcase name="looksBroken" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.011"/>
-  <testcase name="parseTaggedInOrder" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.019"/>
-  <testcase name="parseSingle" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.002"/>
-  <testcase name="languageNames" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.038"/>
+  <testcase name="packBatchesRespectsBudget" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.047"/>
+  <testcase name="looksBroken" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.016"/>
+  <testcase name="parseTaggedInOrder" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.037"/>
+  <testcase name="parseSingle" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.001"/>
+  <testcase name="languageNames" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.07"/>
   <testcase name="parseTaggedStripsThinking" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.001"/>
-  <testcase name="prompts" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.039"/>
+  <testcase name="prompts" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.053"/>
   <testcase name="parseTaggedMissingSegmentIsNull" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.0"/>
-  <testcase name="parseReadImage" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.003"/>
-  <testcase name="parseTaggedSingleUntagged" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.001"/>
-  <testcase name="parseTaggedWithoutClosingTagsAndNoise" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.001"/>
+  <testcase name="parseReadImage" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.006"/>
+  <testcase name="parseTaggedSingleUntagged" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.0"/>
+  <testcase name="parseTaggedWithoutClosingTagsAndNoise" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.0"/>
   <testcase name="parseTaggedIgnoresOutOfRangeAndDuplicates" classname="com.dichmanhinh.screentranslator.AiPromptsTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -27,25 +27,26 @@ Daemon will be stopped at the end of the build
 > Task :app:processDebugMainManifest
 > Task :app:processDebugManifest
 > Task :app:preDebugUnitTestBuild UP-TO-DATE
-> Task :app:javaPreCompileDebug
 > Task :app:javaPreCompileDebugUnitTest
+> Task :app:javaPreCompileDebug
+> Task :app:processDebugManifestForPackage
 > Task :app:buildKotlinToolingMetadata
 > Task :app:preReleaseBuild UP-TO-DATE
-> Task :app:processDebugManifestForPackage
 > Task :app:checkReleaseAarMetadata
 > Task :app:generateReleaseResValues
 > Task :app:mapReleaseSourceSetPaths
 > Task :app:generateReleaseResources
 > Task :app:packageReleaseResources
-> Task :app:parseReleaseLocalResources
 > Task :app:createReleaseCompatibleScreenManifests
 > Task :app:extractDeepLinksRelease
-> Task :app:processDebugResources
 > Task :app:processReleaseMainManifest
-> Task :app:mergeReleaseResources
 > Task :app:processReleaseManifest
-> Task :app:javaPreCompileRelease
+> Task :app:parseReleaseLocalResources
+> Task :app:processReleaseManifestForPackage
 > Task :app:extractProguardFiles
+> Task :app:javaPreCompileRelease
+> Task :app:processDebugResources
+> Task :app:mergeReleaseResources
 
 > Task :app:configureCMakeRelease[arm64-v8a]
 Checking the license for package CMake 3.22.1 in /usr/local/lib/android/sdk/licenses
@@ -55,66 +56,62 @@ Preparing "Install CMake 3.22.1 v.3.22.1".
 Installing CMake 3.22.1 in /usr/local/lib/android/sdk/cmake/3.22.1
 "Install CMake 3.22.1 v.3.22.1" complete.
 "Install CMake 3.22.1 v.3.22.1" finished.
-
-> Task :app:compileDebugKotlin
-
-> Task :app:configureCMakeRelease[arm64-v8a]
 C/C++: CMAKE_BUILD_TYPE=Release
 C/C++: CMake Warning at /home/runner/work/Translate-on-screen/Translate-on-screen/app/.cxx/Release/1jsx3zc5/arm64-v8a/_deps/llama_cpp-src/common/CMakeLists.txt:33 (message):
 C/C++:   Git repository not found; to enable automatic generation of build info,
 C/C++:   make sure Git is installed and the project is a Git repository.
 
+> Task :app:processReleaseResources
+> Task :app:compileDebugKotlin
+> Task :app:buildCMakeRelease[arm64-v8a]
 > Task :app:compileDebugJavaWithJavac NO-SOURCE
 > Task :app:processDebugJavaRes
 > Task :app:bundleDebugClassesToRuntimeJar
 > Task :app:bundleDebugClassesToCompileJar
-> Task :app:processReleaseManifestForPackage
-> Task :app:buildCMakeRelease[arm64-v8a]
 > Task :app:configureCMakeRelease[armeabi-v7a]
-> Task :app:processReleaseResources
 > Task :app:buildCMakeRelease[armeabi-v7a]
 > Task :app:mergeReleaseJniLibFolders
 > Task :app:mergeReleaseNativeLibs
-> Task :app:checkReleaseDuplicateClasses
-> Task :app:desugarReleaseFileDependencies
-> Task :app:mergeReleaseStartupProfile
 > Task :app:compileDebugUnitTestKotlin
-> Task :app:compileReleaseKotlin
-> Task :app:stripReleaseDebugSymbols
+> Task :app:checkReleaseDuplicateClasses
 > Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
 > Task :app:processDebugUnitTestJavaRes
-> Task :app:mergeExtDexRelease
+> Task :app:stripReleaseDebugSymbols
 > Task :app:testDebugUnitTest
+> Task :app:desugarReleaseFileDependencies
+> Task :app:mergeReleaseStartupProfile
+> Task :app:extractReleaseNativeSymbolTables
+> Task :app:compileReleaseKotlin
 > Task :app:compileReleaseJavaWithJavac NO-SOURCE
 > Task :app:generateReleaseLintVitalReportModel
-> Task :app:extractReleaseNativeSymbolTables
+> Task :app:mergeExtDexRelease
+> Task :app:mergeReleaseNativeDebugMetadata
 > Task :app:dexBuilderRelease
 > Task :app:mergeReleaseArtProfile
-> Task :app:mergeReleaseNativeDebugMetadata
+> Task :app:mergeReleaseGlobalSynthetics
 > Task :app:mergeReleaseShaders
 > Task :app:compileReleaseShaders NO-SOURCE
 > Task :app:generateReleaseAssets UP-TO-DATE
-> Task :app:mergeReleaseGlobalSynthetics
 > Task :app:mergeReleaseAssets
 > Task :app:extractReleaseVersionControlInfo
 > Task :app:processReleaseJavaRes
 > Task :app:compressReleaseAssets
-> Task :app:mergeDexRelease
-> Task :app:optimizeReleaseResources
 > Task :app:mergeReleaseJavaResource
-> Task :app:compileReleaseArtProfile
 > Task :app:collectReleaseDependencies
 > Task :app:sdkReleaseDependencyData
 > Task :app:validateSigningRelease
+> Task :app:optimizeReleaseResources
 > Task :app:writeReleaseAppMetadata
 > Task :app:writeReleaseSigningConfigVersions
+> Task :app:mergeDexRelease
+> Task :app:compileReleaseArtProfile
 > Task :app:packageRelease
 > Task :app:createReleaseApkListingFileRedirect
 > Task :app:lintVitalAnalyzeRelease
 > Task :app:lintVitalReportRelease
 > Task :app:lintVitalRelease
 > Task :app:assembleRelease
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1792723940223.json
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1792725541923.json
 
-BUILD SUCCESSFUL in 5m 10s
+BUILD SUCCESSFUL in 5m 44s
 76 actionable tasks: 76 executed
