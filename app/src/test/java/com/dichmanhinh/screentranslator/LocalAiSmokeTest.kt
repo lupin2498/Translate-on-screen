@@ -94,7 +94,8 @@ class LocalAiSmokeTest {
             for (c in cases) {
                 val tr = AiTranslator(ai, perSegment)
                 val s = System.currentTimeMillis()
-                val res = tr.translate(c.segments, c.sources, "vi")
+                // Cùng bước làm sạch chữ OCR như ứng dụng (ScreenTranslateService) trước khi dịch
+                val res = tr.translate(c.segments.map { TextPrep.clean(it) }, c.sources, "vi")
                 val ms = System.currentTimeMillis() - s
                 report.append("## ${c.name} — ${ms} ms, ${tr.lastCalls} lượt gọi, ${ai.lastStats}\n\n")
                 c.segments.forEachIndexed { i, src ->
@@ -113,7 +114,7 @@ class LocalAiSmokeTest {
                     pairs.forEach { (o, t) -> report.append("- `$o` → $t\n") }
                     report.append("\n")
                     // Đọc ảnh + sửa chữ OCR: gửi kèm ảnh vài đoạn OCR cố tình sai
-                    val ocr = if (name.contains("ru")) listOf("Ceгoдня", "нoвые cлoвa") else listOf("学习", "单词")
+                    val ocr = if (name.contains("ru")) listOf("Ceгoдня", "нoвые cлoвa") else listOf("不對 pú tụy", "沒有 máy dầu")
                     val s2 = System.currentTimeMillis()
                     val fixed = AiTranslator(ai).translate(ocr, ocr.map { "auto" }, "vi", img)
                     report.append("Kèm ảnh, OCR sai ${ocr} → ${fixed} (${System.currentTimeMillis() - s2} ms)\n\n")

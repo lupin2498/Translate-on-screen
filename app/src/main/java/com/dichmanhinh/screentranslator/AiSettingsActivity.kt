@@ -80,7 +80,8 @@ class AiSettingsActivity : AppCompatActivity() {
             if (!checked) return@addOnButtonCheckedListener
             val ai = id == R.id.btnEngineAi
             Prefs.setEngine(this, if (ai) Prefs.ENGINE_AI else Prefs.ENGINE_GOOGLE)
-            if (ai && !LocalAi.isReady(this)) {
+            val st = ModelManager.status(this, LocalAi.selected(this)).state
+            if (ai && st != ModelManager.State.READY && st != ModelManager.State.DOWNLOADING) {
                 Toast.makeText(this, R.string.ai_download_first, Toast.LENGTH_LONG).show()
             }
         }
@@ -267,6 +268,10 @@ class AiSettingsActivity : AppCompatActivity() {
                     pendingSelect = spec.id
                     Prefs.setAiModel(this, spec.id)
                     for ((id, v) in cards) v.radio.isChecked = id == spec.id
+                    // Bật luôn AI: tải xong (kể cả khi đã thoát màn hình này) là dùng ngay,
+                    // trong lúc chờ thì tạm dùng Google Dịch
+                    Prefs.setEngine(this, Prefs.ENGINE_AI)
+                    groupEngine.check(R.id.btnEngineAi)
                 } catch (e: Exception) {
                     Toast.makeText(this, "Lỗi: ${e.message}", Toast.LENGTH_LONG).show()
                 }

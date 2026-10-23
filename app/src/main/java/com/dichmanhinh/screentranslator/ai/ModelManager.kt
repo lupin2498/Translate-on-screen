@@ -38,16 +38,34 @@ object ModelManager {
 
     private fun prefs(ctx: Context) = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
+    /**
+     * File mô hình chỉ mang tên chính thức sau khi đã tải/chép xong và được kiểm tra (xem [status],
+     * [importGguf]) nên có file là dùng được. Không so với kích thước trong danh mục: nhà phát hành
+     * cập nhật file trên Hugging Face thì kích thước đổi.
+     */
     private fun isComplete(ctx: Context, f: ModelFile): Boolean {
         val file = file(ctx, f)
-        return file.isFile && (if (f.size > 0) file.length() == f.size else file.length() > 1_000_000)
+        return file.isFile && file.length() > 1_000_000
     }
 
-    fun isReady(ctx: Context, spec: ModelSpec): Boolean = spec.files.all { isComplete(ctx, it) }
+    private fun isGguf(file: File): Boolean = runCatching {
+        file.inputStream().use { val b = ByteArray(4); it.read(b) == 4 && String(b, Charsets.US_ASCII) == "GGUF" }
+    }.getOrDefault(false)
+
+    /**
+     * Mô hình đã sẵn sàng chưa. File tải xong lúc ứng dụng đang đóng cũng được hoàn tất (đổi tên) ở
+     * đây, nên dịch vụ dịch màn hình dùng được ngay mà không cần mở lại màn hình AI.
+     */
+    fun isReady(ctx: Context, spec: ModelSpec): Boolean {
+        if (spec.files.all { isComplete(ctx, it) }) return true
+        val dm = ctx.getSystemService(DownloadManager::class.java) ?: return false
+        for (f in spec.files) if (!isComplete(ctx, f)) checkDownload(ctx, f, dm)
+        return spec.files.all { isComplete(ctx, it) }
+    }
 
     /** Đường dẫn file mô hình và mmproj (null nếu chưa tải đủ). */
     fun paths(ctx: Context, spec: ModelSpec): Pair<String, String?>? {
-        if (!isComplete(ctx, spec.model)) return null
+        if (!isReady(ctx, spec) && !isComplete(ctx, spec.model)) return null
         val mm = spec.mmproj?.let { if (isComplete(ctx, it)) file(ctx, it).absolutePath else null }
         return file(ctx, spec.model).absolutePath to mm
     }
@@ -66,54 +84,69 @@ object ModelManager {
     fun find(ctx: Context, id: String?): ModelSpec? =
         ModelCatalog.byId(id) ?: customModels(ctx).firstOrNull { it.id == id }
 
-    /** Trạng thái tải; đồng thời hoàn tất (đổi tên) file đã tải xong. */
-    fun status(ctx: Context, spec: ModelSpec): Status {
-        val dm = ctx.getSystemService(DownloadManager::class.java)
-        var done = 0L
-        var downloading = false
-        var error: String? = null
-        for (f in spec.files) {
-            if (isComplete(ctx, f)) {
-                done += f.size.takeIf { it > 0 } ?: file(ctx, f).length(); continue
+    private class FileState(val state: State, val bytes: Long, val error: String? = null)
+
+    /** Trạng thái tải của một file; file đã tải xong thì kiểm tra rồi đổi sang tên chính thức. */
+    private fun checkDownload(ctx: Context, f: ModelFile, dm: DownloadManager): FileState {
+        if (isComplete(ctx, f)) return FileState(State.READY, file(ctx, f).length())
+        val id = prefs(ctx).getLong(key(f), -1L)
+        if (id < 0) return FileState(State.NOT_DOWNLOADED, 0)
+        val c = dm.query(DownloadManager.Query().setFilterById(id)) ?: return FileState(State.NOT_DOWNLOADED, 0)
+        return c.use {
+            if (!c.moveToFirst()) {
+                forget(ctx, f)
+                return@use FileState(State.NOT_DOWNLOADED, 0)
             }
-            val id = prefs(ctx).getLong(key(f), -1L)
-            if (id < 0 || dm == null) continue
-            dm.query(DownloadManager.Query().setFilterById(id))?.use { c ->
-                if (!c.moveToFirst()) {
-                    forget(ctx, f); return@use
-                }
-                val st = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
-                val got = c.getLong(c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-                when (st) {
-                    DownloadManager.STATUS_SUCCESSFUL -> {
-                        val part = partFile(ctx, f)
-                        val ok = part.isFile && (f.size <= 0 || part.length() == f.size)
-                        if (ok && part.renameTo(file(ctx, f))) {
-                            done += f.size
-                        } else {
-                            error = "File tải về bị lỗi (${part.length()} / ${f.size} byte)"
-                            part.delete()
-                        }
-                        forget(ctx, f)
-                    }
-                    DownloadManager.STATUS_FAILED -> {
-                        val reason = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON))
-                        error = failReason(reason)
-                        dm.remove(id)
-                        forget(ctx, f)
-                    }
-                    else -> {
-                        downloading = true
-                        done += got.coerceAtLeast(0)
+            val st = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+            val got = c.getLong(c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
+            when (st) {
+                DownloadManager.STATUS_SUCCESSFUL -> {
+                    // Vị trí thật của file (một số máy tự đổi tên file đích)
+                    val local = c.getString(c.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+                        ?.let { Uri.parse(it).path }?.let { File(it) }
+                    val part = local?.takeIf { it.isFile } ?: partFile(ctx, f)
+                    // So với kích thước máy chủ báo (đúng cả khi file trên Hugging Face được cập nhật)
+                    val reported = c.getLong(c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
+                    val expected = if (reported > 0) reported else f.size
+                    val len = part.length()
+                    val ok = part.isFile && len > 1_000_000 && (expected <= 0 || len == expected) && isGguf(part)
+                    forget(ctx, f)
+                    if (ok && part.renameTo(file(ctx, f))) {
+                        Log.i(TAG, "download complete ${f.name} ($len bytes)")
+                        FileState(State.READY, len)
+                    } else {
+                        part.delete()
+                        FileState(State.FAILED, 0, "File tải về bị lỗi ($len / $expected byte), hãy tải lại")
                     }
                 }
+                DownloadManager.STATUS_FAILED -> {
+                    val reason = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON))
+                    dm.remove(id)
+                    forget(ctx, f)
+                    FileState(State.FAILED, 0, failReason(reason))
+                }
+                else -> FileState(State.DOWNLOADING, got.coerceAtLeast(0))
             }
         }
-        val total = spec.totalSize
+    }
+
+    /** Trạng thái tải của cả mô hình (hiển thị tiến độ). */
+    fun status(ctx: Context, spec: ModelSpec): Status {
+        val dm = ctx.getSystemService(DownloadManager::class.java)
+        val states = spec.files.map { f ->
+            when {
+                isComplete(ctx, f) -> FileState(State.READY, file(ctx, f).length())
+                dm == null -> FileState(State.NOT_DOWNLOADED, 0)
+                else -> checkDownload(ctx, f, dm)
+            }
+        }
+        val done = states.sumOf { it.bytes }
+        val total = maxOf(spec.totalSize, done)
         return when {
-            isReady(ctx, spec) -> Status(State.READY, total, total)
-            downloading -> Status(State.DOWNLOADING, done, total)
-            error != null -> Status(State.FAILED, done, total, error)
+            states.all { it.state == State.READY } -> Status(State.READY, done, done)
+            states.any { it.state == State.DOWNLOADING } -> Status(State.DOWNLOADING, done, total)
+            states.any { it.state == State.FAILED } ->
+                Status(State.FAILED, done, total, states.firstNotNullOfOrNull { it.error })
             else -> Status(State.NOT_DOWNLOADED, done, total)
         }
     }

@@ -384,6 +384,19 @@ class ScreenTranslateService : Service() {
         val b = bubble ?: return
         b.findViewById<ProgressBar>(R.id.bubbleProgress).visibility = if (loading) View.VISIBLE else View.GONE
         b.findViewById<View>(R.id.bubbleIcon).visibility = if (loading) View.INVISIBLE else View.VISIBLE
+        if (!loading) b.findViewById<View>(R.id.bubbleCount).visibility = View.GONE
+    }
+
+    /** Hiện "đã dịch/tổng" giữa vòng tiến độ của nút nổi khi AI dịch nhiều đoạn. */
+    private fun setAiProgress(done: Int, total: Int) {
+        mainHandler.post {
+            val tv = bubble?.findViewById<android.widget.TextView>(R.id.bubbleCount) ?: return@post
+            if (!busy || total < 2) {
+                tv.visibility = View.GONE; return@post
+            }
+            tv.text = "$done/$total"
+            tv.visibility = View.VISIBLE
+        }
     }
 
     // ---------------------------------------------------------------- Overlays
@@ -639,10 +652,12 @@ class ScreenTranslateService : Service() {
         try {
             aiRunning = true
             val ai = obtainAi()
-            toast(getString(R.string.ai_translating), long = true)
+            progressToast(getString(R.string.ai_translating))
             val t0 = SystemClock.uptimeMillis()
             val translator = AiTranslator(ai)
-            out = translator.translate(texts, sls, tgt, image).toMutableList()
+            setAiProgress(0, texts.size)
+            out = translator.translate(texts, sls, tgt, image) { p -> setAiProgress(p.done, p.total) }
+                .toMutableList()
             DebugInfo.lastEngine = "ai:${ai.spec.id} calls=${translator.lastCalls} " +
                 "${SystemClock.uptimeMillis() - t0}ms image=${image != null} ${ai.lastStats}"
             Log.i(TAG, "AI ${DebugInfo.lastEngine}")
@@ -656,6 +671,8 @@ class ScreenTranslateService : Service() {
             return GoogleTranslator.translateGrouped(texts, sls, tgt)
         } finally {
             aiRunning = false
+            hideProgressToast()
+            setAiProgress(0, 0)
         }
         val missing = out.indices.filter { out[it] == null }
         if (missing.isNotEmpty() && fallback) {
@@ -673,7 +690,7 @@ class ScreenTranslateService : Service() {
 
     private suspend fun obtainAi(): NativeBackend {
         val spec = LocalAi.selected(this)
-        if (!LocalAi.isLoaded(spec)) toast(getString(R.string.ai_loading, spec.name), long = true)
+        if (!LocalAi.isLoaded(spec)) progressToast(getString(R.string.ai_loading, spec.name))
         return LocalAi.obtain(this)
     }
 
@@ -682,8 +699,9 @@ class ScreenTranslateService : Service() {
         try {
             aiRunning = true
             val ai = obtainAi()
-            toast(getString(R.string.ai_reading_image), long = true)
+            progressToast(getString(R.string.ai_reading_image))
             val pairs = AiTranslator(ai).readImage(image, tgt)
+            hideProgressToast()
             DebugInfo.lastEngine = "ai-read:${ai.spec.id} ${ai.lastStats}"
             DebugInfo.lastOriginals = pairs.map { it.first }
             DebugInfo.lastTranslations = pairs.map { it.second }
@@ -703,6 +721,7 @@ class ScreenTranslateService : Service() {
             toast("Lỗi AI: ${e.message ?: e.javaClass.simpleName}", long = true)
         } finally {
             aiRunning = false
+            hideProgressToast()
         }
     }
 
@@ -784,6 +803,29 @@ class ScreenTranslateService : Service() {
     }
 
     private var lastToast: Toast? = null
+
+    /** Thông báo "AI đang nạp/dịch…": tự ẩn khi xong để không che bản dịch. */
+    private var aiToast: Toast? = null
+
+    private fun progressToast(msg: String) {
+        mainHandler.post {
+            lastToast?.cancel()
+            val t = Toast.makeText(this, msg, Toast.LENGTH_LONG)
+            lastToast = t
+            aiToast = t
+            t.show()
+        }
+    }
+
+    private fun hideProgressToast() {
+        mainHandler.post {
+            aiToast?.let { t ->
+                t.cancel()
+                if (lastToast === t) lastToast = null
+            }
+            aiToast = null
+        }
+    }
 
     private fun toast(msg: String, long: Boolean = false) {
         mainHandler.post {
