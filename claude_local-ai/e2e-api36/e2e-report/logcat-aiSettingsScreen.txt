@@ -1,0 +1,12 @@
+10-23 03:15:39.366  9860  9860 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:15:39.369  9860  9860 I AndroidRuntime: Using default boot image
+10-23 03:15:39.369  9860  9860 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:15:39.451  9860  9860 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:15:39.955  9871  9884 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
+10-23 03:15:44.464  9871  9884 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-01-ai-open.png
+10-23 03:15:45.389  9871  9884 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-02-ai-engine.png
+10-23 03:15:45.481  9871  9884 I ST-E2E  : PASS aiSettingsScreen
+10-23 03:15:45.481  9871  9884 I ST-E2E  : STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
+10-23 03:15:45.915  9871  9884 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-03-final.png
+10-23 03:15:45.956  9871  9884 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
+10-23 03:15:46.525  9860  9860 I AndroidRuntime: VM exiting with result code 0.
