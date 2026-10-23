@@ -24,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import com.dichmanhinh.screentranslator.ai.AiTranslator
+import com.dichmanhinh.screentranslator.ai.LocalAi
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.materialswitch.MaterialSwitch
 import kotlinx.coroutines.launch
@@ -102,6 +104,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnDisplaySettings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
+        findViewById<View>(R.id.btnAi).setOnClickListener {
+            startActivity(Intent(this, AiSettingsActivity::class.java))
+        }
         btnStart.setOnClickListener {
             if (ScreenTranslateService.isRunning) {
                 startService(
@@ -121,8 +126,16 @@ class MainActivity : AppCompatActivity() {
             if (text.isBlank()) return@setOnClickListener
             output.text = "…"
             lifecycleScope.launch {
+                val src = Prefs.source(this@MainActivity)
+                val tgt = Prefs.target(this@MainActivity)
                 output.text = runCatching {
-                    GoogleTranslator.translate(text, Prefs.source(this@MainActivity), Prefs.target(this@MainActivity))
+                    if (Prefs.useAi(this@MainActivity) && LocalAi.isReady(this@MainActivity)) {
+                        val ai = LocalAi.obtain(this@MainActivity)
+                        AiTranslator(ai).translate(listOf(text), listOf(src), tgt).firstOrNull()
+                            ?: GoogleTranslator.translate(text, src, tgt)
+                    } else {
+                        GoogleTranslator.translate(text, src, tgt)
+                    }
                 }.getOrElse { "Lỗi: ${it.message}" }
             }
         }
@@ -136,6 +149,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateButton()
+        updateEngineStatus()
+    }
+
+    private fun updateEngineStatus() {
+        val spec = LocalAi.selected(this)
+        findViewById<TextView>(R.id.txtEngine).text = when {
+            !Prefs.useAi(this) -> getString(R.string.engine_status_google)
+            LocalAi.isReady(this) -> getString(R.string.engine_status_ai, spec.name)
+            else -> getString(R.string.engine_status_ai_missing, spec.name)
+        }
     }
 
     private fun selectSaved() {

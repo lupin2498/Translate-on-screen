@@ -5,3 +5,9 @@ local.properties
 *.iml
 .DS_Store
 captures/
+.cxx/
+app/.cxx/
+.llama/
+build-host/
+prompts.log
+smoke.log

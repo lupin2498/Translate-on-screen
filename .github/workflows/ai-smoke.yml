@@ -1,0 +1,93 @@
+# Kiểm thử AI dịch trên máy với mô hình THẬT (HY-MT 1.5, Gemma 4 E2B + đọc ảnh).
+# Dựng libscreenai.so cho máy tính (cùng mã JNI với bản Android), chạy LocalAiSmokeTest trên JVM:
+# cùng đường đi Kotlin -> JNI -> llama.cpp như trên điện thoại. Kết quả dịch ghi vào Summary.
+name: AI smoke (real models)
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "app/src/main/cpp/**"
+      - "app/src/main/java/com/dichmanhinh/screentranslator/ai/**"
+      - "app/src/test/java/com/dichmanhinh/screentranslator/LocalAiSmokeTest.kt"
+      - ".github/workflows/ai-smoke.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ai-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: AI smoke ${{ matrix.model }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        model: [hymt, gemma]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Model cache
+        uses: actions/cache@v5
+        with:
+          path: ~/models
+          key: ai-models-v1-${{ matrix.model }}
+
+      - name: Download model
+        run: |
+          mkdir -p ~/models && cd ~/models
+          get() { [ -s "$2" ] || curl -fL --retry 5 --retry-delay 5 -o "$2" "$1"; ls -la "$2"; }
+          if [ "${{ matrix.model }}" = hymt ]; then
+            get https://huggingface.co/tencent/HY-MT1.5-1.8B-GGUF/resolve/main/HY-MT1.5-1.8B-Q4_K_M.gguf HY-MT1.5-1.8B-Q4_K_M.gguf
+            echo "SCREENAI_HYMT=$HOME/models/HY-MT1.5-1.8B-Q4_K_M.gguf" >> $GITHUB_ENV
+          else
+            get https://huggingface.co/ggml-org/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q4_0.gguf gemma-4-E2B-it-Q4_0.gguf
+            get https://huggingface.co/ggml-org/gemma-4-E2B-it-GGUF/resolve/main/mmproj-gemma-4-E2B-it-Q8_0.gguf mmproj-gemma-4-E2B-it-Q8_0.gguf
+            echo "SCREENAI_GEMMA=$HOME/models/gemma-4-E2B-it-Q4_0.gguf" >> $GITHUB_ENV
+            echo "SCREENAI_GEMMA_MMPROJ=$HOME/models/mmproj-gemma-4-E2B-it-Q8_0.gguf" >> $GITHUB_ENV
+          fi
+
+      - name: Build libscreenai.so (host)
+        run: |
+          TAG=$(sed -n 's/^set(LLAMA_TAG "\(b[0-9]*\)".*/\1/p' app/src/main/cpp/CMakeLists.txt)
+          echo "llama.cpp $TAG"
+          git clone --depth 1 --branch "$TAG" https://github.com/ggml-org/llama.cpp .llama
+          cmake -S app/src/main/cpp -B build-host -DLLAMA_SRC_DIR=$PWD/.llama -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=ON
+          cmake --build build-host -j4 --target screenai
+          echo "SCREENAI_LIB=$PWD/build-host/libscreenai.so" >> $GITHUB_ENV
+          echo "SCREENAI_IMAGES=$PWD/app/src/androidTest/assets" >> $GITHUB_ENV
+
+      - name: Run smoke test
+        run: |
+          export SCREENAI_DEBUG=$PWD/prompts.log
+          chmod +x gradlew
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          ./gradlew --no-daemon testDebugUnitTest --tests "*LocalAiSmokeTest*" 2>&1 | tee smoke.log
+          test ${PIPESTATUS[0]} -eq 0
+
+      - name: Report
+        if: always()
+        run: |
+          cat app/build/ai-smoke/*.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "no report" >> "$GITHUB_STEP_SUMMARY"
+          cat app/build/ai-smoke/*.md 2>/dev/null || true
+          echo "----- prompts.log (đầu) -----"; head -c 20000 prompts.log 2>/dev/null || true
+
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: ai-smoke-${{ matrix.model }}
+          path: |
+            app/build/ai-smoke/
+            app/build/test-results/testDebugUnitTest/
+            smoke.log
+            prompts.log
+          if-no-files-found: warn

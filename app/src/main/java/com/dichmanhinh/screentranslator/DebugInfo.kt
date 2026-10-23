@@ -12,6 +12,8 @@ object DebugInfo {
     @Volatile var lastCapture: String? = null
     @Volatile var lastOcr: String? = null
     @Volatile var lastUnits: List<UnitInfo> = emptyList()
+    /** Bộ dịch đã dùng ở lần gần nhất ("google", "ai:<mô hình> ...") */
+    @Volatile var lastEngine: String? = null
 
     /** Một đoạn chữ: ngôn ngữ nhận diện được, cách xử lý (dịch/bỏ qua) và bản dịch. */
     data class UnitInfo(val original: String, val lang: String, val action: String, val translated: String?)

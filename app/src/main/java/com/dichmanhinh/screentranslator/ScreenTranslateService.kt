@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ComponentCallbacks2
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
@@ -39,9 +40,16 @@ import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import com.dichmanhinh.screentranslator.ai.AiImage
+import com.dichmanhinh.screentranslator.ai.AiImages
+import com.dichmanhinh.screentranslator.ai.AiTranslator
+import com.dichmanhinh.screentranslator.ai.LocalAi
+import com.dichmanhinh.screentranslator.ai.ModelManager
+import com.dichmanhinh.screentranslator.ai.NativeBackend
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -94,6 +102,10 @@ class ScreenTranslateService : Service() {
     private var overlay: View? = null
     private var busy = false
     private var stopping = false
+    private var translateJob: Job? = null
+
+    /** Đang chạy AI trên máy (chạm nút nổi lúc này để hủy). */
+    private var aiRunning = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -420,7 +432,15 @@ class ScreenTranslateService : Service() {
     }
 
     private fun onBubbleTap() {
-        if (busy) return
+        if (busy) {
+            // AI trên máy có thể chạy lâu: chạm nút nổi lần nữa để hủy
+            if (aiRunning) {
+                translateJob?.cancel()
+                LocalAi.cancel()
+                toast(getString(R.string.ai_cancelled))
+            }
+            return
+        }
         if (overlay != null) {
             // Đang hiện bản dịch / chọn vùng -> chạm nút nổi để đóng
             removeOverlay()
@@ -456,7 +476,7 @@ class ScreenTranslateService : Service() {
         }
         busy = true
         DebugInfo.translateCalls++
-        scope.launch {
+        translateJob = scope.launch {
             try {
                 delay(50)
                 val shot = capture()
@@ -490,6 +510,13 @@ class ScreenTranslateService : Service() {
                     Bitmap.createBitmap(full, area.left, area.top, area.width(), area.height())
                 } else full
 
+                // AI trên máy: mô hình đã tải chưa, có nhìn được ảnh không
+                val aiOn = Prefs.useAi(this@ScreenTranslateService)
+                val aiSpec = LocalAi.selected(this@ScreenTranslateService)
+                val aiReady = aiOn && ModelManager.isReady(this@ScreenTranslateService, aiSpec)
+                if (aiOn && !aiReady) toast(getString(R.string.ai_not_ready_google, aiSpec.name), long = true)
+                val aiVision = aiReady && aiSpec.vision && Prefs.aiVision(this@ScreenTranslateService)
+
                 val statusBar = if (inPlace && area == null) statusBarHeight() else 0
                 val blocks = ocr.recognize(input, src) { lang ->
                     toast(getString(R.string.downloading_ocr_data, tessLangName(lang)), long = true)
@@ -500,11 +527,24 @@ class ScreenTranslateService : Service() {
                 }.filter { // bỏ đồng hồ/biểu tượng trên thanh trạng thái
                     it.rect.bottom > statusBar && ParagraphBuilder.isTranslatable(it.text)
                 }
+                // Ảnh cho AI: vùng chọn, toàn màn hình (nếu bật) hoặc khi OCR không thấy chữ nào
+                val aiImage: AiImage? = if (aiVision &&
+                    (area != null || blocks.isEmpty() || Prefs.aiVisionFull(this@ScreenTranslateService))
+                ) {
+                    withContext(Dispatchers.Default) {
+                        AiImages.fromBitmap(input, if (area != null) 2_000_000 else 1_300_000)
+                    }
+                } else null
                 if (input !== full) input.recycle()
                 full.recycle()
                 val report = ocr.lastReport
                 Log.i(TAG, "ocr blocks=${blocks.size} inPlace=$inPlace shot=${shot.screenRect} report=$report")
                 DebugInfo.lastOcr = report?.toString()
+                if (blocks.isEmpty() && aiImage != null) {
+                    // OCR không đọc được (chữ nghệ thuật, truyện tranh...): để AI tự đọc ảnh
+                    readWithAi(aiImage, tgt, area ?: Rect(0, 0, sw, sh))
+                    return@launch
+                }
                 if (blocks.isEmpty()) {
                     DebugInfo.lastBlocks = 0
                     DebugInfo.lastUnits = emptyList()
@@ -526,10 +566,10 @@ class ScreenTranslateService : Service() {
                 var error: Exception? = null
                 if (todo.isNotEmpty()) {
                     try {
-                        val r = GoogleTranslator.translateGrouped(
+                        val r = translateTexts(
                             todo.map { query[it] },
                             todo.map { (actions[it] as LangRouting.Action.Translate).sl },
-                            tgt
+                            tgt, aiReady, aiImage
                         )
                         todo.forEachIndexed { k, i -> results[i] = r[k]?.let { t -> if (caps[i]) t.uppercase() else t } }
                     } catch (e: CancellationException) {
@@ -579,7 +619,101 @@ class ScreenTranslateService : Service() {
             } finally {
                 setLoading(false)
                 busy = false
+                aiRunning = false
             }
+        }
+    }
+
+    // ---------------------------------------------------------------- AI trên máy
+
+    /** Dịch bằng AI trên máy (nếu bật và đã tải mô hình), Google Dịch cho phần còn lại. */
+    private suspend fun translateTexts(
+        texts: List<String>, sls: List<String>, tgt: String, useAi: Boolean, image: AiImage?,
+    ): List<String?> {
+        if (!useAi) {
+            DebugInfo.lastEngine = "google"
+            return GoogleTranslator.translateGrouped(texts, sls, tgt)
+        }
+        val fallback = Prefs.aiFallback(this)
+        val out: MutableList<String?>
+        try {
+            aiRunning = true
+            val ai = obtainAi()
+            toast(getString(R.string.ai_translating), long = true)
+            val t0 = SystemClock.uptimeMillis()
+            val translator = AiTranslator(ai)
+            out = translator.translate(texts, sls, tgt, image).toMutableList()
+            DebugInfo.lastEngine = "ai:${ai.spec.id} calls=${translator.lastCalls} " +
+                "${SystemClock.uptimeMillis() - t0}ms image=${image != null} ${ai.lastStats}"
+            Log.i(TAG, "AI ${DebugInfo.lastEngine}")
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e(TAG, "AI translate failed", e)
+            if (!fallback) throw e
+            toast(getString(R.string.ai_failed_fallback, e.message ?: e.javaClass.simpleName), long = true)
+            DebugInfo.lastEngine = "google (ai failed: ${e.message})"
+            return GoogleTranslator.translateGrouped(texts, sls, tgt)
+        } finally {
+            aiRunning = false
+        }
+        val missing = out.indices.filter { out[it] == null }
+        if (missing.isNotEmpty() && fallback) {
+            try {
+                val r = GoogleTranslator.translateGrouped(missing.map { texts[it] }, missing.map { sls[it] }, tgt)
+                missing.forEachIndexed { k, i -> out[i] = r[k] }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.w(TAG, "google fallback failed: $e")
+            }
+        }
+        return out
+    }
+
+    private suspend fun obtainAi(): NativeBackend {
+        val spec = LocalAi.selected(this)
+        if (!LocalAi.isLoaded(spec)) toast(getString(R.string.ai_loading, spec.name), long = true)
+        return LocalAi.obtain(this)
+    }
+
+    /** OCR không thấy chữ: mô hình đọc ảnh tự tìm chữ, dịch và hiện dạng danh sách. */
+    private suspend fun readWithAi(image: AiImage, tgt: String, rect: Rect) {
+        try {
+            aiRunning = true
+            val ai = obtainAi()
+            toast(getString(R.string.ai_reading_image), long = true)
+            val pairs = AiTranslator(ai).readImage(image, tgt)
+            DebugInfo.lastEngine = "ai-read:${ai.spec.id} ${ai.lastStats}"
+            DebugInfo.lastOriginals = pairs.map { it.first }
+            DebugInfo.lastTranslations = pairs.map { it.second }
+            if (pairs.isEmpty()) {
+                DebugInfo.lastError = "no text"
+                toast(getString(R.string.no_text))
+                return
+            }
+            DebugInfo.lastError = null
+            DebugInfo.resultCount++
+            showResult(pairs.map { TranslatedBlock(it.first, it.second, rect) }, null, inPlace = false)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e(TAG, "AI read image failed", e)
+            DebugInfo.lastError = "ai read failed: $e"
+            toast("Lỗi AI: ${e.message ?: e.javaClass.simpleName}", long = true)
+        } finally {
+            aiRunning = false
+        }
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        // Hệ thống sắp hết bộ nhớ: nhả mô hình AI (vài GB), lần dịch sau sẽ nạp lại
+        @Suppress("DEPRECATION")
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE ||
+            level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL
+        ) {
+            if (!busy) LocalAi.release()
         }
     }
 
@@ -674,6 +808,7 @@ class ScreenTranslateService : Service() {
         projection = null
         ocr.close()
         detector.close()
+        LocalAi.release()
         captureThread.quitSafely()
         super.onDestroy()
     }

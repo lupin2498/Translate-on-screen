@@ -6,6 +6,8 @@ plugins {
 android {
     namespace = "com.dichmanhinh.screentranslator"
     compileSdk = 34
+    // NDK dựng llama.cpp (AI trên máy). Trên GitHub Actions dùng bản NDK mới nhất có sẵn.
+    ndkVersion = System.getenv("ANDROID_NDK_LATEST_HOME")?.let { File(it).name } ?: "27.3.13750724"
 
     defaultConfig {
         applicationId = "com.dichmanhinh.screentranslator"
@@ -18,6 +20,21 @@ android {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
             // Kiểm thử E2E trên emulator x86_64: ./gradlew -Pe2e=true assembleDebug assembleDebugAndroidTest
             if (project.findProperty("e2e") == "true") abiFilters += "x86_64"
+        }
+        externalNativeBuild {
+            cmake {
+                arguments += listOf("-DCMAKE_BUILD_TYPE=Release", "-DANDROID_STL=c++_shared")
+                // Dùng mã nguồn llama.cpp có sẵn trên máy thay vì tải về: -PllamaSrc=/duong/dan/llama.cpp
+                (project.findProperty("llamaSrc") as String?)?.let { arguments += "-DLLAMA_SRC_DIR=$it" }
+                cppFlags += "-std=c++17"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
         }
     }
 
@@ -48,7 +65,8 @@ android {
         viewBinding = false
     }
     packaging {
-        // Nén thư viện native (ML Kit, Tesseract) trong APK: bộ cài nhỏ hơn ~40%, dễ gửi và tải
+        // Nén thư viện native (ML Kit, Tesseract, llama.cpp) trong APK: bộ cài nhỏ hơn ~40%, dễ gửi và
+        // tải. Thư viện được giải nén ra nativeLibraryDir – llama.cpp nạp các biến thể CPU từ đó.
         jniLibs { useLegacyPackaging = true }
     }
 }
