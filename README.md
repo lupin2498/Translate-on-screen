@@ -31,9 +31,10 @@ không gửi đi đâu.
 | HY-MT 1.5 · 1.8B (Tencent) | 1,1 GB | Chuyên dịch, 33 ngôn ngữ, nhanh, nhẹ (RAM ≥ 4 GB) |
 | Gemma 4 E2B (Google) + mmproj | 3,4 GB | Nhìn được ảnh chụp: đọc lại chữ OCR sai/bỏ sót, dịch theo ngữ cảnh (RAM ≥ 6–8 GB) |
 
-- **Dịch hay hơn**: cả màn hình được dịch trong một lần, mỗi đoạn bọc thẻ `<sN>` nên AI hiểu ngữ
-  cảnh (phụ đề nối tiếp, xưng hô anh/em/tôi/bạn thống nhất, tên riêng chữ Hán đọc theo Hán Việt) mà
-  bản dịch vẫn về đúng vị trí từng đoạn. HY-MT dùng đúng mẫu prompt mà mô hình được huấn luyện.
+- **Dịch hay hơn**: với Gemma 4, cả màn hình được dịch trong một lần, mỗi đoạn bọc thẻ `<sN>` nên AI
+  hiểu ngữ cảnh (phụ đề nối tiếp, hội thoại, xưng hô anh/em/tôi/bạn thống nhất, tên riêng chữ Hán đọc
+  theo Hán Việt) mà bản dịch vẫn về đúng vị trí từng đoạn. HY-MT dịch từng đoạn bằng đúng mẫu prompt
+  chính thức của mô hình (thử với mô hình thật: chính xác hơn gộp nhiều đoạn).
 - **Nhận diện chữ thông minh hơn**: AI được dặn sửa lỗi OCR (thiếu dấu, nhầm rn/m, 0/O, chữ Kirin
   bị đọc thành La-tinh…). Với Gemma 4, khi dịch vùng chọn (nhấn giữ nút nổi) AI nhìn chính ảnh chụp
   để đọc lại chữ; khi OCR không thấy chữ nào (chữ nghệ thuật, truyện tranh) AI tự đọc ảnh và dịch.

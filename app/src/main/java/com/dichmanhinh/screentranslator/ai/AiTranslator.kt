@@ -56,13 +56,19 @@ class AiTranslator(
         // Ngân sách token cho phần chữ nguồn của một lô (còn chỗ cho bản dịch dài hơn ~2.5 lần)
         val imageTokens = if (useImage) 1200 else 0
         val budget = ((llm.contextSize - 900 - imageTokens) / 3.6f).toInt().coerceIn(200, 1400)
-        val batches = if (perSegment) clean.indices.map { listOf(it) } else AiPrompts.packBatches(clean, budget)
+        // Hunyuan-MT là mô hình chuyên dịch từng đoạn: luôn dịch riêng từng đoạn (xem AiPrompts.hyMtSingle)
+        val single = perSegment || llm.style == PromptStyle.HY_MT
+        val batches = if (single) clean.indices.map { listOf(it) } else AiPrompts.packBatches(clean, budget)
         var done = 0
         var lastError: Exception? = null
         for ((bi, idx) in batches.withIndex()) {
             val texts = idx.map { clean[it] }
             try {
-                val ctx = if (perSegment) neighbors(clean, idx[0]) else contextFor(clean, idx)
+                val ctx = when {
+                    llm.style == PromptStyle.HY_MT -> null
+                    single -> neighbors(clean, idx[0])
+                    else -> contextFor(clean, idx)
+                }
                 val res = translateBatch(texts, idx.map { sources[it] }, target,
                     if (useImage && bi == 0) image else null, ctx)
                 idx.forEachIndexed { k, i -> out[i] = res[k] }
@@ -75,9 +81,9 @@ class AiTranslator(
             onProgress(Progress(done, segments.size))
         }
 
-        // Dịch lại riêng các đoạn bị bỏ sót
+        // Dịch lại riêng các đoạn mô hình đa năng bỏ sót (HY-MT vốn đã dịch từng đoạn)
         val missing = out.indices.filter { out[it] == null }
-        if (missing.isNotEmpty() && missing.size <= 12) {
+        if (llm.style == PromptStyle.GENERAL && missing.isNotEmpty() && missing.size <= 12) {
             for (i in missing) {
                 try {
                     out[i] = translateOne(clean[i], sources[i], target, neighbors(clean, i))
@@ -95,20 +101,14 @@ class AiTranslator(
     private suspend fun translateBatch(
         texts: List<String>, sources: List<String>, target: String, image: AiImage?, context: String?,
     ): Array<String?> {
-        val maxTokens = AiPrompts.maxOutputTokens(texts)
-        val raw = when (llm.style) {
-            PromptStyle.HY_MT -> {
-                if (texts.size == 1) {
-                    return arrayOf(translateOne(texts[0], sources[0], target, context))
-                }
-                call(null, AiPrompts.hyMtTagged(texts, target), null, maxTokens)
-            }
-            PromptStyle.GENERAL -> call(
-                AiPrompts.generalSystem(target, image != null),
-                AiPrompts.generalUser(texts, sources, target, if (image != null) llm.mediaMarker else null, context),
-                image, maxTokens
-            )
+        if (llm.style == PromptStyle.HY_MT) {
+            return Array(texts.size) { translateOne(texts[it], sources[it], target, null) }
         }
+        val raw = call(
+            AiPrompts.generalSystem(target, image != null),
+            AiPrompts.generalUser(texts, sources, target, if (image != null) llm.mediaMarker else null, context),
+            image, AiPrompts.maxOutputTokens(texts)
+        )
         val res = AiPrompts.parseTagged(raw, texts.size)
         for (k in res.indices) {
             val t = res[k] ?: continue
@@ -120,7 +120,7 @@ class AiTranslator(
     private suspend fun translateOne(text: String, source: String, target: String, context: String?): String? {
         val maxTokens = AiPrompts.maxOutputTokens(listOf(text))
         val raw = when (llm.style) {
-            PromptStyle.HY_MT -> call(null, AiPrompts.hyMtSingle(text, source, target, context), null, maxTokens)
+            PromptStyle.HY_MT -> call(null, AiPrompts.hyMtSingle(text, source, target), null, maxTokens)
             PromptStyle.GENERAL -> call(
                 AiPrompts.generalSystem(target, false),
                 AiPrompts.generalUser(listOf(text), listOf(source), target, null, context),

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.dichmanhinh.screentranslator.ai.AiTranslator
 import com.dichmanhinh.screentranslator.ai.LocalAi
+import com.dichmanhinh.screentranslator.ai.ModelCatalog
 import com.dichmanhinh.screentranslator.ai.ModelManager
 import com.dichmanhinh.screentranslator.ai.ModelSpec
 import com.google.android.material.appbar.MaterialToolbar
@@ -138,6 +139,9 @@ class AiSettingsActivity : AppCompatActivity() {
         listModels.removeAllViews()
         cards.clear()
         val selected = Prefs.aiModel(this)
+        // Máy đủ RAM: Gemma 4 (dịch hay hơn, đọc được ảnh); máy yếu hơn: HY-MT (nhẹ, nhanh)
+        val ram = LocalAi.totalRamGb(this)
+        val recommended = if (ram >= 7f) ModelCatalog.GEMMA4_E2B.id else ModelCatalog.HY_MT.id
         for (spec in ModelManager.allModels(this)) {
             val card = MaterialCardView(this).apply {
                 useCompatPadding = true
@@ -155,7 +159,9 @@ class AiSettingsActivity : AppCompatActivity() {
                 setOnClickListener { select(spec) }
             }
             val desc = TextView(this).apply {
-                text = spec.description
+                text = if (spec.id == recommended && LocalAi.is64Bit()) {
+                    getString(R.string.ai_recommended) + "\n" + spec.description
+                } else spec.description
                 textSize = 13f
             }
             val status = TextView(this).apply { textSize = 13f; setPadding(0, dp(4f), 0, 0) }

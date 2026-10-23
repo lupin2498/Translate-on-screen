@@ -58,18 +58,21 @@ class AiTranslatorTest {
     }
 
     @Test
-    fun hyMtUsesOfficialTemplates() = runBlocking {
-        val llm = Fake(PromptStyle.HY_MT) { _, u, _ ->
-            if (u.contains("<source>")) echoTags(u) else "Xin chào"
-        }
+    fun hyMtTranslatesEachSegmentWithOfficialTemplate() = runBlocking {
+        val llm = Fake(PromptStyle.HY_MT) { _, u, _ -> "VI(" + u.substringAfterLast("\n") + ")" }
         val one = AiTranslator(llm).translate(listOf("Hello"), listOf("en"), "vi")
-        assertEquals(listOf("Xin chào"), one)
+        assertEquals(listOf("VI(Hello)"), one)
         assertNull("HY-MT has no system prompt", llm.calls[0].first)
         assertTrue(llm.calls[0].second.startsWith("Translate the following segment into Vietnamese"))
 
-        val many = AiTranslator(llm).translate(listOf("设置", "退出"), listOf("zh-CN", "zh-CN"), "vi")
-        assertEquals(listOf("VI(设置)", "VI(退出)"), many)
-        assertTrue(llm.calls.last().second.contains("越南语"))
+        llm.calls.clear()
+        val many = AiTranslator(llm).translate(listOf("设置", "退出", "确定"), listOf("zh-CN", "zh-CN", "zh-CN"), "vi")
+        assertEquals(listOf("VI(设置)", "VI(退出)", "VI(确定)"), many)
+        assertEquals("one call per segment", 3, llm.calls.size)
+        for (c in llm.calls) {
+            assertTrue(c.second.startsWith("将以下文本翻译为越南语"))
+            assertTrue("no other segment leaks into the prompt", c.second.count { it == '\n' } == 2)
+        }
     }
 
     @Test

@@ -60,6 +60,7 @@
     <string name="ai_device_info">RAM %1$.1f GB · %2$s · %3$d luồng AI · còn trống %4$s</string>
     <string name="ai_device_32bit">Máy 32-bit: không chạy được AI trên máy, chỉ dùng được Google Dịch.</string>
     <string name="ai_models">Mô hình AI</string>
+    <string name="ai_recommended">★ Khuyên dùng cho máy này</string>
     <string name="ai_import">Nhập mô hình GGUF từ máy…</string>
     <string name="ai_importing">Đang chép mô hình vào ứng dụng…</string>
     <string name="ai_options">Tùy chọn</string>

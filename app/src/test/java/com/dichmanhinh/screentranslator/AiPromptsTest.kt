@@ -96,14 +96,15 @@ class AiPromptsTest {
 
     @Test
     fun prompts() {
-        val p = AiPrompts.hyMtTagged(listOf("设置", "账号\n与安全"), "vi")
-        assertTrue(p.contains("<s1>设置</s1>"))
-        assertTrue(p.contains("<s2>账号 与安全</s2>"))
-        assertTrue(p.contains("越南语"))
-        val single = AiPrompts.hyMtSingle("Hello", "en", "vi", null)
+        val single = AiPrompts.hyMtSingle("Hello", "en", "vi")
         assertTrue(single.startsWith("Translate the following segment into Vietnamese"))
-        val zh = AiPrompts.hyMtSingle("你好", "zh-CN", "vi", null)
+        val zh = AiPrompts.hyMtSingle("你好", "zh-CN", "vi")
         assertTrue(zh.startsWith("将以下文本翻译为越南语"))
+        assertTrue(zh.endsWith("\n\n你好"))
+        // không rõ nguồn nhưng là chữ Hán -> mẫu tiếng Trung; tiếng Nhật -> mẫu tiếng Anh
+        assertTrue(AiPrompts.hyMtSingle("账号与安全", "auto", "vi").startsWith("将以下文本"))
+        assertTrue(AiPrompts.hyMtSingle("ログインして", "auto", "vi").startsWith("Translate"))
+        assertTrue(AiPrompts.hyMtSingle("账号\n与安全", "zh-CN", "vi").endsWith("账号 与安全"))
         val u = AiPrompts.generalUser(listOf("a", "b"), listOf("ru", "ru"), "vi", "<__media__>", null)
         assertTrue(u.startsWith("<__media__>\n"))
         assertTrue(u.contains("Russian"))

@@ -133,19 +133,12 @@ class LocalAiSmokeTest {
         run(ModelCatalog.HY_MT, model!!, null)
     }
 
-    /** So sánh cấu hình (chỉ khi SCREENAI_VARIANTS=1): giải mã tham lam, dịch từng đoạn, bản Q8_0. */
+    /** So sánh với bản lượng tử hóa Q8_0 (chỉ khi có SCREENAI_HYMT_Q8). */
     @Test
-    fun hyMtVariants() {
-        val model = env("SCREENAI_HYMT")
-        assumeTrue("không so sánh cấu hình", model != null && env("SCREENAI_VARIANTS") != null && loadLib())
-        val greedy = ModelCatalog.HY_MT.sampling.copy(temperature = 0f)
-        run(ModelCatalog.HY_MT.copy(sampling = greedy), model!!, null, tag = "greedy")
-        run(ModelCatalog.HY_MT.copy(sampling = greedy), model, null, perSegment = true, tag = "greedy per-segment")
-        run(ModelCatalog.HY_MT, model, null, perSegment = true, tag = "t0.3 per-segment")
-        env("SCREENAI_HYMT_Q8")?.let { q8 ->
-            run(ModelCatalog.HY_MT.copy(sampling = greedy), q8, null, tag = "Q8_0 greedy")
-            run(ModelCatalog.HY_MT.copy(sampling = greedy), q8, null, perSegment = true, tag = "Q8_0 greedy per-segment")
-        }
+    fun hyMtQ8() {
+        val q8 = env("SCREENAI_HYMT_Q8")
+        assumeTrue("không có bản Q8_0", q8 != null && loadLib())
+        run(ModelCatalog.HY_MT, q8!!, null, tag = "Q8_0")
     }
 
     @Test

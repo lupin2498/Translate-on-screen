@@ -63,9 +63,9 @@ object ModelCatalog {
         style = PromptStyle.HY_MT,
         nCtx = 4096,
         minRamGb = 4,
-        // khuyến nghị của nhà phát triển mô hình (top_k 20, top_p 0.6, repetition_penalty 1.05),
-        // nhiệt độ thấp hơn để bản dịch ổn định giữa các lần chạm
-        sampling = Sampling(temperature = 0.3f, topK = 20, topP = 0.6f, repeatPenalty = 1.05f),
+        // Giải mã tham lam (chính xác và ổn định giữa các lần chạm hơn lấy mẫu ngẫu nhiên khi thử
+        // với mô hình thật), giữ repetition_penalty 1.05 theo khuyến nghị của nhà phát triển.
+        sampling = Sampling(temperature = 0f, topK = 20, topP = 0.6f, repeatPenalty = 1.05f),
     )
 
     /** Google Gemma 4 E2B: đa năng, nhìn được ảnh để đọc lại chữ OCR sai/bỏ sót. */

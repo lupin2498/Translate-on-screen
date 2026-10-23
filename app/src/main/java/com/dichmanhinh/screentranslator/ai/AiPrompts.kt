@@ -2,6 +2,22 @@ package com.dichmanhinh.screentranslator.ai
 
 import java.util.Locale
 
+/** Nhận biết nhanh chữ Hán (khi không rõ ngôn ngữ nguồn). */
+internal object LangHint {
+    fun looksChinese(s: String): Boolean {
+        var han = 0
+        var letters = 0
+        for (ch in s) {
+            if (!ch.isLetter()) continue
+            letters++
+            val c = ch.code
+            if (c in 0x3040..0x30FF || c in 0xAC00..0xD7AF) return false // có kana/hangul: Nhật/Hàn
+            if (c in 0x4E00..0x9FFF || c in 0x3400..0x4DBF) han++
+        }
+        return letters > 0 && han * 2 >= letters
+    }
+}
+
 /** Tên ngôn ngữ dùng trong prompt (tiếng Anh cho mô hình đa năng, tiếng Trung cho HY-MT). */
 object AiLang {
     /** Tên tiếng Trung theo đúng bảng ngôn ngữ trong tài liệu của Hunyuan-MT. */
@@ -56,22 +72,14 @@ object AiPrompts {
 
     // ----------------------------------------------------------------- Hunyuan-MT
 
-    /** Mẫu "dịch có định dạng" của Hunyuan-MT: giữ thẻ <sN> ở vị trí tương ứng trong bản dịch. */
-    fun hyMtTagged(segments: List<String>, target: String): String {
-        val src = segments.mapIndexed { i, s -> "<s${i + 1}>${oneLine(s)}</s${i + 1}>" }.joinToString("\n")
-        return "将以下<source></source>之间的文本翻译为${AiLang.chinese(target)}，注意只需要输出翻译后的结果，" +
-            "不要额外解释，原文中的<sn></sn>标签表示标签内文本包含格式信息，需要在译文中相应的位置尽量保留该标签。" +
-            "输出格式为：<target>str</target>\n\n<source>$src</source>"
-    }
-
-    /** Dịch một đoạn (mẫu chính thức), có kèm ngữ cảnh (chữ xung quanh trên màn hình) nếu có. */
-    fun hyMtSingle(text: String, source: String, target: String, context: String?): String {
+    /**
+     * Mẫu prompt chính thức của Hunyuan-MT cho một đoạn. Thử nghiệm với mô hình thật: dịch từng đoạn
+     * riêng chính xác hơn hẳn gộp nhiều đoạn (gộp thì nội dung các đoạn lẫn vào nhau, "明天" bị dịch
+     * thành "hôm nay"), và mẫu "kèm ngữ cảnh" đôi khi dịch nhầm sang câu ngữ cảnh.
+     */
+    fun hyMtSingle(text: String, source: String, target: String): String {
         val t = oneLine(text)
-        if (!context.isNullOrBlank()) {
-            return "$context\n参考上面的信息，把下面的文本翻译成${AiLang.chinese(target)}，注意不需要翻译上文，" +
-                "也不要额外解释：\n$t"
-        }
-        return if (AiLang.isChinese(source) || AiLang.isChinese(target)) {
+        return if (AiLang.isChinese(source) || AiLang.isChinese(target) || LangHint.looksChinese(t)) {
             "将以下文本翻译为${AiLang.chinese(target)}，注意只需要输出翻译后的结果，不要额外解释：\n\n$t"
         } else {
             "Translate the following segment into ${AiLang.english(target)}, without additional explanation.\n\n$t"
@@ -84,7 +92,9 @@ object AiPrompts {
     private fun targetHints(target: String): String = when (AiLang.base(target)) {
         "vi" -> "- Write natural, idiomatic Vietnamese as a native speaker would, not word-by-word.\n" +
             "- Choose Vietnamese pronouns (tôi, bạn, anh, em, chị, cậu, tớ, ông, bà, ngài…) that fit the " +
-            "speakers' relationship and tone; keep them consistent across the screen.\n" +
+            "speakers' relationship and tone; keep them consistent across the screen. Consecutive subtitle or " +
+            "chat lines are often a dialogue: work out who says each line to whom (a reply comes from the " +
+            "other person) before choosing pronouns.\n" +
             "- Chinese personal names, places, titles and martial-arts terms: use Sino-Vietnamese (Hán Việt) " +
             "readings (e.g. 李明 -> Lý Minh, 北京 -> Bắc Kinh). Russian/Japanese/Korean names: keep the usual " +
             "romanization.\n" +
