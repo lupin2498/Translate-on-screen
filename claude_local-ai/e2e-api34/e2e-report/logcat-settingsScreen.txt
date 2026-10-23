@@ -1,0 +1,15 @@
+10-23 03:10:48.000  8394  8394 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:10:48.003  8394  8394 I AndroidRuntime: Using default boot image
+10-23 03:10:48.003  8394  8394 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:10:48.086  8394  8394 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:10:48.587  8406  8425 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
+10-23 03:10:52.655  8406  8425 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-01-settings-open.png
+10-23 03:10:53.476  8406  8425 I ST-E2E  : color chips 'Màu #F44336' found=2
+10-23 03:11:03.347  8406  8425 I ST-E2E  : saved style: OverlayStyle(transparentBg=true, bgColor=-1, bgOpacity=100, textColor=-769226, autoSize=false, textSizeSp=40, font=serif, bold=true, outline=true, border=true)
+10-23 03:11:04.019  8406  8425 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-02-settings-changed.png
+10-23 03:11:04.917  8406  8425 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-03-settings-reset.png
+10-23 03:11:04.917  8406  8425 I ST-E2E  : PASS settingsScreen
+10-23 03:11:05.248  8406  8425 I ST-E2E  : STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
+10-23 03:11:06.408  8406  8425 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-04-final.png
+10-23 03:11:06.833  8406  8425 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
+10-23 03:11:07.924  8394  8394 I AndroidRuntime: VM exiting with result code 0.

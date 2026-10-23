@@ -1,0 +1,17 @@
+10-23 03:10:34.516  8161  8161 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:10:34.520  8161  8161 I AndroidRuntime: Using default boot image
+10-23 03:10:34.520  8161  8161 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:10:34.601  8161  8161 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:10:35.024  8173  8192 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
+10-23 03:10:36.639  8173  8192 I ST-E2E  : ==== START mode=single-app sdk=34
+10-23 03:10:37.265  8173  8192 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 03:10:39.237  8173  8192 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-01-sample.png
+10-23 03:10:41.184  8173  8192 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-02-main.png
+10-23 03:10:43.248  8173  8192 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-03-consent.png
+10-23 03:10:43.557  8173  8192 I ST-E2E  : consent dialog: spinner=false title='Start recording or casting with Dịch Màn Hình?' positive='Start now'
+10-23 03:10:43.722  8173  8192 I ST-E2E  : SKIP single-app: legacy consent dialog without 'A single app' option on this image
+10-23 03:10:43.726  8173  8192 I ST-E2E  : STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
+10-23 03:10:44.545  8173  8192 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-04-final.png
+10-23 03:10:44.884  8173  8192 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/single-app-final.xml
+10-23 03:10:46.130  8173  8192 I ST-E2E  : SKIP singleAppHidden: single-app sharing not offered by this system image
+10-23 03:10:46.560  8161  8161 I AndroidRuntime: VM exiting with result code 0.

@@ -1,0 +1,17 @@
+10-23 03:15:41.433 10176 10176 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:15:41.436 10176 10176 I AndroidRuntime: Using default boot image
+10-23 03:15:41.436 10176 10176 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:15:41.510 10176 10176 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:15:41.957 10188 10207 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
+10-23 03:15:43.625 10188 10207 I ST-E2E  : llama system info: CPU : SSE3 = 1 | SSSE3 = 1 | REPACK = 1 | 
+10-23 03:15:43.625 10188 10207 I ST-E2E  : native libs: [libc++_shared.so, libggml-base.so, libggml-cpu.so, libggml.so, libjpeg.so, liblanguage_id_l2c_jni.so, libleptonica.so, libllama-common.so, libllama.so, libmlkit_google_ocr_pipeline.so, libmtmd.so, libpngx.so, libscreenai.so, libtesseract.so]
+10-23 03:15:43.625 10188 10207 E llama   : gguf_init_from_file: failed to open GGUF file '/nonexistent.gguf' (No such file or directory)
+10-23 03:15:43.625 10188 10207 E llama   : llama_model_load: error loading model: llama_model_loader: failed to load model from /nonexistent.gguf
+10-23 03:15:43.625 10188 10207 E llama   : llama_model_load_from_file_impl: failed to load model
+10-23 03:15:43.625 10188 10207 E ScreenAI: Không nạp được mô hình: /nonexistent.gguf
+10-23 03:15:43.626 10188 10207 I ST-E2E  : load error (expected): Không nạp được mô hình: /nonexistent.gguf
+10-23 03:15:43.626 10188 10207 I ST-E2E  : PASS nativeAiLibrary
+10-23 03:15:43.626 10188 10207 I ST-E2E  : STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
+10-23 03:15:44.452 10188 10207 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-01-final.png
+10-23 03:15:44.500 10188 10207 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
+10-23 03:15:45.544 10176 10176 I AndroidRuntime: VM exiting with result code 0.

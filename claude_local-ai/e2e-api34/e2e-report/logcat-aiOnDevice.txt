@@ -1,0 +1,111 @@
+10-23 03:15:55.777 10467 10467 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:15:55.780 10467 10467 I AndroidRuntime: Using default boot image
+10-23 03:15:55.780 10467 10467 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:15:55.856 10467 10467 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:15:56.257 10479 10498 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
+10-23 03:16:09.506 10479 10498 I ST-E2E  : model download ok=true  size=91893088
+10-23 03:16:09.619 10479 10556 W llama   : .
+10-23 03:16:09.619 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.620 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.621 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : .
+10-23 03:16:09.622 10479 10556 W llama   : 
+10-23 03:16:09.667 10479 10556 I ScreenAI: model loaded: ctx=4096 threads=2 vision=0
+10-23 03:16:09.668 10479 10556 I ScreenAI: loaded custom:SmolLM2-135M-Instruct-Q4_0.gguf in 127ms: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an
+10-23 03:16:09.669 10479 10498 I ST-E2E  : model: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an threads=2 load=160ms
+10-23 03:16:13.109 10479 10498 I ST-E2E  : direct AI: [Good morning, Thank you very much] stats=prompt 482 tok (dùng lại 0) 2880ms, sinh 23 tok 545ms (42.2 tok/s)
+10-23 03:16:13.110 10479 10498 I ST-E2E  : ==== START mode=entire-screen sdk=34
+10-23 03:16:13.725 10479 10498 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 03:16:15.471 10479 10498 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
+10-23 03:16:17.196 10479 10498 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
+10-23 03:16:19.203 10479 10498 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
+10-23 03:16:19.296 10479 10498 I ST-E2E  : consent dialog: spinner=false title='Start recording or casting with Dịch Màn Hình?' positive='Start now'
+10-23 03:16:19.792 10479 10669 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:16:19.792 10479 10669 I ScreenTranslator: captured content visible=true
+10-23 03:16:19.973 10479 10498 I ST-E2E  : service running=true lastError=null
+10-23 03:16:23.095 10479 10479 I ScreenTranslator: capture singleApp=false newFrame=true frames=25 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:17:06.145 10479 10479 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:17:09.172 10479 10479 I ScreenTranslator: AI ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 3011ms image=false prompt 520 tok (dùng lại 457) 1256ms, sinh 59 tok 1746ms (33.8 tok/s)
+10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Hello world'
+10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Good morning'
+10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
+10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Good morning'
+10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Thank you very much'
+10-23 03:17:09.173 10479 10479 I ScreenTranslator: result blocks=1 first='Good morning'
+10-23 03:17:09.193 10479 10479 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:17:10.684 10479 10498 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-ai-result.png
+10-23 03:17:10.685 10479 10498 I ST-E2E  : ocr: Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:17:10.685 10479 10498 I ST-E2E  :   unit[0] [en/translate:en] 'Hello world' -> 'Hello world'
+10-23 03:17:10.685 10479 10498 I ST-E2E  :   unit[1] [en/translate:en] 'Good morning' -> 'Good morning'
+10-23 03:17:10.685 10479 10498 I ST-E2E  :   unit[2] [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
+10-23 03:17:10.685 10479 10498 I ST-E2E  :   unit[3] [en/translate:en] 'Please open the door' -> 'Good morning'
+10-23 03:17:10.685 10479 10498 I ST-E2E  :   unit[4] [en/translate:en] 'Thank you very much' -> 'Thank you very much'
+10-23 03:17:10.685 10479 10498 I ST-E2E  : RESULT ai done=true engine=ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 3011ms image=false prompt 520 tok (dùng lại 457) 1256ms, sinh 59 tok 1746ms (33.8 tok/s) lastError=null
+10-23 03:17:10.685 10479 10498 I ST-E2E  : PASS aiOnDevice
+10-23 03:17:10.686 10479 10498 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
+10-23 03:17:10.955 10479 10498 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-final.png
+10-23 03:17:11.151 10479 10498 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
+10-23 03:17:12.095 10467 10467 I AndroidRuntime: VM exiting with result code 0.
