@@ -25,6 +25,12 @@ import com.dichmanhinh.screentranslator.Prefs
 import com.dichmanhinh.screentranslator.R
 import com.dichmanhinh.screentranslator.ScreenTranslateService
 import com.dichmanhinh.screentranslator.SettingsActivity
+import com.dichmanhinh.screentranslator.AiSettingsActivity
+import com.dichmanhinh.screentranslator.ai.AiTranslator
+import com.dichmanhinh.screentranslator.ai.LlamaNative
+import com.dichmanhinh.screentranslator.ai.LocalAi
+import com.dichmanhinh.screentranslator.ai.ModelCatalog
+import com.dichmanhinh.screentranslator.ai.ModelManager
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.After
@@ -38,6 +44,8 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.junit.runner.RunWith
 import java.io.File
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.regex.Pattern
 
 /**
@@ -300,6 +308,115 @@ class ScreenTranslateE2ETest {
         assertTrue("translation should mention Gubenko/Vysotsky: $all",
             all.contains("gubenko") || all.contains("vysotsky") || all.contains("vysotskiy"))
         report("PASS videoRussianCyrillic")
+    }
+
+    // ------------------------------------------------------------------ AI trên máy
+
+    /** Thư viện llama.cpp nạp được trên máy, có backend CPU (biến thể nạp động từ nativeLibraryDir). */
+    @Test
+    fun nativeAiLibrary() {
+        assertTrue("loadLibrary: ${LlamaNative.loadError}", LlamaNative.loadLibrary())
+        assertTrue("AI not supported on ${Build.SUPPORTED_ABIS.toList()}", LlamaNative.supported())
+        val info = LlamaNative.init(ctx.applicationInfo.nativeLibraryDir)
+        report("llama system info: $info")
+        report("native libs: ${File(ctx.applicationInfo.nativeLibraryDir).list()?.sorted()}")
+        assertTrue("no CPU backend loaded: $info", info.contains("CPU"))
+        val h = LlamaNative.load("/nonexistent.gguf", null, 512, 2, 0)
+        assertTrue("loading a missing file must fail", h == 0L)
+        report("load error (expected): ${LlamaNative.lastError()}")
+        report("PASS nativeAiLibrary")
+    }
+
+    /** Màn hình AI: có danh mục mô hình, chuyển bộ dịch Google <-> AI được lưu. */
+    @Test
+    fun aiSettingsScreen() {
+        Prefs.setEngine(ctx, Prefs.ENGINE_GOOGLE)
+        ctx.startActivity(Intent(ctx, AiSettingsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        val ai = device.wait(Until.findObject(By.res(PKG, "btnEngineAi")), 10_000)
+        assertTrue("AI screen not shown", ai != null)
+        shot("ai-open")
+        assertTrue("HY-MT card missing", device.wait(Until.hasObject(By.textContains("HY-MT")), 5_000) == true)
+        assertTrue("Gemma card missing", device.hasObject(By.textContains("Gemma 4")))
+        ai!!.click()
+        assertTrue("engine AI not saved", waitUntil(3_000) { Prefs.useAi(ctx) })
+        shot("ai-engine")
+        device.findObject(By.res(PKG, "btnEngineGoogle"))!!.click()
+        assertTrue("engine Google not saved", waitUntil(3_000) { !Prefs.useAi(ctx) })
+        report("PASS aiSettingsScreen")
+    }
+
+    /**
+     * Toàn bộ đường đi AI trên máy: chụp -> OCR -> llama.cpp (JNI) -> overlay, với mô hình rất nhỏ
+     * (SmolLM2 135M, ~90 MB) – chỉ kiểm tra cơ chế chạy được trên Android, không kiểm chất lượng dịch.
+     */
+    @Test
+    fun aiOnDevice() {
+        val name = "SmolLM2-135M-Instruct-Q4_0.gguf"
+        val f = File(ModelManager.dir(ctx), name)
+        if (f.length() != 91_893_088L) {
+            val ok = runCatching { download("https://huggingface.co/bartowski/SmolLM2-135M-Instruct-GGUF/resolve/main/$name", f) }
+            report("model download ok=${ok.isSuccess} ${ok.exceptionOrNull() ?: ""} size=${f.length()}")
+            assumeTrue("cannot download test model", ok.isSuccess && f.length() == 91_893_088L)
+        }
+        val spec = ModelCatalog.custom(name, f.length())
+        Prefs.setAiModel(ctx, spec.id)
+        Prefs.setEngine(ctx, Prefs.ENGINE_AI)
+        Prefs.setAiFallback(ctx, false)
+        try {
+            // 1. Gọi trực tiếp
+            val t0 = SystemClock.uptimeMillis()
+            val direct = runBlocking {
+                withTimeout(120_000) {
+                    val ai = LocalAi.obtain(ctx)
+                    report("model: ${ai.info} threads=${LocalAi.threads()} load=${SystemClock.uptimeMillis() - t0}ms")
+                    AiTranslator(ai).translate(listOf("Good morning", "Thank you very much"), listOf("en", "en"), "vi")
+                }
+            }
+            report("direct AI: $direct stats=${LocalAi.loaded?.lastStats}")
+            assertTrue("AI generated nothing", (LocalAi.loaded?.lastStats?.genTokens ?: 0) > 0)
+
+            // 2. Qua nút nổi
+            DebugInfo.lastEngine = null
+            startSession(Mode.ENTIRE_SCREEN)
+            val calls = DebugInfo.translateCalls
+            tapBubble(findBubble())
+            val done = waitUntil(150_000) {
+                DebugInfo.lastEngine != null || (DebugInfo.translateCalls > calls && DebugInfo.lastError != null)
+            }
+            SystemClock.sleep(1_000)
+            shot("ai-result")
+            reportUnits()
+            report("RESULT ai done=$done engine=${DebugInfo.lastEngine} lastError=${DebugInfo.lastError}")
+            assertTrue("AI engine not used: ${DebugInfo.lastEngine} err=${DebugInfo.lastError}",
+                DebugInfo.lastEngine?.startsWith("ai:") == true)
+            report("PASS aiOnDevice")
+        } finally {
+            Prefs.setEngine(ctx, Prefs.ENGINE_GOOGLE)
+            Prefs.setAiFallback(ctx, true)
+            Prefs.setAiModel(ctx, ModelCatalog.HY_MT.id)
+            LocalAi.release()
+        }
+    }
+
+    private fun download(url: String, dest: File) {
+        val tmp = File(dest.parentFile, dest.name + ".dl")
+        var u = URL(url)
+        repeat(5) {
+            val c = u.openConnection() as HttpURLConnection
+            c.instanceFollowRedirects = false
+            c.connectTimeout = 20_000
+            c.readTimeout = 60_000
+            val code = c.responseCode
+            if (code in 300..399) {
+                u = URL(u, c.getHeaderField("Location")); c.disconnect(); return@repeat
+            }
+            if (code != 200) throw java.io.IOException("HTTP $code")
+            c.inputStream.use { i -> tmp.outputStream().use { o -> i.copyTo(o, 1 shl 16) } }
+            c.disconnect()
+            if (!tmp.renameTo(dest)) throw java.io.IOException("rename failed")
+            return
+        }
+        throw java.io.IOException("too many redirects")
     }
 
     /** Màn hình Cài đặt hiển thị: thay đổi từng tùy chọn, kiểm tra được lưu, khôi phục mặc định. */

@@ -13,6 +13,9 @@ on:
       - ".github/workflows/ai-smoke.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: ai-smoke-${{ github.ref }}
   cancel-in-progress: true
@@ -61,8 +64,9 @@ jobs:
           TAG=$(sed -n 's/^set(LLAMA_TAG "\(b[0-9]*\)".*/\1/p' app/src/main/cpp/CMakeLists.txt)
           echo "llama.cpp $TAG"
           git clone --depth 1 --branch "$TAG" https://github.com/ggml-org/llama.cpp .llama
-          cmake -S app/src/main/cpp -B build-host -DLLAMA_SRC_DIR=$PWD/.llama -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=ON
-          cmake --build build-host -j4 --target screenai
+          set -o pipefail
+          cmake -S app/src/main/cpp -B build-host -DLLAMA_SRC_DIR=$PWD/.llama -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=ON 2>&1 | tee build-host.log
+          cmake --build build-host -j4 --target screenai 2>&1 | tail -n 300 | tee -a build-host.log
           echo "SCREENAI_LIB=$PWD/build-host/libscreenai.so" >> $GITHUB_ENV
           echo "SCREENAI_IMAGES=$PWD/app/src/androidTest/assets" >> $GITHUB_ENV
 
@@ -91,3 +95,11 @@ jobs:
             smoke.log
             prompts.log
           if-no-files-found: warn
+
+      - name: Publish report
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash .github/scripts/publish-report.sh "ai-smoke-${{ matrix.model }}" smoke.log prompts.log build-host.log \
+            app/build/ai-smoke app/build/test-results/testDebugUnitTest

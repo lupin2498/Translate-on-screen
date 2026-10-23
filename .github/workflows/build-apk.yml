@@ -27,7 +27,8 @@ jobs:
         run: |
           chmod +x gradlew
           echo "sdk.dir=$ANDROID_HOME" > local.properties
-          ./gradlew --no-daemon testDebugUnitTest assembleRelease
+          set -o pipefail
+          ./gradlew --no-daemon testDebugUnitTest assembleRelease 2>&1 | tee build.log
 
       - name: Copy APK
         run: |
@@ -37,6 +38,14 @@ jobs:
           echo "Thư viện native trong APK:"
           unzip -l apk/DichManHinh.apk | grep "lib/" | awk '{print $1, $4}'
           unzip -l apk/DichManHinh.apk | grep -q "lib/arm64-v8a/libscreenai.so"
+
+      - name: Publish report
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          unzip -l apk/DichManHinh.apk > apk-contents.txt 2>/dev/null || true
+          bash .github/scripts/publish-report.sh build-apk build.log apk-contents.txt app/build/test-results/testDebugUnitTest
 
       - uses: actions/upload-artifact@v4
         with:
