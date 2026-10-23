@@ -21,7 +21,7 @@ Translate into Vietnamese:
 <s6>取消</s6><turn|>
 <|turn>model
 
-=== OUTPUT (90 tok, 4783 ms)
+=== OUTPUT (90 tok, 4729 ms)
 <s1>Cài đặt</s1>
 <s2>Tài khoản và bảo mật</s2>
 <s3>Ngày mai chúng ta đi Bắc Kinh gặp thầy Lý nhé.</s3>
@@ -49,7 +49,7 @@ Translate into Vietnamese:
 <s3>Нажмите кнопку «Продолжить»</s3><turn|>
 <|turn>model
 
-=== OUTPUT (50 tok, 2580 ms)
+=== OUTPUT (50 tok, 2582 ms)
 <s1>Chào bạn, dạo này thế nào?</s1>
 <s2>Hôm nay chúng ta sẽ học từ mới</s2>
 <s3>Nhấn nút "Tiếp tục"</s3>
@@ -75,7 +75,7 @@ Translate into Vietnamese:
 <s4>Settings</s4><turn|>
 <|turn>model
 
-=== OUTPUT (65 tok, 3381 ms)
+=== OUTPUT (65 tok, 3370 ms)
 <s1>Nhấn tại đây để tiếp tục</s1>
 <s2>Tài khoản của bạn đã được xác minh thành công</s2>
 <s3>Tải phiên bản mới nhất của ứng dụng</s3>
@@ -100,7 +100,7 @@ Translate into Vietnamese:
 <s3>안녕하세요, 만나서 반갑습니다.</s3><turn|>
 <|turn>model
 
-=== OUTPUT (44 tok, 2243 ms)
+=== OUTPUT (44 tok, 2236 ms)
 <s1>Hôm nay thời tiết đẹp nhỉ.</s1>
 <s2>Đăng nhập</s2>
 <s3>Xin chào, rất vui được gặp bạn.</s3>
@@ -125,7 +125,7 @@ Translate into Vietnamese:
 <s3>知道了，你也要注意身体！</s3><turn|>
 <|turn>model
 
-=== OUTPUT (61 tok, 3181 ms)
+=== OUTPUT (61 tok, 3217 ms)
 <s1>Anh, khi nào anh về?</s1>
 <s2>Em sẽ về nhà vào tháng sau, anh phải chăm sóc mẹ cho tốt nhé.</s2>
 <s3>Biết rồi, anh cũng phải giữ gìn sức khỏe nha!</s3>
@@ -144,7 +144,7 @@ Skip text that is already in Vietnamese. If there is no text, output <none/>.<tu
 Read and translate the text in this screenshot into Vietnamese.<turn|>
 <|turn>model
 
-=== OUTPUT (470 tok, 25753 ms)
+=== OUTPUT (470 tok, 25688 ms)
 <p><o>ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ — И ЖИЗНЬ ИЗМЕНИЛАСЬ НА 57 ЛЕТ</o><t>Cô ấy đã gọi cho đối thủ ngay trước đám cưới — và cuộc đời đã thay đổi ở tuổi 57</t></p>
 <p><o>Николай Губенко готовился жениться на актрисе Марианне Вертинской. Заявление подали, свидетелем должен был стать Владимир Высоцкий. Но за несколько дней до свадьбы раздался звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьба сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовце, мечтавший об актёрстве, стал последним министром культуры СССР. Поставьте лайк, если Вы считаете, что настоящую любовь стоит отстаивать, даже когда кажется, что уже слишком поздно.</o><t>Nikolai Gubenko chuẩn bị kết hôn với nữ diễn viên Marianne Vertinskaya. Lời tuyên bố đã được đưa ra, người làm chứng phải là Vladimir Vysotsky. Nhưng vài ngày trước đám cưới, có một cuộc gọi đến. Zhanna Bolotova, người đã là bạn của Gubenko từ thời sinh viên, đã gọi cho đối thủ và nói một câu: làm sao anh có thể kết hôn nếu chúng ta yêu nhau? Đám cưới đã bị hủy bỏ. Và thế là một mối tình bắt đầu, kéo dài năm mươi bảy năm. Mà con đường của Gubenko bắt đầu ở các hang động Odessa, nơi ông đã mất mẹ. Người từng là trẻ mồ côi, mơ ước trở thành diễn viên, đã trở thành bộ trưởng văn hóa Liên Xô. Hãy nhấn thích nếu bạn nghĩ rằng tình yêu đích thực đáng để đấu tranh, ngay cả khi dường như đã quá muộn.</t></p>
 
@@ -167,7 +167,7 @@ Translate into Vietnamese:
 <s2>нoвые cлoвa</s2><turn|>
 <|turn>model
 
-=== OUTPUT (24 tok, 1279 ms)
+=== OUTPUT (24 tok, 1283 ms)
 <s1>Hôm nay</s1>
 <s2>những từ mới</s2>
 
@@ -185,7 +185,7 @@ Skip text that is already in Vietnamese. If there is no text, output <none/>.<tu
 Read and translate the text in this screenshot into Vietnamese.<turn|>
 <|turn>model
 
-=== OUTPUT (337 tok, 18391 ms)
+=== OUTPUT (337 tok, 18052 ms)
 <p><o>Từ cơ bản hay dùng</o><t>Từ cơ bản hay dùng</t></p>
 <p><o>1. hảo de</o><t>1. hảo to Vâng!</t></p>
 <p><o>2. hảo ba</o><t>2. hảo ba Được thôi!</t></p>
@@ -219,7 +219,7 @@ Translate into Vietnamese:
 <s2>单词</s2><turn|>
 <|turn>model
 
-=== OUTPUT (86 tok, 4653 ms)
+=== OUTPUT (86 tok, 4647 ms)
 <s1>Từ cơ bản hay dùng</s1>
 <s2>hào to Vàng!</s2>
 <s3>hào ba Được thôi!</s3>
