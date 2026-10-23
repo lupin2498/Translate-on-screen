@@ -35,7 +35,7 @@ INSTRUMENTATION_STATUS: test=entireScreen
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 69.628
+Time: 53.242
 
 OK (1 test)
 
@@ -73,25 +73,25 @@ STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [entireScreen] app log (ScreenTranslator) ---
-10-23 03:06:06.022  4088  4695 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:06:06.027  4088  4695 I ScreenTranslator: captured content visible=true
-10-23 03:06:10.844  4088  4088 I ScreenTranslator: capture singleApp=false newFrame=true frames=32 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:06:59.568  4088  4088 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:07:00.761  4088  4088 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
-10-23 03:07:00.761  4088  4088 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
-10-23 03:07:00.761  4088  4088 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 03:07:00.762  4088  4088 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
-10-23 03:07:00.762  4088  4088 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
-10-23 03:07:00.763  4088  4088 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
-10-23 03:07:00.781  4088  4088 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:07:02.835  4088  4695 I ScreenTranslator: projection stopped
+10-23 03:37:32.101  3662  4212 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:37:32.101  3662  4212 I ScreenTranslator: captured content visible=true
+10-23 03:37:36.229  3662  3662 I ScreenTranslator: capture singleApp=false newFrame=true frames=27 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:38:12.531  3662  3662 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:38:13.634  3662  3662 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
+10-23 03:38:13.634  3662  3662 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
+10-23 03:38:13.634  3662  3662 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-23 03:38:13.634  3662  3662 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
+10-23 03:38:13.634  3662  3662 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
+10-23 03:38:13.634  3662  3662 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
+10-23 03:38:13.652  3662  3662 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:38:15.442  3662  4212 I ScreenTranslator: projection stopped
 --- [entireScreen] crashes / FGS / projection errors ---
-10-23 03:05:50.372  4060  4060 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:05:50.381  4060  4060 I AndroidRuntime: Using default boot image
-10-23 03:05:50.381  4060  4060 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:05:50.579  4060  4060 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:07:02.806  4088  4717 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:07:03.948  4060  4060 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:37:21.903  3640  3640 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:37:21.908  3640  3640 I AndroidRuntime: Using default boot image
+10-23 03:37:21.910  3640  3640 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:37:22.116  3640  3640 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:38:15.441  3662  3848 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:38:16.672  3640  3640 I AndroidRuntime: VM exiting with result code 0.
 --- [entireScreen] failure stack (if any) ---
 ::group::am instrument singleApp (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -156,7 +156,7 @@ INSTRUMENTATION_STATUS: test=singleApp
 INSTRUMENTATION_STATUS_CODE: -4
 INSTRUMENTATION_RESULT: stream=
 
-Time: 21.387
+Time: 9.163
 
 OK (1 test)
 
@@ -179,11 +179,11 @@ hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/file
 SKIP singleApp: single-app sharing not offered by this system image
 --- [singleApp] app log (ScreenTranslator) ---
 --- [singleApp] crashes / FGS / projection errors ---
-10-23 03:07:06.236  5441  5441 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:07:06.241  5441  5441 I AndroidRuntime: Using default boot image
-10-23 03:07:06.241  5441  5441 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:07:06.412  5441  5441 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:07:28.696  5441  5441 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:38:18.094  4863  4863 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:38:18.101  4863  4863 I AndroidRuntime: Using default boot image
+10-23 03:38:18.101  4863  4863 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:38:18.231  4863  4863 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:38:27.977  4863  4863 I AndroidRuntime: VM exiting with result code 0.
 --- [singleApp] failure stack (if any) ---
 INSTRUMENTATION_STATUS: stack=org.junit.AssumptionViolatedException: single-app sharing not offered by this system image
 	at org.junit.Assume.assumeTrue(Assume.java:68)
@@ -243,7 +243,7 @@ INSTRUMENTATION_STATUS: test=entireScreenForced
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 65.792
+Time: 53.237
 
 OK (1 test)
 
@@ -281,25 +281,26 @@ STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [entireScreenForced] app log (ScreenTranslator) ---
-10-23 03:07:43.371  5956  6229 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:07:43.372  5956  6229 I ScreenTranslator: captured content visible=true
-10-23 03:07:46.852  5956  5956 I ScreenTranslator: capture singleApp=false newFrame=true frames=24 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:08:34.943  5956  5956 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:08:35.019  5956  5956 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
-10-23 03:08:35.019  5956  5956 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
-10-23 03:08:35.019  5956  5956 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 03:08:35.020  5956  5956 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
-10-23 03:08:35.020  5956  5956 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
-10-23 03:08:35.020  5956  5956 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
-10-23 03:08:35.031  5956  5956 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:08:37.139  5956  6229 I ScreenTranslator: projection stopped
+10-23 03:38:38.281  5111  5289 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:38:38.281  5111  5289 I ScreenTranslator: captured content visible=true
+10-23 03:38:42.164  5111  5111 I ScreenTranslator: capture singleApp=false newFrame=true frames=33 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:39:20.115  5111  5111 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:39:20.195  5111  5111 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
+10-23 03:39:20.195  5111  5111 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
+10-23 03:39:20.195  5111  5111 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-23 03:39:20.195  5111  5111 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
+10-23 03:39:20.195  5111  5111 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
+10-23 03:39:20.195  5111  5111 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
+10-23 03:39:20.203  5111  5111 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:39:22.065  5111  5289 I ScreenTranslator: projection stopped
 --- [entireScreenForced] crashes / FGS / projection errors ---
-10-23 03:07:31.860  5930  5930 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:07:31.864  5930  5930 I AndroidRuntime: Using default boot image
-10-23 03:07:31.864  5930  5930 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:07:31.956  5930  5930 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:08:37.138  5956  5972 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:08:38.697  5930  5930 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:38:29.411  5099  5099 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:38:29.413  5099  5099 I AndroidRuntime: Using default boot image
+10-23 03:38:29.413  5099  5099 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:38:29.497  5099  5099 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:39:22.065  5111  5122 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:39:22.086   516   947 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10194, pid=5111)
+10-23 03:39:23.245  5099  5099 I AndroidRuntime: VM exiting with result code 0.
 --- [entireScreenForced] failure stack (if any) ---
 ::group::am instrument styledOverlay (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -319,7 +320,7 @@ INSTRUMENTATION_STATUS: test=styledOverlay
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 57.709
+Time: 54.72
 
 OK (1 test)
 
@@ -357,24 +358,25 @@ STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [styledOverlay] app log (ScreenTranslator) ---
-10-23 03:08:51.021  7029  7274 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:08:51.021  7029  7274 I ScreenTranslator: captured content visible=true
-10-23 03:08:55.428  7029  7029 I ScreenTranslator: capture singleApp=false newFrame=true frames=28 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:09:34.918  7029  7029 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:09:34.989  7029  7029 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
-10-23 03:09:34.989  7029  7029 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
-10-23 03:09:34.989  7029  7029 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 03:09:34.989  7029  7029 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
-10-23 03:09:34.989  7029  7029 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
-10-23 03:09:34.990  7029  7029 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
-10-23 03:09:35.007  7029  7029 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:39:33.248  5658  5818 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:39:33.262  5658  5818 I ScreenTranslator: captured content visible=true
+10-23 03:39:36.692  5658  5658 I ScreenTranslator: capture singleApp=false newFrame=true frames=27 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:40:17.066  5658  5658 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:40:17.146  5658  5658 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
+10-23 03:40:17.146  5658  5658 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
+10-23 03:40:17.146  5658  5658 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-23 03:40:17.147  5658  5658 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
+10-23 03:40:17.147  5658  5658 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
+10-23 03:40:17.147  5658  5658 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
+10-23 03:40:17.154  5658  5658 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:40:19.037  5658  5818 I ScreenTranslator: projection stopped
 --- [styledOverlay] crashes / FGS / projection errors ---
-10-23 03:08:40.592  7013  7013 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:08:40.596  7013  7013 I AndroidRuntime: Using default boot image
-10-23 03:08:40.596  7013  7013 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:08:40.718  7013  7013 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:09:37.134  7029  7290 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:09:38.963  7013  7013 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:39:24.668  5646  5646 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:39:24.671  5646  5646 I AndroidRuntime: Using default boot image
+10-23 03:39:24.671  5646  5646 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:39:24.750  5646  5646 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:40:19.037  5658  5679 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:40:19.888  5646  5646 I AndroidRuntime: VM exiting with result code 0.
 --- [styledOverlay] failure stack (if any) ---
 ::group::am instrument regionSelect (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -394,7 +396,7 @@ INSTRUMENTATION_STATUS: test=regionSelect
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 51.629
+Time: 48.098
 
 OK (1 test)
 
@@ -429,24 +431,24 @@ STATE[tearDown] running=true calls=1 results=1 blocks=2 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [regionSelect] app log (ScreenTranslator) ---
-10-23 03:09:50.146  7642  7809 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:09:50.147  7642  7809 I ScreenTranslator: captured content visible=true
-10-23 03:09:54.221  7642  7642 I ScreenTranslator: overlay shown RegionSelectView
-10-23 03:09:59.360  7642  7642 I ScreenTranslator: capture singleApp=false newFrame=true frames=78 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:10:28.992  7642  7642 I ScreenTranslator: ocr blocks=2 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:10:29.111  7642  7642 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
-10-23 03:10:29.111  7642  7642 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 03:10:29.111  7642  7642 I ScreenTranslator: result blocks=2 first='Chào buổi sáng'
-10-23 03:10:29.121  7642  7642 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:10:31.138  7642  7809 I ScreenTranslator: projection stopped
+10-23 03:40:31.180  6161  6314 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:40:31.180  6161  6314 I ScreenTranslator: captured content visible=true
+10-23 03:40:35.102  6161  6161 I ScreenTranslator: overlay shown RegionSelectView
+10-23 03:40:39.823  6161  6161 I ScreenTranslator: capture singleApp=false newFrame=true frames=80 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:41:07.536  6161  6161 I ScreenTranslator: ocr blocks=2 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:41:07.611  6161  6161 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
+10-23 03:41:07.611  6161  6161 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-23 03:41:07.611  6161  6161 I ScreenTranslator: result blocks=2 first='Chào buổi sáng'
+10-23 03:41:07.633  6161  6161 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:41:09.480  6161  6314 I ScreenTranslator: projection stopped
 --- [regionSelect] crashes / FGS / projection errors ---
-10-23 03:09:40.737  7630  7630 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:09:40.740  7630  7630 I AndroidRuntime: Using default boot image
-10-23 03:09:40.740  7630  7630 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:09:40.814  7630  7630 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:10:31.138  7642  7654 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:10:31.153   513  1764 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10192, pid=7642)
-10-23 03:10:32.912  7630  7630 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:40:21.658  6149  6149 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:40:21.661  6149  6149 I AndroidRuntime: Using default boot image
+10-23 03:40:21.661  6149  6149 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:40:21.761  6149  6149 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:41:09.479  6161  6305 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:41:09.515   516  2431 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10194, pid=6161)
+10-23 03:41:10.408  6149  6149 I AndroidRuntime: VM exiting with result code 0.
 --- [regionSelect] failure stack (if any) ---
 ::group::am instrument singleAppHidden (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -510,7 +512,7 @@ INSTRUMENTATION_STATUS: test=singleAppHidden
 INSTRUMENTATION_STATUS_CODE: -4
 INSTRUMENTATION_RESULT: stream=
 
-Time: 11.418
+Time: 9.918
 
 OK (1 test)
 
@@ -533,11 +535,11 @@ hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/file
 SKIP singleAppHidden: single-app sharing not offered by this system image
 --- [singleAppHidden] app log (ScreenTranslator) ---
 --- [singleAppHidden] crashes / FGS / projection errors ---
-10-23 03:10:34.516  8161  8161 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:10:34.520  8161  8161 I AndroidRuntime: Using default boot image
-10-23 03:10:34.520  8161  8161 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:10:34.601  8161  8161 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:10:46.560  8161  8161 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:41:11.885  6635  6635 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:41:11.888  6635  6635 I AndroidRuntime: Using default boot image
+10-23 03:41:11.888  6635  6635 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:41:11.993  6635  6635 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:41:22.617  6635  6635 I AndroidRuntime: VM exiting with result code 0.
 --- [singleAppHidden] failure stack (if any) ---
 INSTRUMENTATION_STATUS: stack=org.junit.AssumptionViolatedException: single-app sharing not offered by this system image
 	at org.junit.Assume.assumeTrue(Assume.java:68)
@@ -597,7 +599,7 @@ INSTRUMENTATION_STATUS: test=settingsScreen
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 19.403
+Time: 17.184
 
 OK (1 test)
 
@@ -618,11 +620,11 @@ screenshot /data/local/tmp/st-e2e/setup-04-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
 --- [settingsScreen] app log (ScreenTranslator) ---
 --- [settingsScreen] crashes / FGS / projection errors ---
-10-23 03:10:48.000  8394  8394 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:10:48.003  8394  8394 I AndroidRuntime: Using default boot image
-10-23 03:10:48.003  8394  8394 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:10:48.086  8394  8394 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:11:07.924  8394  8394 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:41:23.795  6879  6879 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:41:23.798  6879  6879 I AndroidRuntime: Using default boot image
+10-23 03:41:23.798  6879  6879 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:41:23.877  6879  6879 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:41:41.416  6879  6879 I AndroidRuntime: VM exiting with result code 0.
 --- [settingsScreen] failure stack (if any) ---
 ::group::am instrument paragraphCoherence (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -642,7 +644,7 @@ INSTRUMENTATION_STATUS: test=paragraphCoherence
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 87.471
+Time: 70.185
 
 OK (1 test)
 
@@ -677,24 +679,24 @@ STATE[tearDown] running=true calls=1 results=1 blocks=3 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [paragraphCoherence] app log (ScreenTranslator) ---
-10-23 03:11:18.859  8597  8748 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:11:18.859  8597  8748 I ScreenTranslator: captured content visible=true
-10-23 03:11:22.967  8597  8597 I ScreenTranslator: capture singleApp=false newFrame=true frames=24 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:12:31.875  8597  8597 I ScreenTranslator: ocr blocks=3 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:12:33.841  8597  8597 I ScreenTranslator: unit [en/translate:en] 'zosterday "Nom complet: Gazo' -> 'zosterday "Nom đầy đủ: Gazo'
-10-23 03:12:33.841  8597  8597 I ScreenTranslator: unit [fr/translate:fr] 'En mélangeant une drill sombre, des productions puissantes e' -> 'Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh'
-10-23 03:12:33.841  8597  8597 I ScreenTranslator: unit [fr/translate:fr] 'Situation en 2026: Au milieu de l'année 2026, Gazo poursuit ' -> 'Tình hình năm 2026: Vào giữa năm 2026, Gazo tiếp tục phát tr'
-10-23 03:12:33.844  8597  8597 I ScreenTranslator: result blocks=3 first='zosterday "Nom đầy đủ: Gazo'
-10-23 03:12:33.854  8597  8597 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:12:35.925  8597  8748 I ScreenTranslator: projection stopped
+10-23 03:41:51.220  7074  7228 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:41:51.244  7074  7228 I ScreenTranslator: captured content visible=true
+10-23 03:41:54.953  7074  7074 I ScreenTranslator: capture singleApp=false newFrame=true frames=29 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:42:50.240  7074  7074 I ScreenTranslator: ocr blocks=3 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:42:50.469  7074  7074 I ScreenTranslator: unit [en/translate:en] 'zosterday "Nom complet: Gazo' -> 'zosterday "Nom đầy đủ: Gazo'
+10-23 03:42:50.469  7074  7074 I ScreenTranslator: unit [fr/translate:fr] 'En mélangeant une drill sombre, des productions puissantes e' -> 'Bằng cách kết hợp những bài hát đen tối, những tác phẩm mạnh'
+10-23 03:42:50.469  7074  7074 I ScreenTranslator: unit [fr/translate:fr] 'Situation en 2026: Au milieu de l'année 2026, Gazo poursuit ' -> 'Tình hình năm 2026: Vào giữa năm 2026, Gazo tiếp tục phát tr'
+10-23 03:42:50.471  7074  7074 I ScreenTranslator: result blocks=3 first='zosterday "Nom đầy đủ: Gazo'
+10-23 03:42:50.480  7074  7074 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:42:52.356  7074  7228 I ScreenTranslator: projection stopped
 --- [paragraphCoherence] crashes / FGS / projection errors ---
-10-23 03:11:09.329  8585  8585 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:11:09.334  8585  8585 I AndroidRuntime: Using default boot image
-10-23 03:11:09.334  8585  8585 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:11:09.414  8585  8585 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:12:35.924  8597  8696 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:12:35.947   513  1207 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10192, pid=8597)
-10-23 03:12:37.482  8585  8585 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:41:42.563  7062  7062 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:41:42.565  7062  7062 I AndroidRuntime: Using default boot image
+10-23 03:41:42.565  7062  7062 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:41:42.653  7062  7062 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:42:52.354  7074  7539 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:42:52.426   516  2475 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10194, pid=7074)
+10-23 03:42:53.215  7062  7062 I AndroidRuntime: VM exiting with result code 0.
 --- [paragraphCoherence] failure stack (if any) ---
 ::group::am instrument videoTableChinese (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -714,7 +716,7 @@ INSTRUMENTATION_STATUS: test=videoTableChinese
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 81.304
+Time: 67.676
 
 OK (1 test)
 
@@ -804,58 +806,59 @@ STATE[tearDown] running=true calls=1 results=1 blocks=38 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [videoTableChinese] app log (ScreenTranslator) ---
-10-23 03:12:48.388  9136  9287 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:12:48.388  9136  9287 I ScreenTranslator: captured content visible=true
-10-23 03:12:52.426  9136  9136 I ScreenTranslator: capture singleApp=false newFrame=true frames=30 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:13:56.336  9136  9136 I ScreenTranslator: ocr blocks=38 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=CHINESE, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Từ cơ bàn hay dùng' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Vâng!' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '1。好的' -> '1. Được rồi'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'hao to' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Được thôi !' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '2。好四' -> '2. Bốn điều tốt'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'hảo ba' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không ph' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '不是' -> 'Không'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'pú sư' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Pây bút: Sách Trung Dài' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '4。不對' -> '4. Sai'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'pú tuây' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không đi' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '5。沒有' -> '5. Không'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'mấy dẩu' -> 'null'
-10-23 03:13:57.751  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không có' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Có thể' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '可以' -> 'được rồi'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Cám ơn!' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '謝謝' -> 'cảm ơn bạn'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh-Latn/skip-romanized] 'xia xia' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '8。不要' -> '8. Đừng'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [und/translate:auto] 'pú dao' -> 'pú dao'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '9。不想' -> '9. Không muốn'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [und/translate:auto] 'pu xėng' -> 'pu xėng'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không mua' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '10。真的' -> '10. Thật đấy'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'N Trân tơ' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Thật đấy' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '不用西' -> 'Không cần phải lo lắng'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [und/translate:auto] 'dung' -> 'dung'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'xíng' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [zh/translate:zh-CN] '12。不行' -> '12. không'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'pu xíng' -> 'null'
-10-23 03:13:57.752  9136  9136 I ScreenTranslator: unit [vi/skip-target] 'Không đữựca' -> 'null'
-10-23 03:13:57.753  9136  9136 I ScreenTranslator: result blocks=12 first='1. Được rồi'
-10-23 03:13:57.763  9136  9136 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:14:00.223  9136  9287 I ScreenTranslator: projection stopped
+10-23 03:43:04.306  7660  7813 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:43:04.306  7660  7813 I ScreenTranslator: captured content visible=true
+10-23 03:43:08.285  7660  7660 I ScreenTranslator: capture singleApp=false newFrame=true frames=31 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:43:59.079  7660  7660 I ScreenTranslator: ocr blocks=38 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=CHINESE, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Từ cơ bàn hay dùng' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Vâng!' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '1。好的' -> '1. Được rồi'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'hao to' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Được thôi !' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '2。好四' -> '2. Bốn điều tốt'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'hảo ba' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không ph' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '不是' -> 'Không'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'pú sư' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Pây bút: Sách Trung Dài' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '4。不對' -> '4. Sai'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'pú tuây' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không đi' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '5。沒有' -> '5. Không'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'mấy dẩu' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không có' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Có thể' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '可以' -> 'được rồi'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Cám ơn!' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '謝謝' -> 'cảm ơn bạn'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh-Latn/skip-romanized] 'xia xia' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '8。不要' -> '8. Đừng'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [und/translate:auto] 'pú dao' -> 'pú dao'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '9。不想' -> '9. Không muốn'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [und/translate:auto] 'pu xėng' -> 'pu xėng'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không mua' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '10。真的' -> '10. Thật đấy'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'N Trân tơ' -> 'null'
+10-23 03:44:00.068  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Thật đấy' -> 'null'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '不用西' -> 'Không cần phải lo lắng'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [und/translate:auto] 'dung' -> 'dung'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không cần' -> 'null'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'xíng' -> 'null'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [zh/translate:zh-CN] '12。不行' -> '12. không'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'pu xíng' -> 'null'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: unit [vi/skip-target] 'Không đữựca' -> 'null'
+10-23 03:44:00.069  7660  7660 I ScreenTranslator: result blocks=12 first='1. Được rồi'
+10-23 03:44:00.077  7660  7660 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:44:02.244  7660  7813 I ScreenTranslator: projection stopped
 --- [videoTableChinese] crashes / FGS / projection errors ---
-10-23 03:12:39.102  9124  9124 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:12:39.105  9124  9124 I AndroidRuntime: Using default boot image
-10-23 03:12:39.105  9124  9124 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:12:39.181  9124  9124 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:14:00.204  9136  9149 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:14:00.997  9124  9124 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:42:55.117  7648  7648 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:42:55.119  7648  7648 I AndroidRuntime: Using default boot image
+10-23 03:42:55.119  7648  7648 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:42:55.219  7648  7648 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:44:02.243  7660  8081 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:44:02.283   516  2476 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10194, pid=7660)
+10-23 03:44:03.297  7648  7648 I AndroidRuntime: VM exiting with result code 0.
 --- [videoTableChinese] failure stack (if any) ---
 ::group::am instrument videoRussianCyrillic (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -875,7 +878,7 @@ INSTRUMENTATION_STATUS: test=videoRussianCyrillic
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 94.98
+Time: 71.686
 
 OK (1 test)
 
@@ -915,26 +918,26 @@ STATE[tearDown] running=true calls=1 results=1 blocks=4 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [videoRussianCyrillic] app log (ScreenTranslator) ---
-10-23 03:14:13.504  9655  9812 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:14:13.504  9655  9812 I ScreenTranslator: captured content visible=true
-10-23 03:14:17.971  9655  9655 I ScreenTranslator: capture singleApp=false newFrame=true frames=24 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:15:30.279  9655  9655 I ScreenTranslator: tesseract[rus] lines=21 accepted=21 ml=23->2
-10-23 03:15:30.291  9655  9655 I ScreenTranslator: ocr blocks=4 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=21, tesseractLang=rus, tesseractLines=21, droppedGarbage=1)
-10-23 03:15:36.275  9655  9655 I ScreenTranslator: unit [ru/translate:ru] 'ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ —И' -> 'CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
-10-23 03:15:36.275  9655  9655 I ScreenTranslator: unit [ru/translate:ru] 'Николай Губенко готовился жениться на актрисе Марианне Верти' -> 'Nikolai Gubenko đang chuẩn bị kết hôn với nữ diễn viên Maria'
-10-23 03:15:36.275  9655  9655 I ScreenTranslator: unit [ru/translate:ru] 'когда кажется, что уже слишком поздно.' -> 'khi có vẻ như đã quá muộn.'
-10-23 03:15:36.275  9655  9655 I ScreenTranslator: unit [ru/translate:ru] 'Ь СТОИТ ОТС1' -> 'B CHI PHÍ OTS1'
-10-23 03:15:36.278  9655  9655 I ScreenTranslator: result blocks=4 first='CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
-10-23 03:15:36.287  9655  9655 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:15:38.209  9655  9812 I ScreenTranslator: projection stopped
+10-23 03:44:13.586  8173  8328 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:44:13.586  8173  8328 I ScreenTranslator: captured content visible=true
+10-23 03:44:17.928  8173  8173 I ScreenTranslator: capture singleApp=false newFrame=true frames=27 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:45:13.999  8173  8173 I ScreenTranslator: tesseract[rus] lines=21 accepted=21 ml=23->2
+10-23 03:45:14.005  8173  8173 I ScreenTranslator: ocr blocks=4 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=21, tesseractLang=rus, tesseractLines=21, droppedGarbage=1)
+10-23 03:45:14.256  8173  8173 I ScreenTranslator: unit [ru/translate:ru] 'ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ —И' -> 'CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
+10-23 03:45:14.256  8173  8173 I ScreenTranslator: unit [ru/translate:ru] 'Николай Губенко готовился жениться на актрисе Марианне Верти' -> 'Nikolai Gubenko đang chuẩn bị kết hôn với nữ diễn viên Maria'
+10-23 03:45:14.256  8173  8173 I ScreenTranslator: unit [ru/translate:ru] 'когда кажется, что уже слишком поздно.' -> 'khi có vẻ như đã quá muộn.'
+10-23 03:45:14.256  8173  8173 I ScreenTranslator: unit [ru/translate:ru] 'Ь СТОИТ ОТС1' -> 'B CHI PHÍ OTS1'
+10-23 03:45:14.258  8173  8173 I ScreenTranslator: result blocks=4 first='CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
+10-23 03:45:14.266  8173  8173 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:45:16.220  8173  8328 I ScreenTranslator: projection stopped
 --- [videoRussianCyrillic] crashes / FGS / projection errors ---
-10-23 03:14:03.505  9636  9636 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:14:03.508  9636  9636 I AndroidRuntime: Using default boot image
-10-23 03:14:03.508  9636  9636 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:14:03.598  9636  9636 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:15:38.208  9655  9830 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:15:38.217   513   784 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10192, pid=9655)
-10-23 03:15:39.120  9636  9636 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:44:04.848  8161  8161 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:44:04.850  8161  8161 I AndroidRuntime: Using default boot image
+10-23 03:44:04.851  8161  8161 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:44:04.948  8161  8161 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:45:16.219  8173  8185 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:45:16.255   516  2431 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10194, pid=8173)
+10-23 03:45:17.013  8161  8161 I AndroidRuntime: VM exiting with result code 0.
 --- [videoRussianCyrillic] failure stack (if any) ---
 ::group::am instrument nativeAiLibrary (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -954,7 +957,7 @@ INSTRUMENTATION_STATUS: test=nativeAiLibrary
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 3.678
+Time: 3.388
 
 OK (1 test)
 
@@ -972,16 +975,16 @@ STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
 screenshot /data/local/tmp/st-e2e/setup-01-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
 --- [nativeAiLibrary] app log (ScreenTranslator) ---
-10-23 03:15:43.625 10188 10207 E llama   : gguf_init_from_file: failed to open GGUF file '/nonexistent.gguf' (No such file or directory)
-10-23 03:15:43.625 10188 10207 E llama   : llama_model_load: error loading model: llama_model_loader: failed to load model from /nonexistent.gguf
-10-23 03:15:43.625 10188 10207 E llama   : llama_model_load_from_file_impl: failed to load model
-10-23 03:15:43.625 10188 10207 E ScreenAI: Không nạp được mô hình: /nonexistent.gguf
+10-23 03:45:20.911  8691  8710 E llama   : gguf_init_from_file: failed to open GGUF file '/nonexistent.gguf' (No such file or directory)
+10-23 03:45:20.912  8691  8710 E llama   : llama_model_load: error loading model: llama_model_loader: failed to load model from /nonexistent.gguf
+10-23 03:45:20.912  8691  8710 E llama   : llama_model_load_from_file_impl: failed to load model
+10-23 03:45:20.912  8691  8710 E ScreenAI: Không nạp được mô hình: /nonexistent.gguf
 --- [nativeAiLibrary] crashes / FGS / projection errors ---
-10-23 03:15:41.433 10176 10176 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:15:41.436 10176 10176 I AndroidRuntime: Using default boot image
-10-23 03:15:41.436 10176 10176 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:15:41.510 10176 10176 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:15:45.544 10176 10176 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:45:18.832  8679  8679 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:45:18.835  8679  8679 I AndroidRuntime: Using default boot image
+10-23 03:45:18.835  8679  8679 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:45:18.929  8679  8679 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:45:22.640  8679  8679 I AndroidRuntime: VM exiting with result code 0.
 --- [nativeAiLibrary] failure stack (if any) ---
 ::group::am instrument aiSettingsScreen (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -1001,7 +1004,7 @@ INSTRUMENTATION_STATUS: test=aiSettingsScreen
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 6.226
+Time: 5.322
 
 OK (1 test)
 
@@ -1019,11 +1022,11 @@ screenshot /data/local/tmp/st-e2e/setup-03-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
 --- [aiSettingsScreen] app log (ScreenTranslator) ---
 --- [aiSettingsScreen] crashes / FGS / projection errors ---
-10-23 03:15:46.899 10303 10303 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:15:46.902 10303 10303 I AndroidRuntime: Using default boot image
-10-23 03:15:46.902 10303 10303 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:15:46.980 10303 10303 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:15:53.661 10303 10303 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:45:23.664  8817  8817 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:45:23.666  8817  8817 I AndroidRuntime: Using default boot image
+10-23 03:45:23.667  8817  8817 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:45:23.758  8817  8817 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:45:29.581  8817  8817 I AndroidRuntime: VM exiting with result code 0.
 --- [aiSettingsScreen] failure stack (if any) ---
 ::group::am instrument aiOnDevice (API 34)
 INSTRUMENTATION_STATUS: class=com.dichmanhinh.screentranslator.e2e.ScreenTranslateE2ETest
@@ -1043,7 +1046,7 @@ INSTRUMENTATION_STATUS: test=aiOnDevice
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 75.768
+Time: 64.085
 
 OK (1 test)
 
@@ -1054,8 +1057,8 @@ INSTRUMENTATION_CODE: -1
 --- [aiOnDevice] test report lines (ST-E2E) ---
 device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
 model download ok=true  size=91893088
-model: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an threads=2 load=160ms
-direct AI: [Good morning, Thank you very much] stats=prompt 482 tok (dùng lại 0) 2880ms, sinh 23 tok 545ms (42.2 tok/s)
+model: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an threads=2 load=183ms
+direct AI: [Good morning, Thank you very much] stats=prompt 516 tok (dùng lại 0) 1864ms, sinh 23 tok 401ms (57.4 tok/s)
 ==== START mode=entire-screen sdk=34
 translate pre-check: Chào buổi sáng
 screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
@@ -1070,77 +1073,78 @@ ocr: Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0,
   unit[2] [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
   unit[3] [en/translate:en] 'Please open the door' -> 'Good morning'
   unit[4] [en/translate:en] 'Thank you very much' -> 'Thank you very much'
-RESULT ai done=true engine=ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 3011ms image=false prompt 520 tok (dùng lại 457) 1256ms, sinh 59 tok 1746ms (33.8 tok/s) lastError=null
+RESULT ai done=true engine=ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 1809ms image=false prompt 554 tok (dùng lại 491) 767ms, sinh 59 tok 1022ms (57.7 tok/s) lastError=null
 PASS aiOnDevice
 STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
 screenshot /data/local/tmp/st-e2e/entire-screen-05-final.png
 hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
 --- [aiOnDevice] app log (ScreenTranslator) ---
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.621 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : .
-10-23 03:16:09.622 10479 10556 W llama   : 
-10-23 03:16:09.667 10479 10556 I ScreenAI: model loaded: ctx=4096 threads=2 vision=0
-10-23 03:16:09.668 10479 10556 I ScreenAI: loaded custom:SmolLM2-135M-Instruct-Q4_0.gguf in 127ms: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an
-10-23 03:16:19.792 10479 10669 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:16:19.792 10479 10669 I ScreenTranslator: captured content visible=true
-10-23 03:16:23.095 10479 10479 I ScreenTranslator: capture singleApp=false newFrame=true frames=25 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:17:06.145 10479 10479 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:17:09.172 10479 10479 I ScreenTranslator: AI ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 3011ms image=false prompt 520 tok (dùng lại 457) 1256ms, sinh 59 tok 1746ms (33.8 tok/s)
-10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Hello world'
-10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Good morning'
-10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
-10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Good morning'
-10-23 03:17:09.173 10479 10479 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Thank you very much'
-10-23 03:17:09.173 10479 10479 I ScreenTranslator: result blocks=1 first='Good morning'
-10-23 03:17:09.193 10479 10479 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : .
+10-23 03:45:39.569  8995  9063 W llama   : 
+10-23 03:45:39.679  8995  9063 I ScreenAI: model loaded: ctx=4096 threads=2 vision=0
+10-23 03:45:39.680  8995  9063 I ScreenAI: loaded custom:SmolLM2-135M-Instruct-Q4_0.gguf in 166ms: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an
+10-23 03:45:48.036  8995  9178 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:45:48.036  8995  9178 I ScreenTranslator: captured content visible=true
+10-23 03:45:51.843  8995  8995 I ScreenTranslator: capture singleApp=false newFrame=true frames=31 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:46:30.807  8995  8995 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: AI ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 1809ms image=false prompt 554 tok (dùng lại 491) 767ms, sinh 59 tok 1022ms (57.7 tok/s)
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Hello world'
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Good morning'
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Good morning'
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Thank you very much'
+10-23 03:46:32.645  8995  8995 I ScreenTranslator: result blocks=1 first='Good morning'
+10-23 03:46:32.652  8995  8995 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:46:34.501  8995  9178 I ScreenTranslator: projection stopped
 --- [aiOnDevice] crashes / FGS / projection errors ---
-10-23 03:15:55.777 10467 10467 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:15:55.780 10467 10467 I AndroidRuntime: Using default boot image
-10-23 03:15:55.780 10467 10467 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:15:55.856 10467 10467 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:17:11.189 10479 10492 V MediaProjection: Dispatch stop to 1 callbacks.
-10-23 03:17:12.095 10467 10467 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:45:30.777  8983  8983 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:45:30.780  8983  8983 I AndroidRuntime: Using default boot image
+10-23 03:45:30.780  8983  8983 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:45:30.870  8983  8983 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:46:34.501  8995  9179 V MediaProjection: Dispatch stop to 1 callbacks.
+10-23 03:46:34.531   516  2428 W MediaProjectionManagerService: Attempted to stop inactive MediaProjection (uid=10194, pid=8995)
+10-23 03:46:35.411  8983  8983 I AndroidRuntime: VM exiting with result code 0.
 --- [aiOnDevice] failure stack (if any) ---

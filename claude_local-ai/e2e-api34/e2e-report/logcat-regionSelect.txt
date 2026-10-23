@@ -1,40 +1,40 @@
-10-23 03:09:40.737  7630  7630 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:09:40.740  7630  7630 I AndroidRuntime: Using default boot image
-10-23 03:09:40.740  7630  7630 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:09:40.814  7630  7630 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:09:41.281  7642  7661 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
-10-23 03:09:43.022  7642  7661 I ST-E2E  : ==== START mode=entire-screen sdk=34
-10-23 03:09:43.496  7642  7661 I ST-E2E  : translate pre-check: Chào buổi sáng
-10-23 03:09:45.484  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
-10-23 03:09:47.129  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
-10-23 03:09:49.349  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
-10-23 03:09:49.574  7642  7661 I ST-E2E  : consent dialog: spinner=false title='Start recording or casting with Dịch Màn Hình?' positive='Start now'
-10-23 03:09:50.146  7642  7809 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 03:09:50.147  7642  7809 I ScreenTranslator: captured content visible=true
-10-23 03:09:50.215  7642  7661 I ST-E2E  : service running=true lastError=null
-10-23 03:09:53.221  7642  7661 I ST-E2E  : region to select: Rect(189, 617 - 1017, 1083)
-10-23 03:09:53.437  7642  7661 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 935 - 113, 1014)
-10-23 03:09:53.724  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-before-tap.png
-10-23 03:09:54.221  7642  7642 I ScreenTranslator: overlay shown RegionSelectView
-10-23 03:09:55.115  7642  7661 I ST-E2E  : region selector shown=true
-10-23 03:09:55.408  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-region-selector.png
-10-23 03:09:59.360  7642  7642 I ScreenTranslator: capture singleApp=false newFrame=true frames=78 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 03:10:28.992  7642  7642 I ScreenTranslator: ocr blocks=2 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 03:10:29.111  7642  7642 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
-10-23 03:10:29.111  7642  7642 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 03:10:29.111  7642  7642 I ScreenTranslator: result blocks=2 first='Chào buổi sáng'
-10-23 03:10:29.121  7642  7642 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 03:10:30.637  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
-10-23 03:10:30.637  7642  7661 I ST-E2E  : RESULT mode=entire-screen sdk=34 done=true results=1 calls=1 blocks=2 lastError=null
-10-23 03:10:30.637  7642  7661 I ST-E2E  :   block[0] 'Good morning' -> 'Chào buổi sáng'
-10-23 03:10:30.637  7642  7661 I ST-E2E  :   block[1] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 03:10:30.638  7642  7661 I ST-E2E  : sample phrases recognized: 2/2
-10-23 03:10:30.638  7642  7661 I ST-E2E  : vietnamese-looking translations: 2/2
-10-23 03:10:30.656  7642  7661 I ST-E2E  : overlay window: OK via id; desc='Chào buổi sáng
-10-23 03:10:30.656  7642  7661 I ST-E2E  : Hôm nay thời tiết đẹp'
-10-23 03:10:30.656  7642  7661 I ST-E2E  : PASS mode=entire-screen sdk=34 blocks=2 matched=2
-10-23 03:10:30.656  7642  7661 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=2 lastError=null
-10-23 03:10:30.933  7642  7661 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
-10-23 03:10:31.134  7642  7661 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
-10-23 03:10:31.138  7642  7809 I ScreenTranslator: projection stopped
-10-23 03:10:32.912  7630  7630 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:40:21.658  6149  6149 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:40:21.661  6149  6149 I AndroidRuntime: Using default boot image
+10-23 03:40:21.661  6149  6149 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:40:21.761  6149  6149 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:40:22.269  6161  6180 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
+10-23 03:40:23.929  6161  6180 I ST-E2E  : ==== START mode=entire-screen sdk=34
+10-23 03:40:24.532  6161  6180 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 03:40:26.263  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
+10-23 03:40:28.227  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
+10-23 03:40:30.247  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
+10-23 03:40:30.352  6161  6180 I ST-E2E  : consent dialog: spinner=false title='Start recording or casting with Dịch Màn Hình?' positive='Start now'
+10-23 03:40:31.180  6161  6314 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:40:31.180  6161  6314 I ScreenTranslator: captured content visible=true
+10-23 03:40:31.254  6161  6180 I ST-E2E  : service running=true lastError=null
+10-23 03:40:34.337  6161  6180 I ST-E2E  : region to select: Rect(189, 617 - 1017, 1083)
+10-23 03:40:34.353  6161  6180 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 935 - 113, 1014)
+10-23 03:40:34.596  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-before-tap.png
+10-23 03:40:35.102  6161  6161 I ScreenTranslator: overlay shown RegionSelectView
+10-23 03:40:35.966  6161  6180 I ST-E2E  : region selector shown=true
+10-23 03:40:36.260  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-region-selector.png
+10-23 03:40:39.823  6161  6161 I ScreenTranslator: capture singleApp=false newFrame=true frames=80 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:41:07.536  6161  6161 I ScreenTranslator: ocr blocks=2 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:41:07.611  6161  6161 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
+10-23 03:41:07.611  6161  6161 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-23 03:41:07.611  6161  6161 I ScreenTranslator: result blocks=2 first='Chào buổi sáng'
+10-23 03:41:07.633  6161  6161 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:41:09.061  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
+10-23 03:41:09.061  6161  6180 I ST-E2E  : RESULT mode=entire-screen sdk=34 done=true results=1 calls=1 blocks=2 lastError=null
+10-23 03:41:09.062  6161  6180 I ST-E2E  :   block[0] 'Good morning' -> 'Chào buổi sáng'
+10-23 03:41:09.062  6161  6180 I ST-E2E  :   block[1] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-23 03:41:09.063  6161  6180 I ST-E2E  : sample phrases recognized: 2/2
+10-23 03:41:09.064  6161  6180 I ST-E2E  : vietnamese-looking translations: 2/2
+10-23 03:41:09.212  6161  6180 I ST-E2E  : overlay window: OK via id; desc='Chào buổi sáng
+10-23 03:41:09.212  6161  6180 I ST-E2E  : Hôm nay thời tiết đẹp'
+10-23 03:41:09.212  6161  6180 I ST-E2E  : PASS mode=entire-screen sdk=34 blocks=2 matched=2
+10-23 03:41:09.212  6161  6180 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=2 lastError=null
+10-23 03:41:09.433  6161  6180 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
+10-23 03:41:09.470  6161  6180 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
+10-23 03:41:09.480  6161  6314 I ScreenTranslator: projection stopped
+10-23 03:41:10.408  6149  6149 I AndroidRuntime: VM exiting with result code 0.

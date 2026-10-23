@@ -1,12 +1,12 @@
-10-23 03:15:46.899 10303 10303 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 03:15:46.902 10303 10303 I AndroidRuntime: Using default boot image
-10-23 03:15:46.902 10303 10303 I AndroidRuntime: Leaving lock profiling enabled
-10-23 03:15:46.980 10303 10303 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 03:15:47.431 10315 10334 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
-10-23 03:15:51.521 10315 10334 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-01-ai-open.png
-10-23 03:15:52.454 10315 10334 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-02-ai-engine.png
-10-23 03:15:52.782 10315 10334 I ST-E2E  : PASS aiSettingsScreen
-10-23 03:15:52.782 10315 10334 I ST-E2E  : STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
-10-23 03:15:53.101 10315 10334 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-03-final.png
-10-23 03:15:53.153 10315 10334 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
-10-23 03:15:53.661 10303 10303 I AndroidRuntime: VM exiting with result code 0.
+10-23 03:45:23.664  8817  8817 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:45:23.666  8817  8817 I AndroidRuntime: Using default boot image
+10-23 03:45:23.667  8817  8817 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:45:23.758  8817  8817 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:45:24.137  8829  8848 I ST-E2E  : device sdk=34 release=14 fp=google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys
+10-23 03:45:27.544  8829  8848 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-01-ai-open.png
+10-23 03:45:28.422  8829  8848 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-02-ai-engine.png
+10-23 03:45:28.734  8829  8848 I ST-E2E  : PASS aiSettingsScreen
+10-23 03:45:28.735  8829  8848 I ST-E2E  : STATE[tearDown] running=false calls=0 results=0 blocks=-1 lastError=null
+10-23 03:45:28.980  8829  8848 I ST-E2E  : screenshot /data/local/tmp/st-e2e/setup-03-final.png
+10-23 03:45:29.029  8829  8848 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/setup-final.xml
+10-23 03:45:29.581  8817  8817 I AndroidRuntime: VM exiting with result code 0.
