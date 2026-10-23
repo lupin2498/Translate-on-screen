@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.TextPrepTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-23T02:46:13" hostname="runnervm8k3b6" time="0.005">
+<testsuite name="com.dichmanhinh.screentranslator.TextPrepTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-23T02:56:58" hostname="runnervm8k3b6" time="0.001">
   <properties/>
   <testcase name="russianVideoNoiseIsRemoved" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.001"/>
   <testcase name="legitimateTextIsKept" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
   <testcase name="sentenceCase" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
-  <testcase name="allCapsDetection" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.001"/>
+  <testcase name="allCapsDetection" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
   <testcase name="spacesBetweenHanAreRemoved" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

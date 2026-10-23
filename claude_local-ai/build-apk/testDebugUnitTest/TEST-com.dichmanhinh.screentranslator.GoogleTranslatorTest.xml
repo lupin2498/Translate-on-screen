@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.GoogleTranslatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-23T02:46:13" hostname="runnervm8k3b6" time="0.079">
+<testsuite name="com.dichmanhinh.screentranslator.GoogleTranslatorTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-23T02:56:58" hostname="runnervm8k3b6" time="0.078">
   <properties/>
   <testcase name="longTextIsSplitAtSentences" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.021"/>
   <testcase name="batchesStayUnderGetLimit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.005"/>
   <testcase name="shortTextIsSingleRequest" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.0"/>
-  <testcase name="hugeSentenceIsHardSplit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.051"/>
+  <testcase name="hugeSentenceIsHardSplit" classname="com.dichmanhinh.screentranslator.GoogleTranslatorTest" time="0.05"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
