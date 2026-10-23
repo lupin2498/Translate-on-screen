@@ -1,0 +1,50 @@
+10-23 03:48:27.879  8105  8105 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:48:27.882  8105  8105 I AndroidRuntime: Using default boot image
+10-23 03:48:27.882  8105  8105 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:48:27.995  8105  8105 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:48:28.600  8116  8130 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
+10-23 03:48:30.249  8116  8130 I ST-E2E  : ==== START mode=entire-screen sdk=36
+10-23 03:48:30.832  8116  8130 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 03:48:33.166  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
+10-23 03:48:35.678  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
+10-23 03:48:37.684  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
+10-23 03:48:37.699  8116  8130 I ST-E2E  : consent dialog: spinner=true title='Share your screen with Dịch Màn Hình?' positive='Next'
+10-23 03:48:39.550  8116  8130 I ST-E2E  : spinner -> '(Entire screen|Share entire screen|Full screen)' selected=true
+10-23 03:48:39.868  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-consent-selected.png
+10-23 03:48:39.883  8116  8130 I ST-E2E  : click consent button 'Share screen'
+10-23 03:48:40.362  8116  8267 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:48:40.363  8116  8267 I ScreenTranslator: captured content visible=true
+10-23 03:48:40.474  8116  8130 I ST-E2E  : service running=true lastError=null
+10-23 03:48:43.898  8116  8130 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
+10-23 03:48:44.757  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-before-tap.png
+10-23 03:48:45.259  8116  8116 I ScreenTranslator: capture singleApp=false newFrame=true frames=26 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:49:38.337  8116  8116 I ScreenTranslator: tesseract[rus] lines=21 accepted=21 ml=23->2
+10-23 03:49:38.344  8116  8116 I ScreenTranslator: ocr blocks=4 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=21, tesseractLang=rus, tesseractLines=21, droppedGarbage=1)
+10-23 03:49:38.454  8116  8116 I ScreenTranslator: unit [ru/translate:ru] 'ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ —И' -> 'CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
+10-23 03:49:38.454  8116  8116 I ScreenTranslator: unit [ru/translate:ru] 'Николай Губенко готовился жениться на актрисе Марианне Верти' -> 'Nikolai Gubenko đang chuẩn bị kết hôn với nữ diễn viên Maria'
+10-23 03:49:38.454  8116  8116 I ScreenTranslator: unit [ru/translate:ru] 'когда кажется, что уже слишком поздно.' -> 'khi có vẻ như đã quá muộn.'
+10-23 03:49:38.454  8116  8116 I ScreenTranslator: unit [ru/translate:ru] 'Ь СТОИТ ОТС1' -> 'B CHI PHÍ OTS1'
+10-23 03:49:38.455  8116  8116 I ScreenTranslator: result blocks=4 first='CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
+10-23 03:49:38.462  8116  8116 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:49:39.949  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-result.png
+10-23 03:49:39.950  8116  8130 I ST-E2E  : RESULT mode=entire-screen sdk=36 done=true results=1 calls=1 blocks=4 lastError=null
+10-23 03:49:39.950  8116  8130 I ST-E2E  :   block[0] 'ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ —И' -> 'CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
+10-23 03:49:39.950  8116  8130 I ST-E2E  :   block[1] 'Николай Губенко готовился жениться на актрисе Марианне Вертинской. заявление подали, свидетелем должен был стать с Владимир Высоцкий. Но за несколько дней до свадьбы раздался звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьб 5 сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь: Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовец, Ц мечтавший об актёрстве, стал последним | министром культуры СССР. ЦИИ ПОСТАВЬТЕ ЛАЙК, ® если ВЫ считаете, что настоящую любое гаивать, даж' -> 'Nikolai Gubenko đang chuẩn bị kết hôn với nữ diễn viên Marianna Vertinskaya. Đơn đã được nộp, Vladimir Vysotsky được cho là sẽ trở thành nhân chứng. Nhưng vài ngày trước đám cưới, điện thoại reo. Zhanna Bolotova, người đã làm bạn với Gubenko từ những năm sinh viên, đã gọi điện cho tình địch của cô ấy và thốt ra một câu: làm sao anh ấy có thể kết hôn nếu chúng tôi yêu nhau? 5 đám cưới bị hủy bỏ Thế là bắt đầu một mối tình lãng mạn kéo dài năm mươi bảy năm. Nhưng con đường: Gubenko bắt đầu ở hầm mộ Odessa, nơi anh mất mẹ. Một cư dân trại trẻ mồ côi mơ ước được diễn xuất đã trở thành người cuối cùng | Bộ trưởng Bộ Văn hóa Liên Xô. TION HÃY THÍCH ® nếu bạn nghĩ rằng ai đó là có thật, thậm chí'
+10-23 03:49:39.950  8116  8130 I ST-E2E  :   block[2] 'когда кажется, что уже слишком поздно.' -> 'khi có vẻ như đã quá muộn.'
+10-23 03:49:39.950  8116  8130 I ST-E2E  :   block[3] 'Ь СТОИТ ОТС1' -> 'B CHI PHÍ OTS1'
+10-23 03:49:39.955  8116  8130 I ST-E2E  : sample phrases recognized: 3/3
+10-23 03:49:39.956  8116  8130 I ST-E2E  : vietnamese-looking translations: 4/4
+10-23 03:49:39.975  8116  8130 I ST-E2E  : overlay window: OK via id; desc='CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ
+10-23 03:49:39.975  8116  8130 I ST-E2E  : Nikolai Gubenko đang chuẩn bị kết hôn với nữ diễn viên Marianna Vertinskaya. Đơn đã được nộp, Vladimir Vysotsky được cho là sẽ trở thành nhân ch'
+10-23 03:49:39.975  8116  8130 I ST-E2E  : PASS mode=entire-screen sdk=36 blocks=4 matched=3
+10-23 03:49:39.975  8116  8130 I ST-E2E  : ocr: Report(primary=LATIN, misreadLines=21, tesseractLang=rus, tesseractLines=21, droppedGarbage=1)
+10-23 03:49:39.975  8116  8130 I ST-E2E  :   unit[0] [ru/translate:ru] 'ОНА ПОЗВОНИЛА СОПЕРНИЦЕ ПРЯМО ПЕРЕД СВАДЬБОЙ —И' -> 'CÔ ẤY GỌI CHO ĐỐI THỦ CỦA MÌNH NGAY TRƯỚC ĐÁM CƯỚI - VÀ'
+10-23 03:49:39.975  8116  8130 I ST-E2E  :   unit[1] [ru/translate:ru] 'Николай Губенко готовился жениться на актрисе Марианне Вертинской. заявление подали, свидетелем должен был стать с Владимир Высоцкий. Но за несколько дней до свадьбы раздался звонок. Жанна Болотова, дружившая с Губенко ещё со студенческих лет, позвонила сопернице и произнесла одну фразу: как он может жениться, если у нас любовь? Свадьб 5 сорвалась. Так начался роман, который продлился пятьдесят семь лет. А ведь путь: Губенко начинался в одесских катакомбах, где он потерял мать. Детдомовец, Ц мечтавший об актёрстве, стал последним | министром культуры СССР. ЦИИ ПОСТАВЬТЕ ЛАЙК, ® если ВЫ считаете, что настоящую любое гаивать, даж' -> 'Nikolai Gubenko đang chuẩn bị kết hôn với nữ diễn viên Marianna Vertinskaya. Đơn đã được nộp, Vladimir Vysotsky được cho là sẽ trở thành nhân chứng. Nhưng vài ngày trước đám cưới, điện thoại reo. Zhanna Bolotova, người đã làm bạn với Gubenko từ những năm sinh viên, đã gọi điện cho tình địch của cô ấy và thốt ra một câu: làm sao anh ấy có thể kết hôn nếu chúng tôi yêu nhau? 5 đám cưới bị hủy bỏ Thế là bắt đầu một mối tình lãng mạn kéo dài năm mươi bảy năm. Nhưng con đường: Gubenko bắt đầu ở hầm mộ Odessa, nơi anh mất mẹ. Một cư dân trại trẻ mồ côi mơ ước được diễn xuất đã trở thành người cuối cùng | Bộ trưởng Bộ Văn hóa Liên Xô. TION HÃY THÍCH ® nếu bạn nghĩ rằng ai đó là có thật, thậm chí'
+10-23 03:49:39.975  8116  8130 I ST-E2E  :   unit[2] [ru/translate:ru] 'когда кажется, что уже слишком поздно.' -> 'khi có vẻ như đã quá muộn.'
+10-23 03:49:39.975  8116  8130 I ST-E2E  :   unit[3] [ru/translate:ru] 'Ь СТОИТ ОТС1' -> 'B CHI PHÍ OTS1'
+10-23 03:49:39.978  8116  8130 I ST-E2E  : PASS videoRussianCyrillic
+10-23 03:49:39.978  8116  8130 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=4 lastError=null
+10-23 03:49:40.526  8116  8130 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-07-final.png
+10-23 03:49:40.905  8116  8130 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
+10-23 03:49:40.920  8116  8267 I ScreenTranslator: projection stopped
+10-23 03:49:41.788  8105  8105 I AndroidRuntime: VM exiting with result code 0.

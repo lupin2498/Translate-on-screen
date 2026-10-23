@@ -1,0 +1,115 @@
+10-23 03:49:58.441  8919  8919 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-23 03:49:58.445  8919  8919 I AndroidRuntime: Using default boot image
+10-23 03:49:58.445  8919  8919 I AndroidRuntime: Leaving lock profiling enabled
+10-23 03:49:58.595  8919  8919 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-23 03:49:59.162  8930  8943 I ST-E2E  : device sdk=36 release=16 fp=google/sdk_gphone64_x86_64/emu64xa:16/BE2A.250530.026.F3/13894323:userdebug/dev-keys
+10-23 03:50:13.330  8930  8943 I ST-E2E  : model download ok=true  size=91893088
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.434  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : .
+10-23 03:50:13.435  8930  8996 W llama   : 
+10-23 03:50:13.560  8930  8996 I ScreenAI: model loaded: ctx=4096 threads=2 vision=0
+10-23 03:50:13.561  8930  8996 I ScreenAI: loaded custom:SmolLM2-135M-Instruct-Q4_0.gguf in 212ms: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an
+10-23 03:50:13.561  8930  8943 I ST-E2E  : model: arch=llama;desc=llama 256M Q4_0;ctx=4096;params=134515008;vision=0;template={% for message in messages %}{% if loop.first an threads=2 load=229ms
+10-23 03:50:17.184  8930  8943 I ST-E2E  : direct AI: [Good morning, Thank you very much] stats=prompt 516 tok (dùng lại 0) 2993ms, sinh 23 tok 618ms (37.2 tok/s)
+10-23 03:50:17.185  8930  8943 I ST-E2E  : ==== START mode=entire-screen sdk=36
+10-23 03:50:17.800  8930  8943 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-23 03:50:19.788  8930  8943 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-01-sample.png
+10-23 03:50:22.514  8930  8943 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-02-main.png
+10-23 03:50:24.445  8930  8943 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-03-consent.png
+10-23 03:50:24.460  8930  8943 I ST-E2E  : consent dialog: spinner=true title='Share your screen with Dịch Màn Hình?' positive='Next'
+10-23 03:50:26.207  8930  8943 I ST-E2E  : spinner -> '(Entire screen|Share entire screen|Full screen)' selected=true
+10-23 03:50:26.528  8930  8943 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-04-consent-selected.png
+10-23 03:50:26.543  8930  8943 I ST-E2E  : click consent button 'Share screen'
+10-23 03:50:26.912  8930  9115 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-23 03:50:26.912  8930  9115 I ScreenTranslator: captured content visible=true
+10-23 03:50:27.159  8930  8943 I ST-E2E  : service running=true lastError=null
+10-23 03:50:30.844  8930  8930 I ScreenTranslator: capture singleApp=false newFrame=true frames=30 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-23 03:50:54.931  8930  8930 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: AI ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 2920ms image=false prompt 554 tok (dùng lại 491) 1241ms, sinh 59 tok 1673ms (35.3 tok/s)
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Hello world'
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Good morning'
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Good morning'
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Thank you very much'
+10-23 03:50:57.870  8930  8930 I ScreenTranslator: result blocks=1 first='Good morning'
+10-23 03:50:57.882  8930  8930 I ScreenTranslator: overlay shown TranslationOverlayView
+10-23 03:50:59.278  8930  8943 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-05-ai-result.png
+10-23 03:50:59.279  8930  8943 I ST-E2E  : ocr: Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-23 03:50:59.279  8930  8943 I ST-E2E  :   unit[0] [en/translate:en] 'Hello world' -> 'Hello world'
+10-23 03:50:59.279  8930  8943 I ST-E2E  :   unit[1] [en/translate:en] 'Good morning' -> 'Good morning'
+10-23 03:50:59.279  8930  8943 I ST-E2E  :   unit[2] [en/translate:en] 'The weather is beautiful today' -> 'The weather is beautiful today'
+10-23 03:50:59.279  8930  8943 I ST-E2E  :   unit[3] [en/translate:en] 'Please open the door' -> 'Good morning'
+10-23 03:50:59.279  8930  8943 I ST-E2E  :   unit[4] [en/translate:en] 'Thank you very much' -> 'Thank you very much'
+10-23 03:50:59.279  8930  8943 I ST-E2E  : RESULT ai done=true engine=ai:custom:SmolLM2-135M-Instruct-Q4_0.gguf calls=1 2920ms image=false prompt 554 tok (dùng lại 491) 1241ms, sinh 59 tok 1673ms (35.3 tok/s) lastError=null
+10-23 03:50:59.279  8930  8943 I ST-E2E  : PASS aiOnDevice
+10-23 03:50:59.281  8930  8943 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
+10-23 03:50:59.606  8930  8943 I ST-E2E  : screenshot /data/local/tmp/st-e2e/entire-screen-06-final.png
+10-23 03:50:59.636  8930  8943 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/entire-screen-final.xml
+10-23 03:50:59.657  8930  9115 I ScreenTranslator: projection stopped
+10-23 03:51:01.100  8919  8919 I AndroidRuntime: VM exiting with result code 0.
