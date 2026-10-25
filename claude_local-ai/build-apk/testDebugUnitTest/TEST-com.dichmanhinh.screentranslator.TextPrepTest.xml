@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.dichmanhinh.screentranslator.TextPrepTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-23T10:35:18" hostname="runnervm8k3b6" time="0.008">
+<testsuite name="com.dichmanhinh.screentranslator.TextPrepTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-25T17:08:05" hostname="runnervmtai0g" time="0.009">
   <properties/>
-  <testcase name="russianVideoNoiseIsRemoved" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.003"/>
-  <testcase name="legitimateTextIsKept" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.001"/>
-  <testcase name="sentenceCase" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.002"/>
-  <testcase name="allCapsDetection" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
+  <testcase name="russianVideoNoiseIsRemoved" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.005"/>
+  <testcase name="legitimateTextIsKept" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
+  <testcase name="sentenceCase" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.001"/>
+  <testcase name="allCapsDetection" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.001"/>
   <testcase name="spacesBetweenHanAreRemoved" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
   <testcase name="mixedScriptLookalikesAreFixed" classname="com.dichmanhinh.screentranslator.TextPrepTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
