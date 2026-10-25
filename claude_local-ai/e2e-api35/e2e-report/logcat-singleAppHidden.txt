@@ -1,56 +1,56 @@
-10-23 10:47:28.549  6086  6086 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
-10-23 10:47:28.554  6086  6086 I AndroidRuntime: Using default boot image
-10-23 10:47:28.554  6086  6086 I AndroidRuntime: Leaving lock profiling enabled
-10-23 10:47:28.689  6086  6086 D AndroidRuntime: Calling main entry com.android.commands.am.Am
-10-23 10:47:29.286  6096  6110 I ST-E2E  : device sdk=35 release=15 fp=google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys
-10-23 10:47:31.035  6096  6110 I ST-E2E  : ==== START mode=single-app sdk=35
-10-23 10:47:31.195  6096  6110 I ST-E2E  : translate pre-check: Chào buổi sáng
-10-23 10:47:33.010  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-01-sample.png
-10-23 10:47:35.426  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-02-main.png
-10-23 10:47:37.450  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-03-consent.png
-10-23 10:47:37.458  6096  6110 I ST-E2E  : consent dialog: spinner=true title='Start recording or casting with Dịch Màn Hình?' positive='Start'
-10-23 10:47:37.461  6096  6110 I ST-E2E  : spinner already on '(A single app|Share one app|Single app|One app)'
-10-23 10:47:38.103  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-04-consent-selected.png
-10-23 10:47:38.119  6096  6110 I ST-E2E  : click consent button 'Start'
-10-23 10:47:41.461  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-05-app-selector.png
-10-23 10:47:41.482  6096  6110 I ST-E2E  : app selector tasks (1): [ST E2E Sample]  [selector title='Share or record an app']
-10-23 10:47:41.488  6096  6110 I ST-E2E  : select task 'ST E2E Sample'
-10-23 10:47:42.153  6096  6269 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
-10-23 10:47:42.153  6096  6269 I ScreenTranslator: captured content visible=true
-10-23 10:47:42.390  6096  6110 I ST-E2E  : service running=true lastError=null
-10-23 10:47:45.363  6096  6269 I ScreenTranslator: captured content visible=false
-10-23 10:47:48.613  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-06-home.png
-10-23 10:47:48.779  6096  6110 I ST-E2E  : hidden detected=true lastError=content hidden calls=0
-10-23 10:47:48.845  6096  6269 I ScreenTranslator: captured content visible=true
-10-23 10:47:51.337  6096  6110 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
-10-23 10:47:51.646  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-07-before-tap.png
-10-23 10:47:52.362  6096  6096 I ScreenTranslator: no new frame after hiding overlay -> single-app capture
-10-23 10:47:52.363  6096  6096 I ScreenTranslator: capture singleApp=true newFrame=false frames=5 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
-10-23 10:48:12.153  6096  6096 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
-10-23 10:48:12.214  6096  6096 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
-10-23 10:48:12.214  6096  6096 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
-10-23 10:48:12.214  6096  6096 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 10:48:12.214  6096  6096 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
-10-23 10:48:12.214  6096  6096 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
-10-23 10:48:12.215  6096  6096 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
-10-23 10:48:12.222  6096  6096 I ScreenTranslator: overlay shown TranslationOverlayView
-10-23 10:48:13.608  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-08-result.png
-10-23 10:48:13.609  6096  6110 I ST-E2E  : RESULT mode=single-app sdk=35 done=true results=1 calls=1 blocks=5 lastError=null
-10-23 10:48:13.609  6096  6110 I ST-E2E  :   block[0] 'Hello world' -> 'Xin chào thế giới'
-10-23 10:48:13.609  6096  6110 I ST-E2E  :   block[1] 'Good morning' -> 'Chào buổi sáng'
-10-23 10:48:13.609  6096  6110 I ST-E2E  :   block[2] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
-10-23 10:48:13.609  6096  6110 I ST-E2E  :   block[3] 'Please open the door' -> 'Xin hãy mở cửa'
-10-23 10:48:13.609  6096  6110 I ST-E2E  :   block[4] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
-10-23 10:48:13.612  6096  6110 I ST-E2E  : sample phrases recognized: 5/5
-10-23 10:48:13.613  6096  6110 I ST-E2E  : vietnamese-looking translations: 5/5
-10-23 10:48:13.632  6096  6110 I ST-E2E  : overlay window: OK via id; desc='Xin chào thế giới
-10-23 10:48:13.632  6096  6110 I ST-E2E  : Chào buổi sáng
-10-23 10:48:13.632  6096  6110 I ST-E2E  : Hôm nay thời tiết đẹp
-10-23 10:48:13.632  6096  6110 I ST-E2E  : Xin hãy mở cửa
-10-23 10:48:13.632  6096  6110 I ST-E2E  : Cảm ơn bạn rất nhiều'
-10-23 10:48:13.632  6096  6110 I ST-E2E  : PASS mode=single-app sdk=35 blocks=5 matched=5
-10-23 10:48:13.633  6096  6110 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
-10-23 10:48:13.939  6096  6110 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-09-final.png
-10-23 10:48:13.968  6096  6110 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/single-app-final.xml
-10-23 10:48:13.978  6096  6269 I ScreenTranslator: projection stopped
-10-23 10:48:15.218  6086  6086 I AndroidRuntime: VM exiting with result code 0.
+10-25 17:18:39.351  6489  6489 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-25 17:18:39.355  6489  6489 I AndroidRuntime: Using default boot image
+10-25 17:18:39.355  6489  6489 I AndroidRuntime: Leaving lock profiling enabled
+10-25 17:18:39.465  6489  6489 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+10-25 17:18:40.084  6499  6513 I ST-E2E  : device sdk=35 release=15 fp=google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys
+10-25 17:18:41.754  6499  6513 I ST-E2E  : ==== START mode=single-app sdk=35
+10-25 17:18:41.878  6499  6513 I ST-E2E  : translate pre-check: Chào buổi sáng
+10-25 17:18:43.818  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-01-sample.png
+10-25 17:18:46.483  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-02-main.png
+10-25 17:18:48.476  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-03-consent.png
+10-25 17:18:48.489  6499  6513 I ST-E2E  : consent dialog: spinner=true title='Start recording or casting with Dịch Màn Hình?' positive='Start'
+10-25 17:18:48.492  6499  6513 I ST-E2E  : spinner already on '(A single app|Share one app|Single app|One app)'
+10-25 17:18:49.030  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-04-consent-selected.png
+10-25 17:18:49.189  6499  6513 I ST-E2E  : click consent button 'Start'
+10-25 17:18:52.638  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-05-app-selector.png
+10-25 17:18:52.669  6499  6513 I ST-E2E  : app selector tasks (1): [ST E2E Sample]  [selector title='Share or record an app']
+10-25 17:18:52.676  6499  6513 I ST-E2E  : select task 'ST E2E Sample'
+10-25 17:18:53.606  6499  6664 I ScreenTranslator: captured content resized 1080x2400 (display 1080x2400)
+10-25 17:18:53.609  6499  6664 I ScreenTranslator: captured content visible=true
+10-25 17:18:53.745  6499  6513 I ST-E2E  : service running=true lastError=null
+10-25 17:18:56.050  6499  6664 I ScreenTranslator: captured content visible=false
+10-25 17:18:59.628  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-06-home.png
+10-25 17:18:59.731  6499  6513 I ST-E2E  : hidden detected=true lastError=content hidden calls=0
+10-25 17:19:00.191  6499  6664 I ScreenTranslator: captured content visible=true
+10-25 17:19:02.297  6499  6513 I ST-E2E  : bubble found via a11y=true bounds=Rect(34, 1002 - 113, 1081)
+10-25 17:19:02.645  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-07-before-tap.png
+10-25 17:19:03.412  6499  6499 I ScreenTranslator: no new frame after hiding overlay -> single-app capture
+10-25 17:19:03.413  6499  6499 I ScreenTranslator: capture singleApp=true newFrame=false frames=3 content=1080x2400 rect=Rect(0, 0 - 1080, 2400)
+10-25 17:19:24.074  6499  6499 I ScreenTranslator: ocr blocks=5 inPlace=true shot=Rect(0, 0 - 1080, 2400) report=Report(primary=LATIN, misreadLines=0, tesseractLang=null, tesseractLines=0, droppedGarbage=0)
+10-25 17:19:24.144  6499  6499 I ScreenTranslator: unit [en/translate:en] 'Hello world' -> 'Xin chào thế giới'
+10-25 17:19:24.144  6499  6499 I ScreenTranslator: unit [en/translate:en] 'Good morning' -> 'Chào buổi sáng'
+10-25 17:19:24.144  6499  6499 I ScreenTranslator: unit [en/translate:en] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-25 17:19:24.145  6499  6499 I ScreenTranslator: unit [en/translate:en] 'Please open the door' -> 'Xin hãy mở cửa'
+10-25 17:19:24.145  6499  6499 I ScreenTranslator: unit [en/translate:en] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
+10-25 17:19:24.145  6499  6499 I ScreenTranslator: result blocks=5 first='Xin chào thế giới'
+10-25 17:19:24.158  6499  6499 I ScreenTranslator: overlay shown TranslationOverlayView
+10-25 17:19:25.564  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-08-result.png
+10-25 17:19:25.564  6499  6513 I ST-E2E  : RESULT mode=single-app sdk=35 done=true results=1 calls=1 blocks=5 lastError=null
+10-25 17:19:25.564  6499  6513 I ST-E2E  :   block[0] 'Hello world' -> 'Xin chào thế giới'
+10-25 17:19:25.564  6499  6513 I ST-E2E  :   block[1] 'Good morning' -> 'Chào buổi sáng'
+10-25 17:19:25.564  6499  6513 I ST-E2E  :   block[2] 'The weather is beautiful today' -> 'Hôm nay thời tiết đẹp'
+10-25 17:19:25.565  6499  6513 I ST-E2E  :   block[3] 'Please open the door' -> 'Xin hãy mở cửa'
+10-25 17:19:25.565  6499  6513 I ST-E2E  :   block[4] 'Thank you very much' -> 'Cảm ơn bạn rất nhiều'
+10-25 17:19:25.567  6499  6513 I ST-E2E  : sample phrases recognized: 5/5
+10-25 17:19:25.567  6499  6513 I ST-E2E  : vietnamese-looking translations: 5/5
+10-25 17:19:25.588  6499  6513 I ST-E2E  : overlay window: OK via id; desc='Xin chào thế giới
+10-25 17:19:25.588  6499  6513 I ST-E2E  : Chào buổi sáng
+10-25 17:19:25.588  6499  6513 I ST-E2E  : Hôm nay thời tiết đẹp
+10-25 17:19:25.588  6499  6513 I ST-E2E  : Xin hãy mở cửa
+10-25 17:19:25.588  6499  6513 I ST-E2E  : Cảm ơn bạn rất nhiều'
+10-25 17:19:25.588  6499  6513 I ST-E2E  : PASS mode=single-app sdk=35 blocks=5 matched=5
+10-25 17:19:25.588  6499  6513 I ST-E2E  : STATE[tearDown] running=true calls=1 results=1 blocks=5 lastError=null
+10-25 17:19:25.898  6499  6513 I ST-E2E  : screenshot /data/local/tmp/st-e2e/single-app-09-final.png
+10-25 17:19:25.920  6499  6513 I ST-E2E  : hierarchy /storage/emulated/0/Android/data/com.dichmanhinh.screentranslator/files/e2e/single-app-final.xml
+10-25 17:19:25.925  6499  6664 I ScreenTranslator: projection stopped
+10-25 17:19:27.016  6489  6489 I AndroidRuntime: VM exiting with result code 0.
