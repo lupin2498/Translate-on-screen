@@ -528,7 +528,8 @@ class ScreenTranslateService : Service() {
                 val aiSpec = LocalAi.selected(this@ScreenTranslateService)
                 val aiReady = aiOn && ModelManager.isReady(this@ScreenTranslateService, aiSpec)
                 if (aiOn && !aiReady) toast(getString(R.string.ai_not_ready_google, aiSpec.name), long = true)
-                val aiVision = aiReady && aiSpec.vision && Prefs.aiVision(this@ScreenTranslateService)
+                val aiVision = aiReady && Prefs.aiVision(this@ScreenTranslateService) &&
+                    ModelManager.hasVision(this@ScreenTranslateService, aiSpec)
 
                 val statusBar = if (inPlace && area == null) statusBarHeight() else 0
                 val blocks = ocr.recognize(input, src) { lang ->

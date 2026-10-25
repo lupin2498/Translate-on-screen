@@ -1,5 +1,7 @@
 package com.dichmanhinh.screentranslator.ai
 
+import java.util.Locale
+
 /** Ảnh RGB 8-bit (3 byte/điểm ảnh) đưa cho mô hình đọc ảnh. */
 class AiImage(val rgb: ByteArray, val width: Int, val height: Int) {
     init {
@@ -113,4 +115,22 @@ object ModelCatalog {
     }
 
     fun byId(id: String?): ModelSpec? = builtIn.firstOrNull { it.id == id }
+
+    /**
+     * File trong danh mục ứng với file người dùng tự tải rồi nhập vào: trùng tên (kể cả khi trình
+     * duyệt thêm " (1)" hoặc đuôi ".bin") hoặc trùng đúng kích thước.
+     */
+    fun matchFile(displayName: String, size: Long): Pair<ModelSpec, ModelFile>? {
+        val n = displayName.trim().lowercase(Locale.ROOT).replace(Regex("\\s*\\(\\d+\\)"), "")
+        val all = builtIn.flatMap { s -> s.files.map { s to it } }
+        fun base(f: ModelFile) = f.name.lowercase(Locale.ROOT).removeSuffix(".gguf")
+        return all.firstOrNull { it.second.name.lowercase(Locale.ROOT) == n }
+            ?: all.firstOrNull { size > 0 && it.second.size == size }
+            ?: all.firstOrNull { n.startsWith(base(it.second) + ".") || n == base(it.second) }
+    }
+
+    /** File bộ chiếu ảnh (mmproj), không phải mô hình ngôn ngữ. */
+    fun isMmprojName(name: String): Boolean = name.lowercase(Locale.ROOT).let {
+        it.startsWith("mmproj") || it.contains("-mmproj") || it.contains("_mmproj")
+    }
 }

@@ -38,8 +38,9 @@ object LocalAi {
     /** Nạp (nếu cần) mô hình đang chọn. Chậm ở lần đầu – vài giây. */
     suspend fun obtain(ctx: Context): NativeBackend = mutex.withLock {
         val spec = selected(ctx)
-        backend?.let { if (it.spec.id == spec.id) return@withLock it }
         val paths = ModelManager.paths(ctx, spec) ?: throw AiException("Chưa tải mô hình ${spec.name}")
+        // Dùng lại mô hình đang nạp; nạp lại nếu vừa có thêm file đọc ảnh (mmproj)
+        backend?.let { if (it.spec.id == spec.id && loadedMmproj == paths.second) return@withLock it }
         backend?.close()
         backend = null
         val app = ctx.applicationContext
@@ -52,8 +53,13 @@ object LocalAi {
             }
         }
         backend = b
+        loadedMmproj = paths.second
         b
     }
+
+    /** mmproj dùng khi nạp mô hình hiện tại (null = không có). */
+    @Volatile
+    private var loadedMmproj: String? = null
 
     fun cancel() {
         backend?.cancel()

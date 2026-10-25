@@ -22,7 +22,16 @@ object ModelManager {
 
     enum class State { NOT_DOWNLOADED, DOWNLOADING, READY, FAILED }
 
-    data class Status(val state: State, val downloaded: Long, val total: Long, val error: String? = null) {
+    data class Status(
+        val state: State,
+        val downloaded: Long,
+        val total: Long,
+        val error: String? = null,
+        /** READY nhưng thiếu file đọc ảnh (mmproj): vẫn dịch chữ được, không đọc ảnh. */
+        val visionMissing: Boolean = false,
+        /** Ghi chú khi đang tải (tạm dừng chờ Wi‑Fi, mất mạng...). */
+        val note: String? = null,
+    ) {
         val percent: Int get() = if (total > 0) ((downloaded * 100) / total).toInt().coerceIn(0, 100) else 0
     }
 
@@ -57,15 +66,28 @@ object ModelManager {
      * đây, nên dịch vụ dịch màn hình dùng được ngay mà không cần mở lại màn hình AI.
      */
     fun isReady(ctx: Context, spec: ModelSpec): Boolean {
-        if (spec.files.all { isComplete(ctx, it) }) return true
-        val dm = ctx.getSystemService(DownloadManager::class.java) ?: return false
-        for (f in spec.files) if (!isComplete(ctx, f)) checkDownload(ctx, f, dm)
-        return spec.files.all { isComplete(ctx, it) }
+        finishDownloads(ctx, spec)
+        // Chỉ cần file mô hình chính để dịch chữ; mmproj (đọc ảnh) là phần thêm
+        return isComplete(ctx, spec.model)
     }
 
-    /** Đường dẫn file mô hình và mmproj (null nếu chưa tải đủ). */
+    /** Có đủ file để mô hình nhìn ảnh (mmproj) không. */
+    fun hasVision(ctx: Context, spec: ModelSpec): Boolean {
+        val mm = spec.mmproj ?: return false
+        finishDownloads(ctx, spec)
+        return isComplete(ctx, spec.model) && isComplete(ctx, mm)
+    }
+
+    /** Hoàn tất (kiểm tra, đổi tên) các file đã tải xong – kể cả khi tải xong lúc ứng dụng đóng. */
+    private fun finishDownloads(ctx: Context, spec: ModelSpec) {
+        if (spec.files.all { isComplete(ctx, it) }) return
+        val dm = ctx.getSystemService(DownloadManager::class.java) ?: return
+        for (f in spec.files) if (!isComplete(ctx, f)) checkDownload(ctx, f, dm)
+    }
+
+    /** Đường dẫn file mô hình và mmproj (mmproj null nếu chưa có); null nếu chưa có mô hình. */
     fun paths(ctx: Context, spec: ModelSpec): Pair<String, String?>? {
-        if (!isReady(ctx, spec) && !isComplete(ctx, spec.model)) return null
+        if (!isReady(ctx, spec)) return null
         val mm = spec.mmproj?.let { if (isComplete(ctx, it)) file(ctx, it).absolutePath else null }
         return file(ctx, spec.model).absolutePath to mm
     }
@@ -84,7 +106,14 @@ object ModelManager {
     fun find(ctx: Context, id: String?): ModelSpec? =
         ModelCatalog.byId(id) ?: customModels(ctx).firstOrNull { it.id == id }
 
-    private class FileState(val state: State, val bytes: Long, val error: String? = null)
+    private class FileState(val state: State, val bytes: Long, val error: String? = null, val note: String? = null)
+
+    private fun pausedReason(code: Int): String = when (code) {
+        DownloadManager.PAUSED_QUEUED_FOR_WIFI -> "đang chờ Wi‑Fi (máy chặn tải file lớn bằng dữ liệu di động)"
+        DownloadManager.PAUSED_WAITING_FOR_NETWORK -> "mất mạng, đang chờ kết nối lại"
+        DownloadManager.PAUSED_WAITING_TO_RETRY -> "lỗi mạng, đang thử lại"
+        else -> "tạm dừng"
+    }
 
     /** Trạng thái tải của một file; file đã tải xong thì kiểm tra rồi đổi sang tên chính thức. */
     private fun checkDownload(ctx: Context, f: ModelFile, dm: DownloadManager): FileState {
@@ -125,6 +154,12 @@ object ModelManager {
                     forget(ctx, f)
                     FileState(State.FAILED, 0, failReason(reason))
                 }
+                DownloadManager.STATUS_PAUSED -> {
+                    val reason = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON))
+                    FileState(State.DOWNLOADING, got.coerceAtLeast(0), note = pausedReason(reason))
+                }
+                DownloadManager.STATUS_PENDING ->
+                    FileState(State.DOWNLOADING, got.coerceAtLeast(0), note = "đang chờ bắt đầu")
                 else -> FileState(State.DOWNLOADING, got.coerceAtLeast(0))
             }
         }
@@ -142,11 +177,14 @@ object ModelManager {
         }
         val done = states.sumOf { it.bytes }
         val total = maxOf(spec.totalSize, done)
+        val error = states.firstNotNullOfOrNull { it.error }
         return when {
             states.all { it.state == State.READY } -> Status(State.READY, done, done)
-            states.any { it.state == State.DOWNLOADING } -> Status(State.DOWNLOADING, done, total)
-            states.any { it.state == State.FAILED } ->
-                Status(State.FAILED, done, total, states.firstNotNullOfOrNull { it.error })
+            states.any { it.state == State.DOWNLOADING } ->
+                Status(State.DOWNLOADING, done, total, note = states.firstNotNullOfOrNull { it.note })
+            // Có mô hình chính, thiếu mmproj: dịch chữ được, chưa đọc được ảnh
+            states.first().state == State.READY -> Status(State.READY, done, total, error, visionMissing = true)
+            states.any { it.state == State.FAILED } -> Status(State.FAILED, done, total, error)
             else -> Status(State.NOT_DOWNLOADED, done, total)
         }
     }
@@ -196,13 +234,14 @@ object ModelManager {
     }
 
     fun cancelDownload(ctx: Context, spec: ModelSpec) {
-        val dm = ctx.getSystemService(DownloadManager::class.java)
-        for (f in spec.files) {
-            val id = prefs(ctx).getLong(key(f), -1L)
-            if (id >= 0) dm?.remove(id)
-            forget(ctx, f)
-            partFile(ctx, f).delete()
-        }
+        for (f in spec.files) cancelFileDownload(ctx, f)
+    }
+
+    private fun cancelFileDownload(ctx: Context, f: ModelFile) {
+        val id = prefs(ctx).getLong(key(f), -1L)
+        if (id >= 0) runCatching { ctx.getSystemService(DownloadManager::class.java)?.remove(id) }
+        forget(ctx, f)
+        partFile(ctx, f).delete()
     }
 
     fun delete(ctx: Context, spec: ModelSpec) {
@@ -210,32 +249,48 @@ object ModelManager {
         for (f in spec.files) file(ctx, f).delete()
     }
 
+    /** Kết quả nhập một file: mô hình nó thuộc về (null nếu là mmproj lạ) và tên file đã lưu. */
+    class ImportResult(val spec: ModelSpec?, val fileName: String, val isMmproj: Boolean)
+
     /**
-     * Nhập file GGUF từ bộ nhớ máy (SAF) vào thư mục mô hình.
+     * Nhập file GGUF từ bộ nhớ máy (SAF) vào thư mục mô hình. File chính thức của mô hình trong
+     * danh mục (người dùng tự tải bằng trình duyệt) được nhận ra theo tên/kích thước và lưu đúng
+     * tên, nên mô hình đó hiện "Đã tải" như khi tải trong ứng dụng.
      * @param onProgress (đã chép, tổng) byte
      */
-    suspend fun importGguf(ctx: Context, uri: Uri, onProgress: (Long, Long) -> Unit): ModelSpec =
+    suspend fun importGguf(ctx: Context, uri: Uri, onProgress: (Long, Long) -> Unit): ImportResult =
         withContext(Dispatchers.IO) {
             val cr = ctx.contentResolver
-            var name = "model.gguf"
+            var display = "model.gguf"
             var size = -1L
             cr.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE), null, null, null)?.use { c ->
                 if (c.moveToFirst()) {
-                    c.getString(0)?.let { name = it }
+                    c.getString(0)?.let { display = it }
                     if (!c.isNull(1)) size = c.getLong(1)
                 }
             }
-            name = name.replace(Regex("[^A-Za-z0-9._-]"), "_")
+            val match = ModelCatalog.matchFile(display, size)
+            var name = match?.second?.name ?: display.replace(Regex("[^A-Za-z0-9._-]"), "_")
             if (!name.endsWith(".gguf", true)) name += ".gguf"
-            if (ModelCatalog.builtIn.any { s -> s.files.any { it.name == name } }) name = "custom-$name"
-            if (size > 0 && freeSpace(ctx) < size + 100_000_000L) throw IOException("Không đủ dung lượng trống")
+            val isMmproj = match?.let { it.second == it.first.mmproj } ?: ModelCatalog.isMmprojName(name)
+            if (size > 0 && freeSpace(ctx) < size + 100_000_000L) {
+                throw IOException("Không đủ dung lượng trống (cần thêm ${size / 1_000_000} MB)")
+            }
+            // Đang tải dở file này trong ứng dụng: dừng tải, dùng file người dùng nhập
+            match?.let { cancelFileDownload(ctx, it.second) }
             val dest = File(dir(ctx), name)
             val tmp = File(dir(ctx), "$name.importing")
             try {
                 cr.openInputStream(uri)?.use { input ->
                     val magic = ByteArray(4)
-                    if (input.read(magic) != 4 || String(magic, Charsets.US_ASCII) != "GGUF") {
-                        throw IOException("Không phải file GGUF")
+                    var got = 0
+                    while (got < 4) {
+                        val n = input.read(magic, got, 4 - got)
+                        if (n < 0) break
+                        got += n
+                    }
+                    if (got != 4 || String(magic, Charsets.US_ASCII) != "GGUF") {
+                        throw IOException("\"$display\" không phải file mô hình GGUF")
                     }
                     tmp.outputStream().use { out ->
                         out.write(magic)
@@ -255,10 +310,17 @@ object ModelManager {
                         }
                     }
                 } ?: throw IOException("Không mở được file")
+                if (size > 0 && tmp.length() != size) throw IOException("Chép thiếu dữ liệu, hãy thử lại")
                 if (!tmp.renameTo(dest)) throw IOException("Không lưu được file")
             } finally {
                 tmp.delete()
             }
-            ModelCatalog.custom(name, dest.length())
+            Log.i(TAG, "imported $display -> $name (${dest.length()} bytes) match=${match?.first?.id}")
+            val spec = when {
+                match != null -> match.first
+                isMmproj -> null
+                else -> ModelCatalog.custom(name, dest.length())
+            }
+            ImportResult(spec, name, isMmproj)
         }
 }

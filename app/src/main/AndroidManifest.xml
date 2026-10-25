@@ -31,8 +31,10 @@
             android:exported="false"
             android:parentActivityName=".MainActivity" />
 
+        <!-- configChanges: xoay màn hình không làm gián đoạn việc chép mô hình vài GB -->
         <activity
             android:name=".AiSettingsActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
 

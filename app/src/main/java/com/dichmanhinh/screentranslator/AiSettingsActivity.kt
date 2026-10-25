@@ -53,8 +53,9 @@ class AiSettingsActivity : AppCompatActivity() {
         val delete: MaterialButton,
     )
 
-    private val importLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri != null) importModel(uri)
+    // Chọn được nhiều file một lần (mô hình + mmproj tải bằng trình duyệt)
+    private val importLauncher = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+        if (uris.isNotEmpty()) importModels(uris)
     }
 
     private val poll = object : Runnable {
@@ -208,10 +209,14 @@ class AiSettingsActivity : AppCompatActivity() {
             val size = Formatter.formatShortFileSize(this, spec.totalSize)
             when (st.state) {
                 ModelManager.State.READY -> {
-                    v.status.text = getString(R.string.ai_status_ready, size) +
+                    v.status.text = (if (st.visionMissing) getString(R.string.ai_status_no_vision)
+                    else getString(R.string.ai_status_ready, size)) +
                         if (LocalAi.isLoaded(spec)) " · " + getString(R.string.ai_status_loaded) else ""
                     v.progress.visibility = View.GONE
-                    v.action.visibility = View.GONE
+                    // Thiếu mmproj: cho tải riêng file đọc ảnh
+                    v.action.visibility = if (st.visionMissing && !spec.custom) View.VISIBLE else View.GONE
+                    v.action.text = getString(R.string.ai_download_mmproj)
+                    v.action.setOnClickListener { confirmDownload(spec) }
                     v.delete.visibility = View.VISIBLE
                     if (pendingSelect == spec.id) {
                         pendingSelect = null
@@ -221,7 +226,8 @@ class AiSettingsActivity : AppCompatActivity() {
                 }
                 ModelManager.State.DOWNLOADING -> {
                     v.status.text = getString(R.string.ai_status_downloading, st.percent,
-                        Formatter.formatShortFileSize(this, st.downloaded), size)
+                        Formatter.formatShortFileSize(this, st.downloaded), size) +
+                        (st.note?.let { " · $it" } ?: "")
                     v.progress.visibility = View.VISIBLE
                     v.progress.setProgressCompat(st.percent, true)
                     v.action.visibility = View.VISIBLE
@@ -294,32 +300,62 @@ class AiSettingsActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun importModel(uri: Uri) {
+    private fun importModels(uris: List<Uri>) {
         val dlg = AlertDialog.Builder(this)
             .setTitle(R.string.ai_import)
             .setMessage(R.string.ai_importing)
             .setCancelable(false)
             .show()
         lifecycleScope.launch {
-            try {
-                val spec = ModelManager.importGguf(this@AiSettingsActivity, uri) { copied, total ->
-                    runOnUiThread {
-                        dlg.setMessage(getString(R.string.ai_importing) + "\n" +
-                            Formatter.formatShortFileSize(this@AiSettingsActivity, copied) +
-                            if (total > 0) " / " + Formatter.formatShortFileSize(this@AiSettingsActivity, total) else "")
+            val imported = ArrayList<ModelManager.ImportResult>()
+            val errors = ArrayList<String>()
+            for ((i, uri) in uris.withIndex()) {
+                val head = getString(R.string.ai_importing) + if (uris.size > 1) " (${i + 1}/${uris.size})" else ""
+                dlg.setMessage(head)
+                try {
+                    imported += ModelManager.importGguf(this@AiSettingsActivity, uri) { copied, total ->
+                        runOnUiThread {
+                            dlg.setMessage(head + "\n" +
+                                Formatter.formatShortFileSize(this@AiSettingsActivity, copied) +
+                                if (total > 0) " / " + Formatter.formatShortFileSize(this@AiSettingsActivity, total) else "")
+                        }
                     }
+                } catch (e: CancellationException) {
+                    dlg.dismiss()
+                    throw e
+                } catch (e: Exception) {
+                    errors += e.message ?: e.javaClass.simpleName
                 }
-                buildModelList()
-                select(spec)
-                showDeviceInfo()
-                Toast.makeText(this@AiSettingsActivity, getString(R.string.ai_download_done, spec.name), Toast.LENGTH_LONG).show()
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Toast.makeText(this@AiSettingsActivity, "Lỗi: ${e.message}", Toast.LENGTH_LONG).show()
-            } finally {
-                dlg.dismiss()
             }
+            dlg.dismiss()
+            buildModelList()
+            showDeviceInfo()
+            // Chọn mô hình vừa nhập (ưu tiên file mô hình chính, không phải mmproj)
+            val spec = imported.firstOrNull { !it.isMmproj && it.spec != null }?.spec
+                ?: imported.firstNotNullOfOrNull { it.spec }
+            if (spec != null) select(spec)
+            val msg = StringBuilder()
+            if (imported.isNotEmpty()) {
+                msg.append(getString(R.string.ai_import_done, imported.joinToString(", ") { it.fileName }))
+                if (spec != null && ModelManager.isReady(this@AiSettingsActivity, spec)) {
+                    msg.append("\n\n").append(getString(R.string.ai_download_done, spec.name))
+                    if (spec.mmproj != null && !ModelManager.hasVision(this@AiSettingsActivity, spec)) {
+                        msg.append("\n").append(getString(R.string.ai_import_need_mmproj, spec.mmproj.name))
+                    }
+                } else if (spec != null) {
+                    msg.append("\n\n").append(getString(R.string.ai_import_need_model, spec.model.name))
+                }
+                msg.append("\n\n").append(getString(R.string.ai_import_cleanup))
+            }
+            if (errors.isNotEmpty()) {
+                if (msg.isNotEmpty()) msg.append("\n\n")
+                msg.append("Lỗi: ").append(errors.joinToString("\n"))
+            }
+            AlertDialog.Builder(this@AiSettingsActivity)
+                .setTitle(R.string.ai_import)
+                .setMessage(msg)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
         }
     }
 
